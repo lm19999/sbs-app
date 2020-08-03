@@ -1,0 +1,46 @@
+.search{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+	height: 1.875rem;
+	padding: 0.625rem 0;
+}
+.search input{
+	width: 60%;
+}
+.search button{
+	width: 20%;
+}
+.tab{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+}
+.tab div{
+	padding: 0.3125rem 1.25rem;
+}
+.current{
+	border-bottom: 1px solid red;
+}
+.list{
+	width: 100%;
+}
+.listOne{
+	width: 95%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+}
+.listLeft{
+	width: 50%;
+}
+.listRight{
+	width: 50%;
+}
+.listLeft img{
+	width: 90%;
+	height: 6.25rem;
+}

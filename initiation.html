@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>启蒙页面</title>
+		<link rel="stylesheet" type="text/css" href="css/initiation.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	</head>
+	<body>
+		<div class="search">
+			<input type="text" placeholder="请输入启蒙名称"/>
+			<button>搜索</button>
+		</div>
+		<div class="tab">
+			
+		</div>
+		<div class="list">
+			
+		</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(function(){
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:8080/initiationType/selectAllInitiationType',
+			data: {},
+			dataType: "json",
+			success: function (data) {
+				console.log(data)
+				for(var i = 0;i<data.data.length;i++){
+					$('.tab').append('<div class="tabdiv" value="'+data.data[i].initiationTypeId+'">'+data.data[i].initiationTypeName+'</div>')
+					if(i==0){
+						$('.tabdiv').addClass('current');
+					}
+				}
+				
+				//音频
+				//<video src="${data.data[i].initiationUrl.initiationUrl}" width="100%" controls="controls">您的浏览器不支持此种视频格式。</video>
+				//视频
+				// <audio controls>
+				//<source src="${data.data[i].initiationUrl}" type="audio/mpeg">
+				//</audio>
+				// 获取标签栏的所有标签元素对象
+				  var tabs = $('.tabdiv');
+				  console.log(tabs)
+				  for (var i = 0; i < tabs.length; ++i) {
+					console.log(tabs[i])
+					tabs[i].onclick = function() {
+						$(this).addClass('current');
+						$(this).siblings().removeClass('current');
+						
+						// 获取启蒙类型查询对应的数据
+						var type = $(this).attr("value")
+						$('.list').empty();
+						$.ajax({
+							type: 'POST',
+							url: 'http://localhost:8080/api/selectAllInitiationByType',
+							data: {
+								initiationTypeId:type
+							},
+							dataType: "json",
+							success: function (data) {
+								console.log(data)
+								var html = "";
+								if(data.code=="300"){
+									$('.list').append("暂无数据");
+								}else{
+									for(var i = 0;i<data.data.length;i++){
+										if(data.data[i].initiationType.initiationTypeId == 2){
+											html+=`
+											<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">
+												<div class="listLeft">
+													<img src="${data.data[i].initiationImg}" />
+												</div>
+												<div class="listRight">
+													<figure>
+														${data.data[i].initiationUrl.initiationUrlName}
+														<figcaption></figcaption>
+													</figure>
+												</div>
+											</div></a>
+											`
+										}
+										else{
+											html+=`
+											<div class="listLeft">
+												<img src="${data.data[i].initiationImg}" />
+											</div>
+											<div class="listRight">
+												<figure>
+													${data.data[i].initiationUrl.initiationUrlName}
+													<figcaption></figcaption>
+												</figure>
+											</div>
+											
+											`
+										}
+										
+									}
+									$('.list').append(html)
+								}
+								
+								//js 部分<br>//当音频播放按钮被触发的时候
+								$('audio').on('play',function(){
+								    //这里的索引是1开始的所以要减一
+								    var thisIndex = $(this).index();
+								    for( var i = 0 , len = $('audio').length ; i < len ; i ++ ){
+								        //如果是当前这个音频播放，那么就跳过，其它音频全部暂停
+								        if ( thisIndex != i ) {
+								            $('audio')[i].pause();
+								        }
+								    }
+								})
+							}
+						})
+					}
+				}
+			}
+		})
+	})
+	
+</script>

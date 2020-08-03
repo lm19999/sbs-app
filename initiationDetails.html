@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>启蒙详情页</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/initiationDetails.css"/>
+	</head>
+	<body>
+		<div class="video">
+			
+		</div>
+		<div class="back">
+			<a onclick="go()">返回</a>
+		</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	function go()
+	{
+	 window.history.go(-1);
+	}
+	
+	$(function(){
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串
+			var theRequest = new Object();
+			if (url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for(var i = 0; i < strs.length; i ++) {
+					theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+		
+		var Request = new Object();
+		Request = GetRequest();
+		var id = Request['initiationUrlId'];
+		console.log(id)
+		
+		
+		$.ajax({
+			type:'POST',
+			url:'http://localhost:8080/initiationUrl/selectlInitiationUrlById',
+			data:{
+				initiationUrlId:id
+			},
+			dataType: "json",
+			success: function (data) {
+				console.log(data)
+				var html=`
+					<video src="${data.data.initiationUrl}" width="100%" controls="controls">您的浏览器不支持此种视频格式。</video>
+				`
+				$('.video').append(html);
+			}
+		})
+	})
+</script>
