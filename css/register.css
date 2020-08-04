@@ -1,0 +1,85 @@
+body{
+	background: url(../img/bg.jpg) no-repeat;
+	background-size: cover;
+}
+a{
+	text-decoration: none;
+	color: #edebee;
+}
+.form{
+	width: 70%;
+	margin: auto;
+	margin-top: 2.2rem;
+	color: #FFFFFF;
+	padding-top: 2rem;
+}
+.form #i{
+	display: flex;
+	line-height: 2.5rem;
+	border-bottom: 0.0625rem solid #c6a9ab;
+	margin-bottom: 1rem;
+	margin-top: 0.6rem;
+}
+.form #i .text{
+	width: 4.3rem;
+}
+.form input{
+	width: 60%;
+	height: 2rem;
+	padding-top: 0.2rem;
+	font-size: 1rem;
+	background-color: transparent;
+	outline: none;
+	border: none;
+}
+
+.form input#code{
+	width: 7rem;
+}
+.form input#confirm{
+	width: 10.5rem;
+}
+.form .getCode{
+	border: 1px solid red;
+	border-radius: 0.5rem;
+	margin: auto 0;
+	height: 2rem;
+	color: #000000;
+	font-size: 0.8rem;
+	text-align: center;
+	line-height: 2rem;
+	cursor: pointer; //将指针变成小手形状
+}
+
+.form input::-webkit-input-placeholder{
+    color:#949191;
+	padding-left: 0.5rem;
+}
+.form #zw{
+	width: 100%;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+.form span{
+	display: block;
+	width: 30%;
+	font-size: 0.9rem;
+	color: #edebee;
+}
+.form span #w{
+	text-align: right;
+}
+.form button{
+	width: 100%;
+	height: 3.5rem;
+	background-color: transparent;
+	color: #f5f1f0;
+	font-size: 1.3rem;
+	margin-top: 1rem;
+	border: 0.09375rem solid #c6a9ab;
+	border-radius: 0.8rem;
+	outline: none;
+}
