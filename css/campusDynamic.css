@@ -1,0 +1,26 @@
+.navTab{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+}
+.navTab div{
+	padding: 0.3125rem 1.25rem;
+	font-size: 1rem;
+}
+.current{
+	border-bottom: 1px solid red;
+}
+.dynamicList{
+	width: 100%;
+	margin: auto;
+}
+.dynamicSon{
+	width: 90%;
+	margin: auto;
+	padding-top: 0.5rem;
+	font-size: 0.7rem;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+}

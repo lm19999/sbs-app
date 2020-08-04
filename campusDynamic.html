@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>校园动态</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/campusDynamic.css"/>
+	</head>
+	<body>
+		<div class="head">
+			校园动态
+		</div>
+		<div class="navTab">
+			
+		</div>
+		<div class="dynamicList">
+			
+		</div>
+		<div class="nav">
+			<figure>
+				<span class="iconfont iconshouye"></span>
+				<figcaption>首页</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconshangcheng-copy"></span>
+				<figcaption>启蒙</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconshangcheng-copy"></span>
+				<figcaption>成长记录</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconshangcheng-copy"></span>
+				<figcaption style="color: white;">动态</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconweibiaoti--copy"></span>
+				<figcaption>我的</figcaption>
+			</figure>
+		</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			type: 'GET',
+			url: 'http://localhost:8080/api/campusDynamic/campusDynamicTypeList',
+			data: {},
+			dataType: "json",
+			success: function (res) {
+				console.log(res)
+				for(var campusDynamicType of res.data){
+					console.log(campusDynamicType);
+					$('.navTab').append(
+						`
+							<div class="tabDiv" value="${campusDynamicType.campusDynamicTypeId}">
+								${campusDynamicType.campusDynamicTypeName}
+							</div>
+						`
+					);
+					if(campusDynamicType.campusDynamicTypeId == 1){
+						$('.tabDiv').addClass('current');
+					}
+				}
+				// 进入页面就加在数据
+				// 获取启蒙类型查询对应的数据
+				var typeId = $('.current').attr("value");
+				console.log(typeId);
+				$('.dynamicList').empty();
+				$.ajax({
+					type: 'POST',
+					url: 'http://localhost:8080/api/campusDynamic/campusDynamicListByType',
+					data: {
+						campusDynamicTypeId: typeId
+					},
+					dataType: "json",
+					success: function (res) {
+						console.log(res);
+						var html = "";
+						if(res.code=="300"){
+							$('.dynamicList').append("暂无数据");
+						}else{
+							for(var dynamicList of res.data){
+								$(".dynamicList").append(
+									`
+										<div class="dynamicSon">
+											<span id="gd">${dynamicList.campusDynamicName}</span>
+											<span class="iconfont iconyoushuangjiantou-copy">></span>
+										</div>
+									`
+								);
+							}
+							
+						}
+					}
+				})
+				
+				// tab切换卡
+				var tabs = $('.tabDiv');
+				console.log(tabs);
+				for (var i = 0; i < tabs.length; ++i) {
+					console.log(tabs[i]);
+					tabs[i].onclick = function() {
+						$(this).addClass('current');
+						$(this).siblings().removeClass('current');
+						
+						var typeId = $(this).attr("value");
+						console.log(typeId);
+						$('.dynamicList').empty();
+						$.ajax({
+							type: 'POST',
+							url: 'http://localhost:8080/api/campusDynamic/campusDynamicListByType',
+							data: {
+								campusDynamicTypeId: typeId
+							},
+							dataType: "json",
+							success: function (res) {
+								console.log(res);
+								var html = "";
+								if(res.code=="300"){
+									$('.dynamicList').append("暂无数据");
+								}else{
+									for(var dynamicList of res.data){
+										$(".dynamicList").append(
+											`
+												<div class="dynamicSon">
+													<span id="gd">${dynamicList.campusDynamicName}</span>
+													<span class="iconfont iconyoushuangjiantou-copy">></span>
+												</div>
+											`
+										);
+									}
+									
+								}
+							}
+						})
+					}
+				}
+			}
+		})
+	});
+</script>

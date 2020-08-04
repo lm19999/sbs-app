@@ -1,0 +1,26 @@
+#nav{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+}
+
+#nav li {
+	padding: 0.3125rem 1.25rem;
+	font-size: 1rem;
+	list-style: none;
+}
+
+#nav li.act {
+	border-bottom: 1px solid red;
+}
+
+#container{
+	margin-top: 2rem;
+}
+
+
+
+.container section {
+	height: 300px;
+}
