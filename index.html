@@ -5,6 +5,8 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
 	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <script type="text/javascript">
     	
    		document.addEventListener('plusready', function(){
@@ -37,6 +39,51 @@
 			<figcaption>我的</figcaption>
 		</figure>
 	</div>
+	
+	<div class="swiper-container">
+	    <div class="swiper-wrapper">
+	        
+	    </div>
+	<div class="swiper-pagination"></div>
+	</div>
 </body>
 </html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:8080/api/selectAllBannerByStatus',
+			data: {},
+			dataType: "json",
+			success: function (data) {
+				$('.swiper-wrapper').empty();
+				console.log(data)
+				var html = "";
+				for(var i = 0;i<data.data.length;i++){
+					html+=`
+						<div class="swiper-slide"><img src="${data.data[i].bannerUrl}" /></div>
+					`
+				}
+				$('.swiper-wrapper').append(html);
+				$(window).resize(swiper())
+			}
+		})
+	})
+	
+	
+	function swiper(){
+		$('.swiper-slide').css('width' ,$(window).width());
+		var swiper = new Swiper('.swiper-container', {
+		autoplay:{
+			delay:3000,
+		},
+		pagination: {
+			el:'.swiper-pagination',
+			clickable: true
+		},
+		})
+	}
+</script>
