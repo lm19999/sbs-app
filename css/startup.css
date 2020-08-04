@@ -1,0 +1,21 @@
+body{
+	background: url(../img/bg.jpg) no-repeat;
+	background-size: cover;
+}
+
+.time{
+	/* border: 1px solid red; */
+	width: 2rem;
+	height: 2rem;
+	margin-left: 18.75rem;
+	border-radius: 50%;
+	background-color: #ddd;
+}
+
+.time #Time{
+	color: #eee;
+	margin: auto 0;
+	text-align: center;
+	font-size: 1.25rem;
+	line-height: 2rem;
+}

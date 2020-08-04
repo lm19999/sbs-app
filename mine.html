@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="utf-8">
+		<title>我的</title>
+		<link rel="stylesheet" type="text/css" href="css/mine.css"/>
+		<style type="text/css">
+			.icon-zuji{
+				color: #bf4343;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<div class="top">
+				<span class="iconfont icon-biaoqing"></span>
+				<p>我的</p>
+				<span class="iconfont icon-sandian"></span>
+			</div>
+			
+			<div class="bodys">
+				<div class="me">
+
+				</div>
+				
+				<div class="lists">
+					<a href="shops.html">
+						<div class="p1">
+							店铺
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
+					<a href="choose.html">
+						<div class="p1">
+							精选
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
+					<a href="read.html">
+						<div class="p1">
+							阅读
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
+					<a href="myOrder.html">
+						<div class="p1">
+							我的订单
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
+					<a href="like.html">
+						<div class="p1">
+							我的喜欢
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="footer" style="border: 1px solid red;">
+			<!-- <figure>
+				<span class="iconfont icon-canyin"></span>
+				<figcaption>首页</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont icon-canyinxitong-"></span>
+				<figcaption>约食</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont icon-gouwuche"></span>
+				<figcaption>购物车</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont icon-zuji"></span>
+				<figcaption style="color: #bf4343;">我的</figcaption>
+			</figure> -->
+		</div>
+	</body>
+</html>
+
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$.ajax({
+		url:'http://localhost:8080/parentsApi/showParentById',
+		dataType:"json",
+		type:"post",
+		data:{
+
+		},
+		success:function(res){
+			console.log(res)
+			var lists = '';
+
+			lists+="<div class=\"list\" onclick=\"myInfo("+res.data.parId+")\">"
+				lists+="<div id=\"tx\">"
+					lists+="<img src=\"/"+res.data.parPortrait+"\" >"
+				lists+="</div>"
+				lists+="<div id=\"name\">"
+						lists+="<span id=\"wm\">"+res.data.parName+"</span>"
+						lists+="<span id=\"jj\">简介："+res.data.parPhone+"</span>"
+				lists+="</div>"
+				lists+="<div id=\"jt\">"
+						lists+="<span class=\"iconfont icon-dibudaohanglan-\"></span>"
+				lists+="</div>"
+			lists+="</div>"
+
+			$(".me").empty();
+			$(".me").html(lists);
+
+		}
+	});
+	function myInfo(id){
+		window.location.href = "/tea/myInfo.html?id="+id;
+	}
+</script>
+
