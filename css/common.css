@@ -6,3 +6,35 @@ a{
 	text-decoration: none;
 	color: black;
 }
+/* -----------------------------底部导航---------------------------------- */
+.nav {
+	border-top: 1px solid #00d519;
+	width: 100%;
+	height: 3.6rem;
+	background: #00d519;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	position: fixed;
+	bottom: 0;
+}
+
+.nav figure {
+	width: 20%;
+	margin: auto;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.nav figure .iconfont {
+	font-size: 1.5rem;
+}
+
+.nav figure figcaption {
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 0.8rem;
+	color: #cdcdcd;
+}
