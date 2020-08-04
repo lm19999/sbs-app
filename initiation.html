@@ -38,6 +38,43 @@
 					}
 				}
 				
+				// 进入页面就查询数据
+				// 获取启蒙类型查询对应的数据
+				var type = $('.current').attr("value")
+				$('.list').empty();
+				$.ajax({
+					type: 'POST',
+					url: 'http://localhost:8080/api/selectAllInitiationByType',
+					data: {
+						initiationTypeId:type
+					},
+					dataType: "json",
+					success: function (data) {
+						console.log(data)
+						var html = "";
+						if(data.code=="300"){
+							$('.list').append("暂无数据");
+						}else{
+							for(var i = 0;i<data.data.length;i++){
+									html+=`
+									<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">
+										<div class="listLeft">
+											<img src="${data.data[i].initiationImg}" />
+										</div>
+										<div class="listRight">
+											<figure>
+												${data.data[i].initiationUrl.initiationUrlName}
+												<figcaption></figcaption>
+											</figure>
+										</div>
+									</div></a>
+									`
+							}
+							$('.list').append(html)
+						}
+					}
+				})
+				
 				//音频
 				//<video src="${data.data[i].initiationUrl.initiationUrl}" width="100%" controls="controls">您的浏览器不支持此种视频格式。</video>
 				//视频
