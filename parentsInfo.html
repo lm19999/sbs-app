@@ -7,6 +7,12 @@
 		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
 		<link rel="stylesheet" type="text/css" href="css/parentsInfo.css"/>
 		<script type="text/javascript">
+			
+			function getParents(){
+				var parents = localStorage.getItem("parentLogin");
+				return JSON.parse(parents);
+			}
+			
 			function getQueryStrings() {
 				var url = location.search; //获取url中"?"符后的字串
 				var theRequest = new Object();
@@ -52,28 +58,31 @@
             data:{
                 parId:parId
             },
+			xhrFields:{
+				withCredentials: true,
+			},
             success:function(res){
                 var lists = '';
-				console.log(res)
+
 				lists += `
 					<div id="info" onclick="parentsChangeTx()">
 						<span id="items">头像</span>
 						<div id="imgs">
-							<img src="`+res.data.parPortrait+`" >
+							<img src="`+getParents().parPortrait+`" >
 						</div>
 					</div>
 					
 					<div id="info" onclick="parentsChangeName()">
 						<span id="items">用户名</span>
 						<div id="text">
-							<p>`+res.data.parName+`</p>
+							<p>`+getParents().parName+`</p>
 						</div>
 					</div>
 					
 					<div id="info" onclick="parentsChangePhone()">
 						<span id="items">电话</span>
 						<div id="text">
-							<p>`+res.data.parPhone+`</p>
+							<p>`+getParents().parPhone+`</p>
 						</div>
 					</div>
 				`

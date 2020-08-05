@@ -7,6 +7,12 @@
 		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
 		<link rel="stylesheet" type="text/css" href="css/parentsInfo.css"/>
 		<script type="text/javascript">
+			
+			function getTeacher(){
+				var teacher = localStorage.getItem("teacherLogin");
+				return JSON.parse(teacher);
+			}
+			
 			function getQueryStrings() {
 				var url = location.search; //获取url中"?"符后的字串
 				var theRequest = new Object();
@@ -57,21 +63,21 @@
     				<div id="info" onclick="teacherChangeTx()">
     					<span id="items">头像</span>
     					<div id="imgs">
-    						<img src="`+res.data.teaPortrait+`" >
+    						<img src="`+getTeacher().teaPortrait+`" >
     					</div>
     				</div>
     				
     				<div id="info" onclick="teacherChangeName()">
     					<span id="items">姓名</span>
     					<div id="text">
-    						<p>`+res.data.teaName+`</p>
+    						<p>`+getTeacher().teaName+`</p>
     					</div>
     				</div>
     				
     				<div id="info">
     					<span id="items">教师工号</span>
     					<div id="text">
-    						<p>`+res.data.teaNo+`</p>
+    						<p>`+getTeacher().teaNo+`</p>
     					</div>
     				</div>
     			`

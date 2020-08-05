@@ -71,6 +71,11 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	function getTeacher(){
+		var teacher = localStorage.getItem("teacherLogin");
+		return JSON.parse(teacher);
+	}
+	
 	$.ajax({
 		url:'http://localhost:8080/teacherApi/showTeacherById',
 		dataType:"json",
@@ -82,11 +87,11 @@
 			lists += `
 				<div class="list">
 					<div id="tx">
-						<img src="`+res.data.teaPortrait+`" >
+						<img src="`+getTeacher().teaPortrait+`" >
 					</div>
 					<div id="name">
-						<span id="wm" style="color:red;">`+res.data.teaName+`</span>
-						<span id="jj" style="color:red;">教师工号：`+res.data.teaNo+`</span>
+						<span id="wm" style="color:red;">`+getTeacher().teaName+`</span>
+						<span id="jj" style="color:red;">教师工号：`+getTeacher().teaNo+`</span>
 					</div>
 				</div> 
 			`
