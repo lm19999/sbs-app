@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>班级页面</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	</head>
+	<body>
+		<!-- 扫一扫测试 -->
+		
+		<!-- <li id="barcode.html" onclick="clicked(this.id, 'Barcode')">
+			<span class="item">Barcode
+				<div class="chs">二维码扫描</div>
+			</span>
+		</li> -->
+		
+		
+		<!--创建群聊--老师的功能  -->
+		<!-- 后台自动创建一个班级号，班级二维码 -->
+		<div class="create" onclick="create()">创建一个群聊</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function create(){
+		window.location.href = "createClass.html"
+	}
+</script>

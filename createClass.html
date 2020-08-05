@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>创建班级群聊</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/createClass.css"/>
+	</head>
+	<body>
+		<div class="back"><a onclick="go()">返回</a></div>
+		<form class="form">
+			<input type="text" class="className" placeholder="请输入班级名称" />
+			<input type="file" class="file" id="file" placeholder="请选择班级头像" />
+		</form>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function go()
+	{
+	 window.history.go(-1);
+	}
+</script>
