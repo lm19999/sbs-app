@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
+		<link rel="stylesheet" type="text/css" href="css/parentsInfo.css"/>
+		<script type="text/javascript">
+			function getQueryStrings() {
+				var url = location.search; //获取url中"?"符后的字串
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i ++) {
+						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = getQueryStrings();
+			var teaNo = Request['teaNo'];
+		</script>
+	</head>
+	<body>
+		<div class="top">
+			<span class="iconfont icon-biaoqing"></span>
+			<p>个人资料</p>
+			<span class="iconfont icon-sandian"></span>
+		</div>
+		<div class="bodys">
+			<div class="me">
+			</div>
+		</div>
+	</body>
+</html>
+
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    /* $('.icon-biaoqing').click(function(){
+        window.location.href = "mine.html";
+    }) */
+    $(function(){
+        $.ajax({
+            url:'http://localhost:8080/teacherApi/showTeacherById',
+            dataType:"json",
+            type:"post",
+            data:{
+                teaNo:teaNo
+            },
+            success:function(res){
+                var lists = '';
+    			console.log(res)
+    			lists += `
+    				<div id="info" onclick="teacherChangeTx()">
+    					<span id="items">头像</span>
+    					<div id="imgs">
+    						<img src="`+res.data.teaPortrait+`" >
+    					</div>
+    				</div>
+    				
+    				<div id="info" onclick="teacherChangeName()">
+    					<span id="items">姓名</span>
+    					<div id="text">
+    						<p>`+res.data.teaName+`</p>
+    					</div>
+    				</div>
+    				
+    				<div id="info">
+    					<span id="items">教师工号</span>
+    					<div id="text">
+    						<p>`+res.data.teaNo+`</p>
+    					</div>
+    				</div>
+    			`
+                $(".me").empty();
+                $(".me").html(lists);
+                }
+        })
+    });
+    
+    function teacherChangeTx(){
+        window.location.href = "teacherChangeTx.html";
+    }
+    function teacherChangeName(){
+        window.location.href = "teacherChangeName.html";
+    }
+    
+</script>

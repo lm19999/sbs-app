@@ -25,37 +25,24 @@
 				</div>
 				
 				<div class="lists">
-					<a href="shops.html">
-						<div class="p1">
-							店铺
-							<span class="iconfont icon-dibudaohanglan-"></span>
-						</div>
-					</a>
-					<a href="choose.html">
-						<div class="p1">
-							精选
-							<span class="iconfont icon-dibudaohanglan-"></span>
-						</div>
-					</a>
-					<a href="read.html">
-						<div class="p1">
-							阅读
-							<span class="iconfont icon-dibudaohanglan-"></span>
-						</div>
-					</a>
-					<a href="myOrder.html">
-						<div class="p1">
-							我的订单
+					<a href="parentsInfo.html">
+						<div class="p1" >
+							基本资料
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
 					<a href="like.html">
 						<div class="p1">
-							我的喜欢
+							我的点赞
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
-					
+					<a href="like.html">
+						<div class="p1">
+							关于我们
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -87,33 +74,28 @@
 		url:'http://localhost:8080/parentsApi/showParentById',
 		dataType:"json",
 		type:"post",
-		data:{
-
-		},
+		data:{},
 		success:function(res){
 			console.log(res)
 			var lists = '';
-
-			lists+="<div class=\"list\" onclick=\"myInfo("+res.data.parId+")\">"
-				lists+="<div id=\"tx\">"
-					lists+="<img src=\"/"+res.data.parPortrait+"\" >"
-				lists+="</div>"
-				lists+="<div id=\"name\">"
-						lists+="<span id=\"wm\">"+res.data.parName+"</span>"
-						lists+="<span id=\"jj\">简介："+res.data.parPhone+"</span>"
-				lists+="</div>"
-				lists+="<div id=\"jt\">"
-						lists+="<span class=\"iconfont icon-dibudaohanglan-\"></span>"
-				lists+="</div>"
-			lists+="</div>"
-
+			lists += `
+				<div class="list">
+					<div id="tx">
+						<img src="`+res.data.parPortrait+`" >
+					</div>
+					<div id="name">
+						<span id="wm">`+res.data.parName+`</span>
+						<span id="jj">电话：`+res.data.parPhone+`</span>
+					</div>
+				</div> 
+			`
 			$(".me").empty();
 			$(".me").html(lists);
-
 		}
 	});
-	function myInfo(id){
-		window.location.href = "/tea/myInfo.html?id="+id;
-	}
+	/* function parentsInfo(parId){
+		console.log(parId)
+		window.location.href = "parentsInfo.html?parId="+parId;
+	} */
 </script>
 

@@ -1,0 +1,31 @@
+#changeName{
+	border-bottom: 0.1rem dashed #B49370;
+	width: 89%;
+	height: 3rem;
+	margin: 1rem auto;
+	font-size: 1.2rem;
+	line-height: 3rem;
+	color: #E49090;
+}
+#changeName input{
+	width: 70%;
+	border: none;
+	outline: none;
+	font-size: 1.2rem;
+	color: #E49090;
+}
+#ok{
+	width: 30%;
+	margin: 3rem auto;
+}
+#ok button{
+	width: 100%;
+	height: 2rem;
+	font-size: 1rem;
+	text-align: center;
+	border-radius: 0.6rem;
+	outline: none;
+	background: #f6e0d6;
+	border: none;
+	color: #e49090;
+}

@@ -1,0 +1,91 @@
+/* ==================top================== */
+.top{
+	width: 100%;
+	text-align: center;
+	font-size: 1.2rem;
+	height: 2.3rem;
+	line-height: 2.3rem;
+	background: #eeeeee;
+	color: #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.top p{
+	margin-top: -2.5rem;
+}
+.top .icon-biaoqing{
+	font-size: 1.5rem;
+	margin-left: -18rem;
+}
+/* ===================bodys===================== */
+.bodys{
+	width: 100%;
+	height: 80%;
+	position: absolute;
+	overflow-y: scroll;
+	top: 2.3rem;
+	left: 0;
+	overflow: auto;
+}
+.bodys #textarea textarea{
+	display: block;
+	width: 90%;
+	margin: 1rem auto;
+	height: 10rem;
+	outline: none;
+	border: 0.0625rem solid #f6e0d6;
+}
+/* ====================upload=================== */
+.bodys .upload #frame{
+	display: block;
+	width: 100%;
+}
+.bodys .upload input{
+	display: block;
+	width: 90%;
+	margin: 2rem auto;
+}
+.bodys .upload .icon-tianjiatupian{
+	display: block;
+	font-size: 4rem;
+	margin: auto;
+	color: #e49090;
+	margin-top: -5rem;
+	margin-left: 0.8rem;
+}
+.upload #frame p{
+	/* border: 0.0625rem solid red; */
+	width: 31%;
+	display: block;
+	/* margin-top: 2rem; */
+	margin-left: 1rem;
+	font-size: 0.6rem;
+	right: 0;
+	color: #838182;
+}
+#previewImg{
+	/* border: 0.0625rem solid red; */
+
+	width: 90%;
+	margin: auto;
+	margin-top: -4rem;
+}
+.bodys #share{
+	margin-top: 5rem;
+}
+.bodys #share button{
+	display: block;
+	width: 70%;
+	height: 3rem;
+	margin: auto;
+	/* margin-top: rem; */
+	font-size: 1.4rem;
+	text-align: center;
+	border-radius: 1rem;
+	outline: none;
+	background: #f6e0d6;
+	border: none;
+	color: #e49090;
+}
