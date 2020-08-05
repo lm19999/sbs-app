@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>修改姓名</title>
+		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
+		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+		<script type="text/javascript">
+			function getQueryStrings() {
+				var url = location.search; //获取url中"?"符后的字串
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i ++) {
+						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = getQueryStrings();
+			var teaNo = Request['teaNo'];
+		</script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="top">
+				<span class="iconfont icon-biaoqing"></span>
+				<p>修改姓名</p>
+			</div>
+			<div class="bodys">
+				<div id="changeName">
+					姓名：
+					<input type="text"  name="teaName" id="teaName" />
+				</div>
+				<div id="ok">
+					<button onclick="changeTeaName()">保&nbsp;&nbsp;&nbsp;存</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	/* $(function(){
+	    $.ajax({
+	        url:'http://localhost:8080/teacherApi/showTeacherById',
+	        dataType:"json",
+	        type:"post",
+	        data:{
+	            teaNo:teaNo
+	        },
+	        success:function(res){
+	            var lists = '';
+				console.log(res)
+				lists += `
+				
+				
+					<div id="info">
+						<span id="items">姓名</span>
+						<div id="text">
+							<p>`+res.data.teaName+`</p>
+						</div>
+					</div>
+				`
+	            $(".me").empty();
+	            $(".me").html(lists);
+	            }
+	    })
+	}); */
+	
+	function changeTeaName(){
+		var teaName = $("#teaName").val();
+		if(teaName != null){
+			$.ajax({
+				url:'http://localhost:8080/teacherApi/teacherChangeName',
+				dataType:"json",
+				type:"post",
+				data:{
+					teaName:teaName
+				},
+				success:function(res){
+					alert("名称修改成功");
+					window.location.href = "teacherInfo.html";
+				}
+			})
+		}
+	}
+	$(".icon-biaoqing").click(function(){
+		window.location.href = "teacherInfo.html";
+	})
+</script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>修改名称</title>
+		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
+		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+	</head>
+	<body>
+		<div class="header">
+			<div class="top">
+				<span class="iconfont icon-biaoqing"></span>
+				<p>修改名称</p>
+			</div>
+			<div class="bodys">
+				<div id="changeName">
+					名称：
+					<input type="text" name="parName" id="parName" />
+				</div>
+				<div id="ok">
+					<button onclick="changeParName()">保&nbsp;&nbsp;&nbsp;存</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function changeParName(){
+		var parName = $("#parName").val();
+		if(parName != null){
+			$.ajax({
+				url:'http://localhost:8080/parentsApi/parentsChangeName',
+				dataType:"json",
+				type:"post",
+				data:{
+					parName:parName
+				},
+				success:function(res){
+					alert("名称修改成功");
+					window.location.href = "parentsInfo.html";
+				}
+			})
+		}
+	}
+	$(".icon-biaoqing").click(function(){
+		window.location.href = "parentsInfo.html";
+	})
+</script>

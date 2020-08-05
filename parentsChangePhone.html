@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>修改电话</title>
+		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
+		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+	</head>
+	<body>
+		<div class="header">
+			<div class="top">
+				<span class="iconfont icon-biaoqing"></span>
+				<p>修改电话</p>
+			</div>
+			<div class="bodys">
+				<div id="changeName">
+					电话：
+					<input type="text" name="parPhone" id="parPhone" />
+				</div>
+				<div id="ok">
+					<button onclick="changeParPhone()">保&nbsp;&nbsp;&nbsp;存</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function changeParPhone(){
+		var parPhone = $("#parPhone").val();
+		if(parPhone != null){
+			$.ajax({
+				url:'http://localhost:8080/parentsApi/parentsChangePhone',
+				dataType:"json",
+				type:"post",
+				data:{
+					parPhone:parPhone
+				},
+				success:function(res){
+					alert("电话修改成功");
+					window.location.href = "parentsInfo.html";
+				}
+			})
+		}
+	}
+	$(".icon-biaoqing").click(function(){
+		window.location.href = "parentsInfo.html";
+	})
+</script>
