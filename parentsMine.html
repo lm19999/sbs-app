@@ -70,22 +70,35 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	
+	function getParents(){
+		var parents = localStorage.getItem("parentLogin");
+		return JSON.parse(parents);
+	}
+
 	$.ajax({
+		xhrFields:{
+			withCredentials: true,
+		},
+		crossDomain: true,
 		url:'http://localhost:8080/parentsApi/showParentById',
 		dataType:"json",
 		type:"post",
-		data:{},
+		data:{
+			
+		},
 		success:function(res){
 			console.log(res)
+			console.log(getParents())
 			var lists = '';
 			lists += `
 				<div class="list">
 					<div id="tx">
-						<img src="`+res.data.parPortrait+`" >
+						<img src="`+getParents().parPortrait+`" >
 					</div>
 					<div id="name">
-						<span id="wm">`+res.data.parName+`</span>
-						<span id="jj">电话：`+res.data.parPhone+`</span>
+						<span id="wm">`+getParents().parName+`</span>
+						<span id="jj">电话：`+getParents().parPhone+`</span>
 					</div>
 				</div> 
 			`

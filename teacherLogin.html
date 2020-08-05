@@ -44,7 +44,7 @@
 				},
 				success : function(result){
 					if(result != null){
-						localStorage.setItem("teacherLogin",JSON.stringify(result));
+						localStorage.setItem("teacherLogin",JSON.stringify(result.data));
 						window.location.href = "teacherMine.html";
 					}
 				},
