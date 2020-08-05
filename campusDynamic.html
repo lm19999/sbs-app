@@ -16,6 +16,9 @@
 		</div>
 		<div class="dynamicList">
 			
+		</div><div class="comments" style="display: none;">
+			<input type="text" name="" id="" class="commentsContent" />
+			<button type="button" class="btn">发送</button>
 		</div>
 		<div class="nav">
 			<figure>
@@ -84,14 +87,42 @@
 							$('.dynamicList').append("暂无数据");
 						}else{
 							for(var dynamicList of res.data){
-								$(".dynamicList").append(
-									`
-										<div class="dynamicSon">
-											<span id="gd">${dynamicList.campusDynamicName}</span>
-											<span class="iconfont iconyoushuangjiantou-copy">></span>
-										</div>
-									`
-								);
+								$.ajax({
+									type: 'POST',
+									url: 'http://localhost:8080/api/campusDynamic/getPictureUrl',
+									data: {
+										campusDynamicDescribe: dynamicList.campusDynamicDescribe
+									},
+									dataType: "json",
+									async:false,
+									success: function (res) {
+										console.log(res.data);
+										$(".dynamicList").append(
+											`
+												<div class="dynamicSon">
+													<img src="${res.data}" onclick="toDetails(${dynamicList.campusDynamicId})" />
+													<div class="mm">
+														<span onclick="toDetails(${dynamicList.campusDynamicId})">
+															${dynamicList.campusDynamicName}
+														</span>
+														<div class="interactbody">
+														    <div class="bo">
+														        <span class="iconfont icondianzan1-copy red ${dynamicList.campusDynamicId}1" onclick='obtainDynamic(${dynamicList.campusDynamicId})'></span>
+														        <span class="font yesFont ${dynamicList.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;</span>
+														    </div>
+														    <div class="bt">
+														        <span class="iconfont iconpinglun1-copy ${dynamicList.campusDynamicId}2" onclick='obtainPingLun(${dynamicList.campusDynamicId})'></span>
+														        <span class="fontLun ${dynamicList.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;</span>
+														    </div>
+														</div>
+														<div class="comContent ${dynamicList.campusDynamicId}3"></div>
+													</div>
+												</div>
+											`
+										);
+									}
+								});
+								
 							}
 							
 						}
@@ -117,6 +148,7 @@
 								campusDynamicTypeId: typeId
 							},
 							dataType: "json",
+							async:false,
 							success: function (res) {
 								console.log(res);
 								var html = "";
@@ -124,14 +156,43 @@
 									$('.dynamicList').append("暂无数据");
 								}else{
 									for(var dynamicList of res.data){
-										$(".dynamicList").append(
-											`
-												<div class="dynamicSon">
-													<span id="gd">${dynamicList.campusDynamicName}</span>
-													<span class="iconfont iconyoushuangjiantou-copy">></span>
-												</div>
-											`
-										);
+										console.log(dynamicList.campusDynamicDescribe)
+										
+										$.ajax({
+											type: 'POST',
+											url: 'http://localhost:8080/api/campusDynamic/getPictureUrl',
+											data: {
+												campusDynamicDescribe: dynamicList.campusDynamicDescribe
+											},
+											dataType: "json",
+											async:false,
+											success: function (res) {
+												console.log(res.data);
+												$(".dynamicList").append(
+													`
+														<div class="dynamicSon">
+															<img src="${res.data}" onclick="toDetails(${dynamicList.campusDynamicId})" />
+															<div class="mm">
+																<span id="gd" onclick="toDetails(${dynamicList.campusDynamicId})">
+																	${dynamicList.campusDynamicName}
+																</span>
+																<div class="interactbody">
+																    <div class="bo">
+																        <span class="iconfont icondianzan1-copy red ${dynamicList.campusDynamicId}1" onclick='obtainDynamic(${dynamicList.campusDynamicId})'></span>
+																        <span class="font yesFont ${dynamicList.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;</span>
+																    </div>
+																    <div class="bt">
+																        <span class="iconfont iconpinglun1-copy ${dynamicList.campusDynamicId}2" onclick='obtainPingLun(${dynamicList.campusDynamicId})'></span>
+																        <span class="fontLun ${dynamicList.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;</span>
+																    </div>
+																</div>
+																<div class="comContent ${dynamicList.campusDynamicId}3"></div>
+															</div>
+														</div>
+													`
+												);
+											}
+										});										
 									}
 									
 								}
@@ -142,4 +203,15 @@
 			}
 		})
 	});
+	function toDetails(campusDynamicId){
+		window.location.href="campusDynamicDetails.html?campusDynamicId="+campusDynamicId;
+	}
+	function getParData() {
+	    var storage = localStorage.getItem("parentLogin");
+	    return JSON.parse(storage);
+	}
+	function getTeaData() {
+	    var storage = localStorage.getItem("teacherLogin");
+	    return JSON.parse(storage);
+	}
 </script>
