@@ -4,6 +4,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8">
 		<title>我的</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/mine.css"/>
 		<style type="text/css">
 			.icon-zuji{
@@ -37,7 +38,13 @@
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
-					<a href="like.html">
+					<a href="tel:10086">
+						<div class="p1 callPhone">
+							联系我们
+							<span class="iconfont icon-dibudaohanglan-"></span>
+						</div>
+					</a>
+					<a href="aboutUs.html">
 						<div class="p1">
 							关于我们
 							<span class="iconfont icon-dibudaohanglan-"></span>
@@ -71,16 +78,16 @@
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	
+	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
+	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+	});
+		
 	function getParents(){
 		var parents = localStorage.getItem("parentLogin");
 		return JSON.parse(parents);
 	}
 
 	$.ajax({
-		xhrFields:{
-			withCredentials: true,
-		},
-		crossDomain: true,
 		url:'http://localhost:8080/parentsApi/showParentById',
 		dataType:"json",
 		type:"post",

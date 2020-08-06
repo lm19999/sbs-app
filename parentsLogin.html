@@ -26,6 +26,11 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	
+	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
+	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+	});
+	
 	function login(){
 		var parPhone = $("#parPhone").val();
 		var parPwd = $("#parPwd").val();
@@ -42,10 +47,6 @@
 					parPhone:parPhone,
 					parPwd:parPwd
 				},
-				xhrFields:{
-					withCredentials: true,
-				},
-				crossDomain: true,
 				success : function(result){
 					console.log(result.data)
 					if(result.msg == "success"){
