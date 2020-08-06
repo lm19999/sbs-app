@@ -21,6 +21,13 @@
 			
 			<button id="submit_btn" type="button">提交</button>
 		</form>
+		
+		<!-- 遮罩层提示框 -->
+		<div id="fullbg"></div> 
+		<div id="dialog"> 
+			<p class="close"><a href="#" onclick="closeBg();">关闭</a></p> 
+			<div id="val"></div> 
+		</div> 
 	</body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
@@ -52,7 +59,7 @@
 			var file_suffix = fileName.substr(fileName.length-3);
 			var fileMaxSize = 1024;
 			if(className == null || className == ""){
-				alert("姓名不能为空");
+				showBg("请输入班级名称");
 				return;
 			}
 			if(fileName != null && fileName != ""){
@@ -114,4 +121,23 @@
 		console.log(url);
 	    return url ;
 	}
+	
+	
+	//显示灰色 jQuery 遮罩层 
+	function showBg(text) { 
+	var bh = $("body").height(); 
+	var bw = $("body").width(); 
+	$("#fullbg").css({ 
+	height:bh, 
+	width:bw, 
+	display:"block" 
+	}); 
+	$('#val').empty()
+	$('#val').append(text)
+	$("#dialog").show(); 
+	} 
+	//关闭灰色 jQuery 遮罩 
+	function closeBg() { 
+	$("#fullbg,#dialog").hide(); 
+	} 
 </script>
