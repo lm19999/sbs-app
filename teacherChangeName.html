@@ -46,32 +46,20 @@
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	
-	/* $(function(){
+	$(function(){
 	    $.ajax({
-	        url:'http://localhost:8080/teacherApi/showTeacherById',
+	        url:'http://localhost:8080/teacher/searchTeacherByTno',
 	        dataType:"json",
 	        type:"post",
 	        data:{
 	            teaNo:teaNo
 	        },
 	        success:function(res){
-	            var lists = '';
 				console.log(res)
-				lists += `
-				
-				
-					<div id="info">
-						<span id="items">姓名</span>
-						<div id="text">
-							<p>`+res.data.teaName+`</p>
-						</div>
-					</div>
-				`
-	            $(".me").empty();
-	            $(".me").html(lists);
-	            }
+				$('#teaName').val(res.data.teaName)
+	        }
 	    })
-	}); */
+	});
 	
 	function changeTeaName(){
 		var teaName = $("#teaName").val();
@@ -81,11 +69,26 @@
 				dataType:"json",
 				type:"post",
 				data:{
+					teaNo:teaNo,
 					teaName:teaName
 				},
 				success:function(res){
 					alert("名称修改成功");
-					window.location.href = "teacherInfo.html";
+					console.log(res)
+					console.log(teaName)
+					$.ajax({
+					    url:'http://localhost:8080/teacher/searchTeacherByTno',
+					    dataType:"json",
+					    type:"post",
+					    data:{
+					        teaNo:teaNo
+					    },
+					    success:function(res){
+							console.log(res)
+							localStorage.setItem("teacherLogin",JSON.stringify(res.data));
+							window.location.href = "teacherInfo.html";
+					    }
+					})
 				}
 			})
 		}

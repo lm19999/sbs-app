@@ -58,9 +58,6 @@
             data:{
                 parId:parId
             },
-			xhrFields:{
-				withCredentials: true,
-			},
             success:function(res){
                 var lists = '';
 
@@ -94,12 +91,12 @@
     });
 
     function parentsChangeTx(){
-        window.location.href = "parentsChangeTx.html";
+        window.location.href = "parentsChangeTx.html?parId="+getParents().parId;
     }
     function parentsChangeName(){
         window.location.href = "parentsChangeName.html?parId="+getParents().parId;
     }
     function parentsChangePhone(){
-        window.location.href = "parentsChangePhone.html";
+        window.location.href = "parentsChangePhone.html?parId="+getParents().parId;
     }
 </script>

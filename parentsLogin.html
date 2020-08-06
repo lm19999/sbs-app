@@ -46,11 +46,40 @@
 					parPhone:parPhone,
 					parPwd:parPwd
 				},
-				success : function(result){
-					console.log(result.data)
-					if(result.msg == "success"){
-						localStorage.setItem("parentLogin",JSON.stringify(result.data));
-						window.location.href = "parentsMine.html";
+				success : function(data){
+					console.log(data.data)
+					if(data.msg == "success"){
+						$.ajax({
+							url : 'http://localhost:8080/parentsApi/updateParentsStatus',
+							type : "post",
+							dataType : "json",
+							data:{
+								parId:data.data.parId
+							},
+							success : function(result){
+								console.log(result)
+								if(result.msg == "success"){
+									console.log("正处于登录状态")
+								
+									$.ajax({
+										url : 'http://localhost:8080/parents/searchParentsById',
+										type : "post",
+										dataType : "json",
+										data:{
+											parId:data.data.parId
+										},
+										success : function(res){
+											console.log(res)
+											if(res.msg == "success"){
+												localStorage.setItem("parentLogin",JSON.stringify(res.data));
+												window.location.href = "parentsMine.html";
+											}
+										},
+									})
+								}
+							},
+						})
+						
 					}
 				},
 				error:function(result){
@@ -59,6 +88,7 @@
 			});
 		}
 	};
+	
 	
 	function changePwd(){
 		window.location.href = "changePwd.html";

@@ -6,6 +6,23 @@
 		<title>更换头像</title>
 		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
 		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+		<script type="text/javascript">
+			function getQueryStrings() {
+				var url = location.search; //获取url中"?"符后的字串
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i ++) {
+						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = getQueryStrings();
+			var teaNo = Request['teaNo'];
+		</script>
 	</head>
 	<body>
 		<div class="header">
@@ -124,6 +141,7 @@
         var formData = new FormData();
         var teacherTx = $("#upLoads").get(0).files[0];
         formData.append("teacherTx", teacherTx);
+		formData.append("teaNo", teaNo);
         $.ajax({
             url:'http://localhost:8080/teacherApi/teacherChangeTx',
             dataType:"json",
@@ -136,7 +154,19 @@
             success:function(data){
                 if (data != null) {
                     alert("修改成功");
-                    window.location.href = "teacherInfo.html";
+                    $.ajax({
+                        url:'http://localhost:8080/teacher/searchTeacherByTno',
+                        dataType:"json",
+                        type:"post",
+                        data:{
+                            teaNo:teaNo
+                        },
+                        success:function(res){
+                    		console.log(res)
+                    		localStorage.setItem("teacherLogin",JSON.stringify(res.data));
+                    		window.location.href = "teacherInfo.html";
+                        }
+                    })
                 }
             }
         })

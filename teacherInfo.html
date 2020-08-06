@@ -77,7 +77,7 @@
     				<div id="info">
     					<span id="items">教师工号</span>
     					<div id="text">
-    						<p>`+getTeacher().teaNo+`</p>
+    						<p style="disabled">`+getTeacher().teaNo+`</p>
     					</div>
     				</div>
     			`
@@ -88,10 +88,10 @@
     });
     
     function teacherChangeTx(){
-        window.location.href = "teacherChangeTx.html";
+        window.location.href = "teacherChangeTx.html?teaNo="+getTeacher().teaNo;
     }
     function teacherChangeName(){
-        window.location.href = "teacherChangeName.html";
+        window.location.href = "teacherChangeName.html?teaNo="+getTeacher().teaNo;
     }
     
 </script>

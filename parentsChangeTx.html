@@ -6,6 +6,23 @@
 		<title>更换头像</title>
 		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
 		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+		<script type="text/javascript">
+			function getQueryStrings() {
+				var url = location.search; //获取url中"?"符后的字串
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i ++) {
+						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = getQueryStrings();
+			var parId = Request['parId'];
+		</script>
 	</head>
 	<body>
 		<div class="header">
@@ -119,11 +136,13 @@
         }
     });
 </script>
+
 <script type="text/javascript">
     function parentsChangeTx(){
         var formData = new FormData();
         var parentsTx = $("#upLoads").get(0).files[0];
         formData.append("parentsTx", parentsTx);
+		formData.append("parId", parId);
         $.ajax({
             url:'http://localhost:8080/parentsApi/parentsChangeTx',
             dataType:"json",
@@ -134,9 +153,24 @@
             contentType: false, //不设置内容类型
             processData: false, //不处理数据
             success:function(data){
+				console.log(data)
                 if (data != null) {
                     alert("修改成功");
-                    window.location.href = "parentsInfo.html";
+                    $.ajax({
+                    	url : 'http://localhost:8080/parents/searchParentsById',
+                    	type : "post",
+                    	dataType : "json",
+                    	data:{
+                    		parId:parId
+                    	},
+                    	success : function(res){
+                    		console.log(res)
+                    		if(res.msg == "success"){
+                    			localStorage.setItem("parentLogin",JSON.stringify(res.data));
+                    			window.location.href = "parentsInfo.html";
+                    		}
+                    	},
+                    })
                 }
             }
         })
