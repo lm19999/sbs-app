@@ -17,6 +17,24 @@
     </script>
 </head>
 <body>
+	<div class="head">
+		首页
+	</div>
+	<div class="swiper-container">
+	    <div class="swiper-wrapper">
+	        
+	    </div>
+	<div class="swiper-pagination"></div>
+	</div>
+	<div class="dynamicTitle">
+		<div class="title">
+			<p><span class="iconfont iconredu"></span><span id="hua">热门动态</span></p>
+			<p><a href="campusDynamic.html"><span id="gd">更多</span><span class="iconfont iconyoushuangjiantou-copy"></span></a></p>
+		</div>
+	</div>
+	<div class="dynamicTopList">
+		
+	</div>
 	<div class="nav">
 		<figure>
 			<span class="iconfont iconshouye"></span>
@@ -28,11 +46,11 @@
 		</figure>
 		<figure>
 			<span class="iconfont iconshangcheng-copy"></span>
-			<figcaption>成长记录</figcaption>
+			<figcaption>班级</figcaption>
 		</figure>
 		<figure>
 			<span class="iconfont iconshangcheng-copy"></span>
-			<figcaption>动态</figcaption>
+			<figcaption>成长记录</figcaption>
 		</figure>
 		<figure>
 			<span class="iconfont iconweibiaoti--copy"></span>
@@ -40,12 +58,7 @@
 		</figure>
 	</div>
 	
-	<div class="swiper-container">
-	    <div class="swiper-wrapper">
-	        
-	    </div>
-	<div class="swiper-pagination"></div>
-	</div>
+	
 </body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
@@ -70,10 +83,32 @@
 				$('.swiper-wrapper').append(html);
 				$(window).resize(swiper())
 			}
+		});
+		$.ajax({
+			type: 'GET',
+			url: 'http://localhost:8080/api/campusDynamic/campusDynamicTop',
+			data: {},
+			dataType: "json",
+			success: function (res) {
+				$('.dynamicTopList').empty();
+				console.log(res);
+				for(var dynamic of res.data){
+					$('.dynamicTopList').append(
+						`
+							<div class="dynamicTopSon">
+								<span class="name" onclick="toDetails(${dynamic.campusDynamicId})">${dynamic.campusDynamicName}</span>
+								<span class="iconfont iconyoushuangjiantou-copy">></span>
+							</div>
+						`
+					)
+				}
+			}
 		})
 	})
-	
-	
+	// 跳转详情页
+	function toDetails(campusDynamicId){
+		window.location.href="campusDynamicDetails.html?campusDynamicId="+campusDynamicId;
+	}
 	function swiper(){
 		$('.swiper-slide').css('width' ,$(window).width());
 		var swiper = new Swiper('.swiper-container', {

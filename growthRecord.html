@@ -8,23 +8,23 @@
 		<link rel="stylesheet" type="text/css" href="css/growthRecord.css"/>
 	</head>
 	<body>
-		<div id="">
-			成长记录
+		<div class="head">
+			<p class="gr">成长记录</p>
+			<p class="next">bianji</p>
 		</div>
 		<!--导航栏部分HTML代码-->
+		
 		<nav id="nav">
 			<li class="act">成长记录</li>
 			<li>我的成长记录</li>
 		</nav>
 		<!--内容部分HTML代码-->
 		<div id="container" class="container">
-			<section class="tab" id="tabOne">
-				<div class="numone">
-				</div>
+			<section class="tab" id="tabOne" class="tabOneList">
+				
 			</section>
-			<section class="tab" id="tabTwo">
-				<div class="numtwo">
-				</div>
+			<section class="tab" id="tabTwo" class="tabTwoList">
+				
 			</section>
 		</div>
 		<div class="nav">
@@ -38,11 +38,11 @@
 			</figure>
 			<figure>
 				<span class="iconfont iconshangcheng-copy"></span>
-				<figcaption style="color: white;">成长记录</figcaption>
+				<figcaption>班级</figcaption>
 			</figure>
 			<figure>
 				<span class="iconfont iconshangcheng-copy"></span>
-				<figcaption>动态</figcaption>
+				<figcaption style="color: white;">成长记录</figcaption>
 			</figure>
 			<figure>
 				<span class="iconfont iconweibiaoti--copy"></span>
@@ -53,3 +53,51 @@
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/growthRecord.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			type: 'GET',
+			url: 'http://localhost:8080/api/growthRecord/growthRecordList',
+			data: {},
+			dataType: "json",
+			success: function (res) {
+				console.log(res)
+				for(var growthRecordList of res.data){
+					console.log(growthRecordList);
+					$('.tabOneList').append(
+						`
+							<div class="tabOneSon">
+								
+							</div>
+						`
+					);
+				}
+			}
+		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:8080/api/growthRecord/growthRecordList',
+			data: {
+				parId: getParData().parId
+			},
+			dataType: "json",
+			success: function (res) {
+				console.log(res)
+				for(var growthRecordList of res.data){
+					console.log(growthRecordList);
+					$('.tabTwoList').append(
+						`
+							<div class="tabTwoSon">
+								
+							</div>
+						`
+					);
+				}
+			}
+		})
+	});
+	function getParData() {
+	    var storage = localStorage.getItem("parentLogin");
+	    return JSON.parse(storage);
+	}
+</script>

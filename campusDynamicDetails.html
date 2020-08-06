@@ -25,11 +25,29 @@
 			.editormd-preview-container, .editormd-html-preview{
 				padding: 0;
 			}
+			.head{
+				width: 100%;
+				text-align: center;
+				align-content: center;
+				height: 2.6rem;
+				line-height: 2.6rem;
+				background: #007BFF;
+				display: flex;
+				flex-flow: row;
+				justify-content: space-around;
+			}
+			.return{
+				width: 10%;
+			}
+			.title{
+				width: 90%;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="head">
-			校园动态详情
+			<p class="return" onclick="go()"><</p>
+			<p class="title">校园动态详情</p>
 		</div>
 		<div class="content editormd-preview-theme" id="content">
 			
@@ -43,7 +61,10 @@
 <script src="editor/lib/prettify.min.js"></script>
 <script src="editor/editormd.min.js"></script>
 <script type="text/javascript">
-	
+	function go()
+	{
+		window.history.go(-1);
+	}
 	$(function(){
 		function GetRequest() {
 			var url = location.search; //获取url中"?"符后的字串

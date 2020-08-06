@@ -1,3 +1,20 @@
+.head{
+	width: 100%;
+	text-align: center;
+	align-content: center;
+	height: 2.6rem;
+	line-height: 2.6rem;
+	background: #007BFF;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+}
+.gr{
+	width: 85%;
+}
+.next{
+	width: 20%;
+}
 #nav{
 	width: 100%;
 	display: flex;
@@ -6,7 +23,7 @@
 }
 
 #nav li {
-	padding: 0.3125rem 1.25rem;
+	padding: 0.7rem 1.2rem;
 	font-size: 1rem;
 	list-style: none;
 }

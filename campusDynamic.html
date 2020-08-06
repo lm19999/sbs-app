@@ -9,7 +9,8 @@
 	</head>
 	<body>
 		<div class="head">
-			校园动态
+			<p class="return" onclick="go()"><</p>
+			<p class="title">校园动态</p>
 		</div>
 		<div class="navTab">
 			
@@ -20,33 +21,15 @@
 			<input type="text" name="" id="" class="commentsContent" />
 			<button type="button" class="btn">发送</button>
 		</div>
-		<div class="nav">
-			<figure>
-				<span class="iconfont iconshouye"></span>
-				<figcaption>首页</figcaption>
-			</figure>
-			<figure>
-				<span class="iconfont iconshangcheng-copy"></span>
-				<figcaption>启蒙</figcaption>
-			</figure>
-			<figure>
-				<span class="iconfont iconshangcheng-copy"></span>
-				<figcaption>成长记录</figcaption>
-			</figure>
-			<figure>
-				<span class="iconfont iconshangcheng-copy"></span>
-				<figcaption style="color: white;">动态</figcaption>
-			</figure>
-			<figure>
-				<span class="iconfont iconweibiaoti--copy"></span>
-				<figcaption>我的</figcaption>
-			</figure>
-		</div>
 	</body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	function go()
+	{
+		window.history.go(-1);
+	}
 	$(function(){
 		$.ajax({
 			type: 'GET',

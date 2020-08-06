@@ -1,3 +1,20 @@
+.head{
+	width: 100%;
+	text-align: center;
+	align-content: center;
+	height: 2.6rem;
+	line-height: 2.6rem;
+	background: #007BFF;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+}
+.return{
+	width: 10%;
+}
+.title{
+	width: 90%;
+}
 .navTab {
 	width: 100%;
 	display: flex;
