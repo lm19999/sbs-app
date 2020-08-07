@@ -10,9 +10,24 @@
 	<body>
 		<div class="back"><a onclick="go()">返回</a></div>
 		<form class="form">
-			<input type="text" class="className" placeholder="请输入班级名称" />
-			<input type="file" class="file" id="file" placeholder="请选择班级头像" />
+			<input type="text" name="className" class="className" placeholder="请输入班级名称" />
+			<figure class="touxiang">
+				<span>上传图片</span>
+				<figcaption>
+					<img id="headPic" src="img/upload.png" width="45%" height="45%" >
+					<input type="file" id="upload" name="file" accept="image/*" type="file" style="display: none"/>
+				</figcaption>
+			</figure>
+			
+			<button id="submit_btn" type="button">提交</button>
 		</form>
+		
+		<!-- 遮罩层提示框 -->
+		<div id="fullbg"></div> 
+		<div id="dialog"> 
+			<p class="close"><a href="#" onclick="closeBg();">关闭</a></p> 
+			<div id="val"></div> 
+		</div> 
 	</body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
@@ -21,4 +36,108 @@
 	{
 	 window.history.go(-1);
 	}
+	
+	
+	$(function() {
+		var teacher = JSON.parse(localStorage.getItem("teacherLogin"));
+	    //头像预览
+	    $("#headPic").click(function () {
+			// $(#headpic)
+	        $("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+	        $("#upload").on("change",function(){
+	            var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+	            if (objUrl) {
+	                $("#headPic").attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+	            }
+	        });
+	    });
+	
+	     //图片上传
+	    $("#submit_btn").click(function () {
+			var className = $('.className').val();
+			var fileName = document.getElementById("upload").value;
+			var file_suffix = fileName.substr(fileName.length-3);
+			var fileMaxSize = 1024;
+			if(className == null || className == ""){
+				showBg("请输入班级名称");
+				return;
+			}
+			if(fileName != null && fileName != ""){
+				var size = document.getElementById('upload').files[0].size/(1024*1024);
+				if(file_suffix != "jpg" && file_suffix != "png" && file_suffix != "JPG" && file_suffix != "PNG"){
+					alert("您上传的文件类型不被允许，请重传，只允许上传图片文件");
+					return;
+				}
+				
+				if (size > fileMaxSize) {
+					alert("文件大小不能大于1M！");
+					file.value = "";
+					return false;
+				}
+				if (size <= 0) {
+					alert("文件大小不能为0M！");
+					file.value = "";
+					return false;
+				}
+			}
+	
+	
+			var formdate = new FormData();
+			var img_file=document.getElementById("upload");//文件
+			console.log(img_file);
+			
+			var fileObj = img_file.files[0];
+			console.log(fileObj);
+			formdate.append("file",fileObj);
+			formdate.append("className",className);
+			formdate.append("teaNo",teacher.teaNo);
+			$.ajax({
+				type:"post",//HTTP请求类型
+				url:"http://localhost:8080/api/insertCreateClass",
+				data:formdate,
+				processData: false,
+				contentType : false,
+				dataType:'json',//服务器返回json格式数据
+				success:function(data){
+					console.log(data);
+					// 创建好班级后跳转到自己所有创建的班级目录
+				}
+			});
+	    });
+	
+	});
+	
+	//建立一個可存取到該file的url
+	function getObjectURL(file) {
+		console.log(file);
+	    var url = null ;
+	    if (window.createObjectURL!=undefined) { // basic
+	        url = window.createObjectURL(file) ;
+	    } else if (window.URL!=undefined) { // mozilla(firefox)
+	        url = window.URL.createObjectURL(file) ;
+	    } else if (window.webkitURL!=undefined) { // webkit or chrome
+	        url = window.webkitURL.createObjectURL(file) ;
+	    }
+		console.log(url);
+	    return url ;
+	}
+	
+	
+	//显示灰色 jQuery 遮罩层 
+	function showBg(text) { 
+	var bh = $("body").height(); 
+	var bw = $("body").width(); 
+	$("#fullbg").css({ 
+	height:bh, 
+	width:bw, 
+	display:"block" 
+	}); 
+	$('#val').empty()
+	$('#val').append(text)
+	$("#dialog").show(); 
+	} 
+	//关闭灰色 jQuery 遮罩 
+	function closeBg() { 
+	$("#fullbg,#dialog").hide(); 
+	} 
 </script>

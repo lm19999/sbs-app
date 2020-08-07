@@ -1,13 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-		<meta name="HandheldFriendly" content="true"/>
-		<meta name="MobileOptimized" content="320"/>
-		<title>Hello H5+</title>
-		<script type="text/javascript" src="../js/common.js"></script>
-		<script type="text/javascript">
 var img = null;
 var blist = [];
 function scaned(t, r, f){
@@ -119,33 +109,3 @@ function openBarcodeCustom(){
 		}
 	});
 }
-		</script>
-		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-		<style type="text/css" media="screen">
-.hdata {
-	color: #e1673e;	
-	font-size: 14px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-		</style>
-	</head>
-	<body onload="img=document.getElementById('bimg')">
-		<br/>
-		<img style="width:40%" id="bimg" src="../img/barcode.png"/>
-		<br/>
-		<div class="button" onclick="openBarcode()">扫一扫</div>
-		<div class="button" onclick="openBarcodeCustom()">扫一扫（自定义）</div>
-		<br/>
-		<ul id="history" class="dlist" style="text-align:left;">
-			<li id="nohistory" class="ditem" onclick="onempty()">无历史记录	</li>
-		</ul>
-		<br/>
-		<div class="button button-waring" onclick="cleanHistroy()">清空历史记录</div>
-		<div id="outpos"/>
-		<div id="output">
-Barcode提供二维码扫描识别功能，支持调用摄像头即时扫描二维码，也可直接输入图片进行扫描识别。
-		</div>
-	</body>
-</html>

@@ -6,6 +6,23 @@
 		<title>修改电话</title>
 		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
 		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+		<script type="text/javascript">
+			function getQueryStrings() {
+				var url = location.search; //获取url中"?"符后的字串
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i ++) {
+						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = getQueryStrings();
+			var parId = Request['parId'];
+		</script>
 	</head>
 	<body>
 		<div class="header">
@@ -28,6 +45,22 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	
+	$(function(){
+		$.ajax({
+			url:'http://localhost:8080/parents/searchParentsById',
+			dataType:"json",
+			type:"post",
+			data:{
+				parId:parId
+			},
+			success:function(res){
+				console.log(res)
+				$('#parPhone').val(res.data.parPhone)
+			}
+		});
+	})
+	
 	function changeParPhone(){
 		var parPhone = $("#parPhone").val();
 		if(parPhone != null){
@@ -36,11 +69,26 @@
 				dataType:"json",
 				type:"post",
 				data:{
+					parId:parId,
 					parPhone:parPhone
 				},
 				success:function(res){
 					alert("电话修改成功");
-					window.location.href = "parentsInfo.html";
+					$.ajax({
+						url : 'http://localhost:8080/parents/searchParentsById',
+						type : "post",
+						dataType : "json",
+						data:{
+							parId:parId
+						},
+						success : function(res){
+							console.log(res)
+							if(res.msg == "success"){
+								localStorage.setItem("parentLogin",JSON.stringify(res.data));
+								window.location.href = "parentsInfo.html";
+							}
+						},
+					})
 				}
 			})
 		}

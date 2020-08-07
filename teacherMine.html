@@ -38,9 +38,9 @@
 						</div>
 					</a>
 					
-					<a href="like.html">
+					<a href="teacherAboutUs.html">
 						<div class="p1">
-							我的点赞
+							关于我们
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
@@ -71,6 +71,10 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
+	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+	});
+	
 	function getTeacher(){
 		var teacher = localStorage.getItem("teacherLogin");
 		return JSON.parse(teacher);
@@ -83,6 +87,7 @@
 		data:{},
 		success:function(res){
 			console.log(res)
+			console.log(getTeacher())
 			var lists = '';
 			lists += `
 				<div class="list">
@@ -90,8 +95,8 @@
 						<img src="`+getTeacher().teaPortrait+`" >
 					</div>
 					<div id="name">
-						<span id="wm" style="color:red;">`+getTeacher().teaName+`</span>
-						<span id="jj" style="color:red;">教师工号：`+getTeacher().teaNo+`</span>
+						<span id="wm">`+getTeacher().teaName+`</span>
+						<span id="jj">教师工号：`+getTeacher().teaNo+`</span>
 					</div>
 				</div> 
 			`
