@@ -1,0 +1,52 @@
+.head{
+	width: 100%;
+	text-align: center;
+	align-content: center;
+	height: 2.6rem;
+	line-height: 2.6rem;
+	background: #007BFF;
+	color: white;
+}
+.bodys{
+	width: 90%;
+	margin: auto;
+}
+/* .baskbody{
+	width: 100%;
+	margin: auto;
+	margin-top: 3rem;
+	background: #ffffff;
+} */
+.pettitle input,.petname input{
+	width: 92%;
+	height: 3rem;
+	margin: auto;
+	border-bottom: 1px solid #f6f6f6;
+}
+.petdescribe textarea{
+	width: 92%;
+	height: 7rem;
+	margin-top: 1rem;
+	border: none;
+	outline: none;
+}
+#btn{
+	width: 2.5rem;
+	height: 4rem;
+}
+.url{
+	width: 100%;
+	margin: auto;
+}
+.imgBody{
+	display: block;
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+.url img{
+	width: 25%;
+	height: 25%;
+	padding: 0.5rem;
+}

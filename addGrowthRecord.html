@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>添加成长记录</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/addGrowthRecord.css"/>
+	</head>
+	<body>
+		<div class="head">
+			编辑成长记录
+		</div>
+		<div class="bodys">
+			<div class="petdescribe">
+				<textarea rows="" cols="" placeholder="请输入您的描述" id="describe"></textarea>
+			</div>
+			<div class="url">
+				<button id="btn">+</button>
+				<!-- //隐藏默认的，，，，，选择多个 -->
+				<input id="fileup" type="file" style="display: none;" multiple>
+				<div class="imgBody">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$("#btn").click(function () {
+		$("#fileup").click();
+	});
+	var urlList;
+	$("#fileup").change(function () {
+		urlList = document.getElementById("fileup").files;
+		console.log(urlList);
+		for (var url of urlList){
+			console.log(url.name);
+			var reader = new FileReader();
+			reader.readAsDataURL(url);
+			reader.onload = function(){
+				//文件地址
+				console.log(this.result);
+				//创建img节点
+				var img = document.createElement('img');
+				// var img = new Image();
+				img.src  = this.result;
+				//向body中插入img
+				$(".imgBody").append(img);
+			}
+		}
+		console.log(urlList);
+	});
+	
+</script>
