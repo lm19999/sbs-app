@@ -41,6 +41,7 @@
 		var Request = new Object();
 		Request = GetRequest();
 		var id = Request['initiationUrlId'];
+		var initiationTypeId = Request['initiationTypeId'];
 		console.log(id)
 		
 		
@@ -53,6 +54,9 @@
 			dataType: "json",
 			success: function (data) {
 				console.log(data)
+				if(initiationTypeId == 1){
+					
+				}
 				var html=`
 					<video src="${data.data.initiationUrl}" width="100%" controls="controls">您的浏览器不支持此种视频格式。</video>
 				`

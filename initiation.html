@@ -56,8 +56,13 @@
 							$('.list').append("暂无数据");
 						}else{
 							for(var i = 0;i<data.data.length;i++){
+								if(type == 1){
+									html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+								}
+								else{
+									html+=`<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+								}
 									html+=`
-									<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">
 										<div class="listLeft">
 											<img src="${data.data[i].initiationImg}" />
 										</div>
@@ -107,9 +112,8 @@
 									$('.list').append("暂无数据");
 								}else{
 									for(var i = 0;i<data.data.length;i++){
-										if(data.data[i].initiationType.initiationTypeId == 2){
 											html+=`
-											<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">
+											<a href="initiationDetails.html?initiationTypeId=${data.data[0].initiationType.initiationTypeId}&initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">
 												<div class="listLeft">
 													<img src="${data.data[i].initiationImg}" />
 												</div>
@@ -121,22 +125,6 @@
 												</div>
 											</div></a>
 											`
-										}
-										else{
-											html+=`
-											<div class="listLeft">
-												<img src="${data.data[i].initiationImg}" />
-											</div>
-											<div class="listRight">
-												<figure>
-													${data.data[i].initiationUrl.initiationUrlName}
-													<figcaption></figcaption>
-												</figure>
-											</div>
-											
-											`
-										}
-										
 									}
 									$('.list').append(html)
 								}
