@@ -25,19 +25,26 @@
 </html>
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/registerAndchangePwd.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
 	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
 	});
 	
+	
 	function login(){
+　　　　var ipone  = isIpone($('#parPhone').val());//手机号验证
 		var parPhone = $("#parPhone").val();
 		var parPwd = $("#parPwd").val();
 
+		if(ipone != true){
+　　　　　　return;
+　　　　 }
 		if(parPhone == "" || parPwd == ""){
 			alert("账号或密码不能为空");
-			return false;
-		}else {
+			return;
+		} 
+		if(ipone == true) {
 			$.ajax({
 				url : 'http://localhost:8080/parentsApi/parentsLogin',
 				type : "post",

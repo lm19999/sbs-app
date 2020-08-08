@@ -31,4 +31,4 @@
 	　　　　wait--;
 	　　　　setTimeout('time()', 1000) //循环调用
 	　　}
-	};
+	}

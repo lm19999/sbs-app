@@ -40,8 +40,9 @@ a{
 	width: 10.5rem;
 }
 .form .getCode{
-	border: 1px solid red;
+	border: 0.5px solid red;
 	border-radius: 0.5rem;
+	width: 4.5rem;
 	margin: auto 0;
 	height: 2rem;
 	color: #000000;
@@ -50,7 +51,17 @@ a{
 	line-height: 2rem;
 	cursor: pointer; //将指针变成小手形状
 }
-
+.parentStudent{
+	border: 1px solid red;
+	margin-top: 0.25rem;
+	width: 12rem;
+	height: 2rem;
+	border: none;
+	outline: none;
+	background: #5f8d70;
+	color: white;
+	font-size: 0.9rem;
+}
 .form input::-webkit-input-placeholder{
     color:#949191;
 	padding-left: 0.5rem;
