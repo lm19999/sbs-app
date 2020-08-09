@@ -6,20 +6,26 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<style type="text/css">
+			.back{
+				width: 100%;
+				padding: 0.625rem 0;
+				background-color: blue;
+			}
 			.img{
 				height: 14rem;
-				border: 1px solid red;
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				margin: 0.625rem 0;
 			}
 			.img img{
 				border-radius: 50%;
+				width: 12.5rem;
+				height: 12.5rem;
 			}
 			.lrc{
 				margin-top: 1.25rem;
 				height: 18.75rem;
-				border: 1px solid red;
 				margin: auto;
 				text-align: center;
 				color: #ccc;
@@ -30,10 +36,14 @@
 			}
 			.bottom{
 				width: 100%;
-				border: 1px solid red;
 				position: fixed;
 				bottom: 0;
 				left: 0;
+				background-color: blue;
+				display: flex;
+				flex-flow: row;
+				align-items: center;
+				justify-content: space-around;
 			}
 			.bottom div{
 				padding: 10px 0;
@@ -55,13 +65,10 @@
 		</style>
 	</head>
 	<body>
-		<!-- <video controls height="300" width="100%" id="myvideo" >
-			<source src="http://localhost:8080/upload/儿歌 - 两只老虎.mp3" type="video/mp4" />
-		</video> -->
-		<audio id="music" src="http://localhost:8080/upload/儿歌 - 两只老虎.mp3" >
+		<audio id="music" >
 			当前浏览器不支持audio
 		</audio>
-		<div class="">头部信息，返回....</div>
+		<div class="back"><a onclick="go()">返回</a></div>
 		<div style="text-align: center;" class="author">歌曲名称</div>
 		<div class="img">
 			<img class="turn" src="img/upload.png" >
@@ -71,7 +78,9 @@
 			<div id="content" class="content"></div>
 		</div>
 		<div class="bottom">
+			<div class="prev">上一首</div>
 			<div class="on">开始</div>
+			<div class="next">下一首</div>
 		</div>
 	</body>
 </html>
@@ -79,6 +88,8 @@
 <script type="text/javascript">
 	var initiationLrc = "";
 	var lrc = "";
+	var arr = [];
+	var index = 0;
 	// 进到页面先获取这条数据
 	// 歌词文件单独处理
 	$(function(){
@@ -98,104 +109,162 @@
 		var Request = new Object();
 		Request = GetRequest();
 		var id = Request['initiationUrlId'];
-		var initiationTypeId = Request['initiationTypeId'];
-		console.log(id)
+		// 获取传递过来的下标
+		index = Request['index'];
+		console.log(index)
+		music(id);
 		
+		
+		// 在走一遍查询所有儿歌的方法,存放到数组中,实现上一曲下一曲播放
 		$.ajax({
-			type:'POST',
-			url:'http://localhost:8080/initiationUrl/selectlInitiationUrlById',
-			data:{
-				initiationUrlId:id
+			type: 'POST',
+			url: 'http://localhost:8080/api/selectAllInitiationByType',
+			data: {
+				initiationTypeId:1
 			},
+			dataType: "json",
 			async:false,
 			success: function (data) {
-				initiationLrc = data.data.initiationLrc;
-			}
-		})
-		
-		console.log(initiationLrc)
-		$.ajax({
-			type:'POST',
-			url:'http://localhost:8080/api/readLrc',
-			data:{
-				initiationLrc:initiationLrc
+				arr=data.data
 			},
-			async:false,
-			success: function (data) {
-				lrc = data.data;
-			}
+		})
+		console.log(arr);
+		console.log(arr[index])
 		})
 		
-		// 获取音乐标签
-		var music = document.getElementById("music");
-		// 获取文本标签
-		var con = document.getElementById("content");
-		
-		// 自定义一个开关
-		var onOff = true;
-		// 点击实现播放暂停功能
-		$('div[class=on]').click(function(){
-			if (onOff) {
-				music.play();
-				onOff = false;
-				$('img[class=turn]').addClass("rouate")
-				$('div[class=on]').empty();
-				$('div[class=on]').append("暂停")
-			} else{
-				music.pause();
-				onOff = true;
-				document.getElementsByClassName("turn")[0].className = "turn"
-				$('div[class=on]').empty(); 
-				$('div[class=on]').append("开始")
-			}
-		})
-		
-		var lrcArr = lrc.split("[");
-		// console.log(lrcArr)
-		var html = "";
-		for(var i = 0;i<lrcArr.length;i++){
-			var arr = lrcArr[i].split("]");
-			// console.log(arr[1])获取到歌词
-			var allTime = arr[0].split(".");
-			var time = "";
-			var timer = "";
-			if(allTime.length >= 2){
-				time = allTime[0].split(":")
-				timer = parseInt(time[0]*60)+parseInt(time[1])
-			}
-			var text = arr[1];//文本
-			if(text != undefined && text.length >2){
-				html+="<p id="+timer+">"+text+"</p>"
-			}
-			con.innerHTML = html;
+		function go(){
+		 window.history.go(-1);
 		}
 		
-		// 监听音乐播放器进度,实现歌词同步
-		var op = $('p')
-		var num = 0;
-		music.addEventListener("timeupdate",function(){
-			// 获取当前播放时间
-			var curTime = parseInt(this.currentTime);
-			if(document.getElementById(curTime)){
-				for(var i = 0;i<op.length;i++){
-					op[i].style.cssText = "color:#ccc;font-size:12px;"
-				}
-				document.getElementById(curTime).style.cssText="color:red;font-size: 18px;"
-			
-				if(op[num+7].id == curTime){
-					con.style.top = -20*num + "px";
-					num++;
-				}
+		// 上一首
+		$('div[class=prev]').click(function(){
+			if(index == 0){
+				console.log(arr.length)
+				var id = arr[arr.length-1].initiationUrl.initiationUrlId
+				index=arr.length-1
+				music(id)
+			}else{
+				var id = arr[--index].initiationUrl.initiationUrlId
+				console.log(index)
+				music(id)
 			}
-		});
-		
-		music.addEventListener("ended",function(){
-			document.getElementsByClassName("turn")[0].className = "turn"
-			onOff = true;
-			$('div[class=on]').empty();
-			$('div[class=on]').append("开始")
-			con.style.top = 0;
-			this.currentTime = 0;
-		});
 		})
+		
+		// 下一首
+		$('div[class=next]').click(function(){
+			if(index == arr.length-1){
+				var id = arr[0].initiationUrl.initiationUrlId
+				index=0
+				music(id)
+			}else{
+				var id = arr[++index].initiationUrl.initiationUrlId
+				console.log(index)
+				music(id)
+			}
+		})
+		
+		function music(id){
+			document.getElementById("content").style.top = 0+"px"
+			$.ajax({
+				type:'POST',
+				url:'http://localhost:8080/initiationUrl/selectlInitiationUrlById',
+				data:{
+					initiationUrlId:id
+				},
+				async:false,
+				success: function (data) {
+					console.log(data.data.initiationUrl)
+					$('#music').attr("src",data.data.initiationUrl);
+					initiationLrc = data.data.initiationLrc;
+				}
+			})
+			
+			$.ajax({
+				type:'POST',
+				url:'http://localhost:8080/api/readLrc',
+				data:{
+					initiationLrc:initiationLrc
+				},
+				async:false,
+				success: function (data) {
+					lrc = data.data;
+				}
+			})
+			
+			// 获取音乐标签
+			var music = document.getElementById("music");
+			// 获取文本标签
+			var con = document.getElementById("content");
+			
+			music.play();
+			$('img[class=turn]').addClass("rouate")
+			$('div[class=on]').empty();
+			$('div[class=on]').append("暂停")
+			// 自定义一个开关
+			var onOff = false;
+			// 点击实现播放暂停功能
+			$('div[class=on]').click(function(){
+				if (onOff) {
+					music.play();
+					onOff = false;
+					$('img[class=turn]').addClass("rouate")
+					$('div[class=on]').empty();
+					$('div[class=on]').append("暂停")
+				} else{
+					music.pause();
+					onOff = true;
+					document.getElementsByClassName("turn")[0].className = "turn"
+					$('div[class=on]').empty(); 
+					$('div[class=on]').append("开始")
+				}
+			})
+			
+			var lrcArr = lrc.split("[");
+			// console.log(lrcArr)
+			var html = "";
+			for(var i = 0;i<lrcArr.length;i++){
+				var arr = lrcArr[i].split("]");
+				// console.log(arr[1])获取到歌词
+				var allTime = arr[0].split(".");
+				var time = "";
+				var timer = "";
+				if(allTime.length >= 2){
+					time = allTime[0].split(":")
+					timer = parseInt(time[0]*60)+parseInt(time[1])
+				}
+				var text = arr[1];//文本
+				if(text != undefined && text.length >2){
+					html+="<p id="+timer+">"+text+"</p>"
+				}
+				con.innerHTML = html;
+			}
+			
+			// 监听音乐播放器进度,实现歌词同步
+			var op = $('p')
+			var num = 0;
+			music.addEventListener("timeupdate",function(){
+				// 获取当前播放时间
+				var curTime = parseInt(this.currentTime);
+				if(document.getElementById(curTime)){
+					for(var i = 0;i<op.length;i++){
+						op[i].style.cssText = "color:#ccc;font-size:12px;"
+					}
+					document.getElementById(curTime).style.cssText="color:red;font-size: 18px;"
+				
+					if(op[num+7].id == curTime){
+						con.style.top = -20*num + "px";
+						num++;
+					}
+				}
+			});
+			
+			music.addEventListener("ended",function(){
+				document.getElementsByClassName("turn")[0].className = "turn"
+				onOff = true;
+				$('div[class=on]').empty();
+				$('div[class=on]').append("开始")
+				con.style.top = 0;
+				this.currentTime = 0;
+			});
+		}
 </script>
