@@ -18,6 +18,12 @@
 			<div id="i">
 				<span class="text">学&nbsp;&nbsp;&nbsp;生：</span><select class="parentStudent" name="stuName" id="selectId"></select>
 			</div>
+			<div id="i">
+				<span class="text">密&nbsp;&nbsp;&nbsp;码：</span><input type="password" id="parPwd" placeholder="请填写密码" style="color: white;"/>
+			</div>
+			<div id="i">
+				<span class="text">确认密码：</span><input type="password" id="confirm" placeholder="确认密码" style="color: white;"/>
+			</div>
 			<button id="register" >立即注册</button>
 		</div>
 	</body>
@@ -102,6 +108,8 @@ window.onload = SearchVehicleTag();//加载页面时自动执行方法
 		var parPhone = document.getElementById('parPhone').value;
 		var code = document.getElementById('code').value;
 		var stuNo = document.getElementById('selectId').value;
+		var parPwd = document.getElementById('parPwd').value;
+		var confirm = document.getElementById('confirm').value;
 		
 		// console.log(stuNo)
 		if(ipone != true){
@@ -119,6 +127,18 @@ window.onload = SearchVehicleTag();//加载页面时自动执行方法
 			alert("请选择学生");
 			return;
 		}
+		if(parPwd == ''){
+			alert("请填写密码");
+			return;
+		}
+		if(confirm == ''){
+			alert("请确认密码");
+			return;
+		}
+		if(parPwd != confirm){
+			alert("输入的两个密码不一致，请重新输入！");
+			return;
+		}
 		if(ipone == true) {
 　　　　　　$.ajax({
 				url : 'http://localhost:8080/parentsApi/registerParents',
@@ -127,7 +147,8 @@ window.onload = SearchVehicleTag();//加载页面时自动执行方法
 				data:{
 					"parPhone":parPhone,
 					"code":code,
-					"stuNo":stuNo
+					"stuNo":stuNo,
+					"parPwd":parPwd
 				},
 				xhrFields: { //为true实现跨域访问
 					withCredentials: true
@@ -136,8 +157,22 @@ window.onload = SearchVehicleTag();//加载页面时自动执行方法
 					console.log(result.data)
 					if(result != null){
 						alert("注册成功！")
-						localStorage.setItem("parentLogin",JSON.stringify(result.data));
-						window.location.href = "parentsMine.html";
+						
+						$.ajax({
+							url : 'http://localhost:8080/parentsApi/parentsLogin',
+							type : "post",
+							dataType : "json",
+							data:{
+								parPhone:parPhone,
+								parPwd:parPwd
+							},
+							success:function(data){
+								console.log(data.data)
+								localStorage.setItem("parentLogin",JSON.stringify(data.data));
+								window.location.href = "parentsMine.html";
+							}
+						})
+						
 					}
 				}
 			});
