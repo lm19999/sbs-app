@@ -16,7 +16,7 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				margin: 0.625rem 0;
+				/* margin: 0.625rem 0; */
 			}
 			.img img{
 				border-radius: 50%;
@@ -58,9 +58,13 @@
 				to{transform: rotate(360deg);}
 			}
 			.content{
+				padding-top: 3.125rem;
 				position: relative;
 				left: 0;
 				top: 0px;
+			}
+			.name{
+				padding: 10px 0;
 			}
 		</style>
 	</head>
@@ -69,9 +73,9 @@
 			当前浏览器不支持audio
 		</audio>
 		<div class="back"><a onclick="go()">返回</a></div>
-		<div style="text-align: center;" class="author">歌曲名称</div>
+		<div style="text-align: center;" class="name" id="name"></div>
 		<div class="img">
-			<img class="turn" src="img/upload.png" >
+			<img id="turn" class="turn" src="http://localhost:8080/upload/5.jpeg" >
 		</div>
 		<!-- 歌词 -->
 		<div class="lrc" id="lrc">
@@ -88,7 +92,7 @@
 <script type="text/javascript">
 	var initiationLrc = "";
 	var lrc = "";
-	var arr = [];
+	var arrList = [];
 	var index = 0;
 	// 进到页面先获取这条数据
 	// 歌词文件单独处理
@@ -112,7 +116,7 @@
 		// 获取传递过来的下标
 		index = Request['index'];
 		console.log(index)
-		music(id);
+		playmusic(id);
 		
 		
 		// 在走一遍查询所有儿歌的方法,存放到数组中,实现上一曲下一曲播放
@@ -125,11 +129,9 @@
 			dataType: "json",
 			async:false,
 			success: function (data) {
-				arr=data.data
+				arrList=data.data
 			},
 		})
-		console.log(arr);
-		console.log(arr[index])
 		})
 		
 		function go(){
@@ -139,32 +141,37 @@
 		// 上一首
 		$('div[class=prev]').click(function(){
 			if(index == 0){
-				console.log(arr.length)
-				var id = arr[arr.length-1].initiationUrl.initiationUrlId
-				index=arr.length-1
-				music(id)
+				console.log(arrList.length)
+				var id = arrList[arrList.length-1].initiationUrl.initiationUrlId
+				index=arrList.length-1
+				playmusic(id)
 			}else{
-				var id = arr[--index].initiationUrl.initiationUrlId
+				var id = arrList[--index].initiationUrl.initiationUrlId
 				console.log(index)
-				music(id)
+				playmusic(id)
 			}
 		})
 		
 		// 下一首
 		$('div[class=next]').click(function(){
-			if(index == arr.length-1){
-				var id = arr[0].initiationUrl.initiationUrlId
+			if(index == arrList.length-1){
+				var id = arrList[0].initiationUrl.initiationUrlId
 				index=0
-				music(id)
+				playmusic(id)
 			}else{
-				var id = arr[++index].initiationUrl.initiationUrlId
+				var id = arrList[++index].initiationUrl.initiationUrlId
 				console.log(index)
-				music(id)
+				playmusic(id)
 			}
 		})
 		
-		function music(id){
+		var music = document.getElementById("music");
+		function playmusic(id){
 			document.getElementById("content").style.top = 0+"px"
+			$('#music').empty()
+			$('#name').empty();
+			document.getElementsByClassName("turn")[0].className = "turn"
+			this.currentTime = 0;
 			$.ajax({
 				type:'POST',
 				url:'http://localhost:8080/initiationUrl/selectlInitiationUrlById',
@@ -173,9 +180,12 @@
 				},
 				async:false,
 				success: function (data) {
-					console.log(data.data.initiationUrl)
+					console.log(data.data)
 					$('#music').attr("src",data.data.initiationUrl);
-					initiationLrc = data.data.initiationLrc;
+					$('#name').empty();
+					$('#name').append(data.data.initiationUrlName);
+					initiationLrc = data.data.lrc.lrcUrl;
+					console.log(initiationLrc)
 				}
 			})
 			
@@ -192,7 +202,7 @@
 			})
 			
 			// 获取音乐标签
-			var music = document.getElementById("music");
+			music = document.getElementById("music");
 			// 获取文本标签
 			var con = document.getElementById("content");
 			
@@ -220,11 +230,10 @@
 			})
 			
 			var lrcArr = lrc.split("[");
-			// console.log(lrcArr)
 			var html = "";
 			for(var i = 0;i<lrcArr.length;i++){
 				var arr = lrcArr[i].split("]");
-				// console.log(arr[1])获取到歌词
+				// console.log(arr[1])//获取到歌词
 				var allTime = arr[0].split(".");
 				var time = "";
 				var timer = "";
@@ -236,6 +245,7 @@
 				if(text != undefined && text.length >2){
 					html+="<p id="+timer+">"+text+"</p>"
 				}
+				$('#content').empty()
 				con.innerHTML = html;
 			}
 			
@@ -251,20 +261,26 @@
 					}
 					document.getElementById(curTime).style.cssText="color:red;font-size: 18px;"
 				
-					if(op[num+7].id == curTime){
+					if(op[num].id == curTime){
 						con.style.top = -20*num + "px";
 						num++;
 					}
 				}
 			});
-			
-			music.addEventListener("ended",function(){
-				document.getElementsByClassName("turn")[0].className = "turn"
-				onOff = true;
-				$('div[class=on]').empty();
-				$('div[class=on]').append("开始")
-				con.style.top = 0;
-				this.currentTime = 0;
-			});
 		}
+		
+		music.addEventListener("ended",function(){
+			if(index == arrList.length-1){
+				console.log(arrList)
+				var id = arrList[0].initiationUrl.initiationUrlId
+				window.location.href = "initiationAudio.html?initiationUrlId="+id+"&index=0"
+				index=0
+				// playmusic(id)
+			}else{
+				var id = arrList[++index].initiationUrl.initiationUrlId
+				window.location.href = "initiationAudio.html?initiationUrlId="+id+"&index="+index+""
+				console.log(index)
+				// playmusic(id)
+			}
+		});
 </script>

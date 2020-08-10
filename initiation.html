@@ -106,8 +106,9 @@
 									$('.list').append("暂无数据");
 								}else{
 									for(var i = 0;i<data.data.length;i++){
+										console.log(data.data)
 										if(type == 1){
-											html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+											html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}&index=${i}"><div class="listOne">`
 										}
 										else{
 											html+=`<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
