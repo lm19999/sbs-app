@@ -1,16 +1,16 @@
-$('.iconshouye').click(function(){
+$('.iconindex').click(function(){
 	window.location.href = "index.html";
 });
-$('.iconshangcheng-copy').click(function(){
+$('.iconqimeng').click(function(){
 	window.location.href = "initiation.html";
 });
-$('.iconweibiaoti--copy').click(function(){
-	window.location.href = "growthRecord.html";
+$('.icongrowth').click(function(){
+	window.location.href = "growthRecord-parents.html";
 });
-$('.iconzuojiantou1').click(function(){
-	window.location.href = "campusDynamic.html";
+$('.iconbianji').click(function(){
+	window.location.href = "addGrowthRecord.html";
 });
-$('.iconchongwujiyang').click(function(){
+$('.iconmine').click(function(){
 	window.location.href = "mime.html"
 });
 

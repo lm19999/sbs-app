@@ -1,3 +1,18 @@
+.iconfont {
+	color: #cdcdcd;
+	font-size: 1.5rem;
+}
+.icongrowth{
+	color: white;
+}
+.iconqimeng{
+	color: #cdcdcd;
+	font-size: 1.2rem;
+}
+.iconbianji{
+	font-size: 1rem;
+	color: white;
+}
 .head{
 	width: 100%;
 	text-align: center;
@@ -8,23 +23,28 @@
 	display: flex;
 	flex-flow: row;
 	justify-content: space-around;
+	color: white;
+	font-size: 0.875rem;
 }
 .gr{
 	width: 85%;
+	padding-left: 2.5rem;
+	text-align: center;
 }
 .next{
 	width: 20%;
 }
+
 #nav{
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
 	flex-flow: row;
+	font-size: 0.875rem;
 }
 
 #nav li {
 	padding: 0.7rem 1.2rem;
-	font-size: 1rem;
 	list-style: none;
 }
 
@@ -33,11 +53,11 @@
 }
 
 #container{
-	margin-top: 2rem;
+	margin-top: 1rem;
 }
 
 
 
-.container section {
+/* .container section {
 	height: 300px;
-}
+} */

@@ -6,24 +6,23 @@
 	line-height: 2.6rem;
 	background: #007BFF;
 	color: white;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+	font-size: 0.8rem;
 }
 .bodys{
 	width: 90%;
 	margin: auto;
 }
-/* .baskbody{
-	width: 100%;
-	margin: auto;
-	margin-top: 3rem;
-	background: #ffffff;
-} */
-.pettitle input,.petname input{
+
+.growthdescribe input{
 	width: 92%;
 	height: 3rem;
 	margin: auto;
 	border-bottom: 1px solid #f6f6f6;
 }
-.petdescribe textarea{
+.growthdescribe textarea{
 	width: 92%;
 	height: 7rem;
 	margin-top: 1rem;
@@ -49,4 +48,18 @@
 	width: 25%;
 	height: 25%;
 	padding: 0.5rem;
+}
+.local{
+	display: flex;
+	flex-flow: row;
+	align-content: center;
+	
+	margin-top: 1rem;
+	font-size: 0.5rem;
+	color: #cdcdcd;
+}
+.iconweizhi{
+	color: #CDCDCD;
+	font-size: 0.8rem !important;
+	margin-right: 0.4rem;
 }
