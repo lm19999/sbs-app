@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>成长记录</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="css/growthRecord.css"/>
+	</head>
+	<body>
+		<div class="head">
+			<p class="gr">成长记录</p>
+		</div>
+		<!--内容部分HTML代码-->
+		<div id="container" class="container">
+			<section class="tab" id="tabOne" class="tabOneList">
+				
+			</section>
+		</div>
+		<div class="nav">
+			<figure>
+				<span class="iconfont iconindex"></span>
+				<figcaption>首页</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconqimeng"></span>
+				<figcaption>启蒙</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconshangcheng-copy"></span>
+				<figcaption>班级</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont icongrowth"></span>
+				<figcaption style="color: white;">成长记录</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconmine"></span>
+				<figcaption>我的</figcaption>
+			</figure>
+		</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/growthRecord.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			type: 'GET',
+			url: 'http://localhost:8080/api/growthRecord/growthRecordList',
+			data: {},
+			dataType: "json",
+			success: function (res) {
+				console.log(res)
+				for(var growthRecordList of res.data){
+					console.log(growthRecordList);
+					$('.tabOneList').append(
+						`
+							<div class="tabOneSon">
+								
+							</div>
+						`
+					);
+				}
+			}
+		});
+	});
+	function getParData() {
+	    var storage = localStorage.getItem("parentLogin");
+	    return JSON.parse(storage);
+	}
+</script>

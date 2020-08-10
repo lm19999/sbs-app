@@ -5,12 +5,13 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>成长记录</title>
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
 		<link rel="stylesheet" type="text/css" href="css/growthRecord.css"/>
 	</head>
 	<body>
 		<div class="head">
 			<p class="gr">成长记录</p>
-			<p class="next">bianji</p>
+			<p class="next"><span class="iconfont iconbianji"></span></p>
 		</div>
 		<!--导航栏部分HTML代码-->
 		
@@ -27,13 +28,19 @@
 				
 			</section>
 		</div>
+		<!-- <div class="navTab">
+			
+		</div>
+		<div class="dynamicList">
+			
+		</div> -->
 		<div class="nav">
 			<figure>
-				<span class="iconfont iconshouye"></span>
+				<span class="iconfont iconindex"></span>
 				<figcaption>首页</figcaption>
 			</figure>
 			<figure>
-				<span class="iconfont iconshangcheng-copy"></span>
+				<span class="iconfont iconqimeng"></span>
 				<figcaption>启蒙</figcaption>
 			</figure>
 			<figure>
@@ -41,17 +48,18 @@
 				<figcaption>班级</figcaption>
 			</figure>
 			<figure>
-				<span class="iconfont iconshangcheng-copy"></span>
+				<span class="iconfont icongrowth"></span>
 				<figcaption style="color: white;">成长记录</figcaption>
 			</figure>
 			<figure>
-				<span class="iconfont iconweibiaoti--copy"></span>
+				<span class="iconfont iconmine"></span>
 				<figcaption>我的</figcaption>
 			</figure>
 		</div>
 	</body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/growthRecord.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function(){
@@ -76,7 +84,7 @@
 		});
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:8080/api/growthRecord/growthRecordList',
+			url: 'http://localhost:8080/api/growthRecord/findGrowthRecordByPar',
 			data: {
 				parId: getParData().parId
 			},

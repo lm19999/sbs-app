@@ -6,13 +6,16 @@
 		<title>添加成长记录</title>
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/addGrowthRecord.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
 	</head>
 	<body>
 		<div class="head">
-			编辑成长记录
+			<span class="iconfont iconfanhui" onclick="go()"></span>
+			<span>编辑成长记录</span>
+			<span class="iconfont iconfabu" onclick="add()"></span>
 		</div>
 		<div class="bodys">
-			<div class="petdescribe">
+			<div class="growthdescribe">
 				<textarea rows="" cols="" placeholder="请输入您的描述" id="describe"></textarea>
 			</div>
 			<div class="url">
@@ -23,21 +26,63 @@
 					
 				</div>
 			</div>
+			<div class="local" onclick="getGeocode()">
+				<span class="iconfont iconweizhi"></span>获取定位信息
+			</div>
 		</div>
 	</body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	function go()
+	{
+		window.history.go(-1);
+	}
+	// 定位
+	function geoInf( position ) {
+		var str = "";
+		str += "地址："+position.addresses+"\n";//获取地址信息
+		str += "坐标类型："+position.coordsType+"\n";
+		var timeflag = position.timestamp;//获取到地理位置信息的时间戳；一个毫秒数；
+		str += "时间戳："+timeflag+"\n";
+		var codns = position.coords;//获取地理坐标信息；
+		var lat = codns.latitude;//获取到当前位置的纬度；
+		str += "纬度："+lat+"\n";
+		var longt = codns.longitude;//获取到当前位置的经度
+		str += "经度："+longt+"\n";
+		var alt = codns.altitude;//获取到当前位置的海拔信息；
+		str += "海拔："+alt+"\n";
+		var accu = codns.accuracy;//地理坐标信息精确度信息；
+		str += "精确度："+accu+"\n";
+		var altAcc = codns.altitudeAccuracy;//获取海拔信息的精确度；
+		str += "海拔精确度："+altAcc+"\n";
+		var head = codns.heading;//获取设备的移动方向；
+		str += "移动方向："+head+"\n";
+		var sped = codns.speed;//获取设备的移动速度；
+		str += "移动速度："+sped;
+		console.log(JSON.stringify(position));
+		outLine( str );
+	}
+	
+	// 通过定位模块获取位置信息
+	function getGeocode(){
+		outSet( "获取定位位置信息:" );
+		plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+			outSet( "获取定位位置信息失败："+e.message );
+		},{geocode:true});
+	}
+	
 	$("#btn").click(function () {
 		$("#fileup").click();
 	});
-	var urlList;
+	var urlList = [];
 	$("#fileup").change(function () {
-		urlList = document.getElementById("fileup").files;
-		console.log(urlList);
-		for (var url of urlList){
-			console.log(url.name);
+		var files = document.getElementById("fileup").files;
+		console.log(files);
+		for (var url of files){
+			console.log(url);
+			urlList.push(url);
 			var reader = new FileReader();
 			reader.readAsDataURL(url);
 			reader.onload = function(){
@@ -49,9 +94,39 @@
 				img.src  = this.result;
 				//向body中插入img
 				$(".imgBody").append(img);
+				
 			}
-		}
+		}		
 		console.log(urlList);
 	});
+	function add(){
+		let formdate = new FormData();
+		console.log(urlList);
+		formdate.append("parId",getParData().parId);
+		formdate.append("growthRecordPosition","");
+		for (var url of urlList){
+			formdate.append("growthRecordUrl",url);
+			console.log(url);
+		}
+		formdate.append("growthRecordDescribe",$("#describe").val());
+		
+		console.log(formdate.growthRecordUrl);
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:8080/api/growthRecord/addGrowthRecord',
+			data: formdate,
+            dataType: 'json',
+			processData: false,
+			contentType: false,
+			success: function (res) {
+				console.log(res)
+			}
+		});
+	}
+	
+	function getParData() {
+	    var storage = localStorage.getItem("parentLogin");
+	    return JSON.parse(storage);
+	}
 	
 </script>
