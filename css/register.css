@@ -21,7 +21,7 @@ a{
 	margin-top: 0.6rem;
 }
 .form #i .text{
-	width: 4.3rem;
+	width: 4.5rem;
 }
 .form input{
 	width: 60%;
@@ -37,7 +37,7 @@ a{
 	width: 7rem;
 }
 .form input#confirm{
-	width: 10.5rem;
+	width: 10rem;
 }
 .form .getCode{
 	border: 0.5px solid red;

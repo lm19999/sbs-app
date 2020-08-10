@@ -74,14 +74,14 @@
 					},
 					dataType: "json",
 					success: function (data) {
-						console.log(data)
+						console.log(data.data)
 						var html = "";
 						if(data.code=="300"){
 							$('.list').append("暂无数据");
 						}else{
 							for(var i = 0;i<data.data.length;i++){
 								if(type == 1){
-									html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+									html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}&index=${i}"><div class="listOne">`
 								}
 								else{
 									html+=`<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
@@ -104,12 +104,6 @@
 					}
 				})
 				
-				//音频
-				//<video src="${data.data[i].initiationUrl.initiationUrl}" width="100%" controls="controls">您的浏览器不支持此种视频格式。</video>
-				//视频
-				// <audio controls>
-				//<source src="${data.data[i].initiationUrl}" type="audio/mpeg">
-				//</audio>
 				// 获取标签栏的所有标签元素对象
 				  var tabs = $('.tabdiv');
 				  console.log(tabs)
@@ -136,8 +130,13 @@
 									$('.list').append("暂无数据");
 								}else{
 									for(var i = 0;i<data.data.length;i++){
+										if(type == 1){
+											html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+										}
+										else{
+											html+=`<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+										}
 											html+=`
-											<a href="initiationDetails.html?initiationTypeId=${data.data[0].initiationType.initiationTypeId}&initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">
 												<div class="listLeft">
 													<img src="${data.data[i].initiationImg}" />
 												</div>

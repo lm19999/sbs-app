@@ -86,6 +86,7 @@
 		var parents = localStorage.getItem("parentLogin");
 		return JSON.parse(parents);
 	}
+	console.log(getParents())
 
 	$.ajax({
 		url:'http://localhost:8080/parentsApi/showParentById',
