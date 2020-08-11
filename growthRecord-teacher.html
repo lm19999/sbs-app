@@ -10,13 +10,11 @@
 	</head>
 	<body>
 		<div class="head">
-			<p class="gr">成长记录</p>
+			<p class="gr" style="text-align: center;padding-left: 0;">成长记录</p>
 		</div>
 		<!--内容部分HTML代码-->
-		<div id="container" class="container">
-			<section class="tab" id="tabOne" class="tabOneList">
-				
-			</section>
+		<div class="container-List" style="padding-top: 2.6rem;margin-bottom: 5rem;">
+			
 		</div>
 		<div class="nav">
 			<figure>
@@ -44,31 +42,200 @@
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/growthRecord.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function(){
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost:8080/api/growthRecord/growthRecordList',
+			url: 'http://localhost:8080/api/growthRecord/growthRecordTeaList',
 			data: {},
 			dataType: "json",
 			success: function (res) {
 				console.log(res)
-				for(var growthRecordList of res.data){
-					console.log(growthRecordList);
-					$('.tabOneList').append(
-						`
-							<div class="tabOneSon">
-								
-							</div>
-						`
-					);
-				}
+				var growthRecordCollectList = res.data.growthRecordCollectList;
+				for(var growthRecord of res.data.growthRecordList){
+					$.ajax({
+						type: 'POST',
+						url: 'http://localhost:8080/api/growthRecord/searchGrowthRecordById',
+						data: {
+							growthRecordId: growthRecord.growthRecordId
+						},
+						dataType: "json",
+						success: function (res) {
+							$('.container').append(
+								`
+									<div class="son">
+										<div class="sonleft">
+											<div class="sonimg">
+												<img src="${res.data.parents.parPortrait}">
+											</div>
+											<div class="jieshao">
+												<span>${res.data.parents.parName}</span>
+											</div>
+										</div>
+										<p>${res.data.growthRecordDescribe}</p>
+										<div class="imageson ${res.data.growthRecordId}3">
+											
+										</div>
+										<div class="bottom">
+											<div class="dizhi">
+												<span class="iconfont iconweizhi"></span>
+												<span class="dizhifont">${res.data.growthRecordPosition}</span>
+											</div>
+											<div class="pinglun">
+												<div class="po">
+													<span class="iconfont iconthumbup-fill ${res.data.growthRecordId}1" onclick="obtainGrowth(${res.data.growthRecordId})"></span>
+													<span class="font ${res.data.growthRecordId}4">${res.data.growthRecordCollects}</span>
+												</div>&nbsp;&nbsp;&nbsp;
+												<div class="pt">
+													<span class="iconfont iconpinglun ${res.data.growthRecordId}2" onclick="obtainGrowthReview(${res.data.growthRecordId})"></span>
+													<span class="font ${res.data.growthRecordId}5">${res.data.growthRecordViews}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								`
+							);
+							// 图片循环
+							var imgList = (res.data.growthRecordUrl).split("&");
+							var img = imgList.filter(function (s) {
+							   return s && s.trim();
+							});
+							$("."+res.data.growthRecordId+3+"").empty();
+							for (let tu of img) {
+								$("."+res.data.growthRecordId+3+"").append(
+									`<img src="http://localhost:8080/upload/${tu}" />`
+								);
+							}
+							// 点赞状态->颜色变化
+							let choose=0;
+							for (let growthRecordCollect of growthRecordCollectList){
+								console.log(getTeaData());
+								if (growthRecordCollect.teacher.teaNo == getTeaData().teaNo && growthRecordCollect.growthRecord.growthRecordId == res.data.growthRecordId && growthRecordCollect.collectState==1){
+									choose = 1;
+								}
+								if (choose == 1){
+									$("."+res.data.growthRecordId+1+"").addClass("red");
+									return;
+								} else {
+									$("."+res.data.growthRecordId+1+"").removeClass("red");
+								}
+							}
+						}
+					});
+				};
 			}
 		});
 	});
-	function getParData() {
-	    var storage = localStorage.getItem("parentLogin");
+	function getTeaData() {
+	    var storage = localStorage.getItem("teacherLogin");
 	    return JSON.parse(storage);
+	}
+	console.log(getTeaData());
+	function obtainGrowth(growthRecordId) {
+		console.log(growthRecordId);
+	    if($("."+growthRecordId+1+"").hasClass("red")){
+	        /* var num = $("."+growthRecordId+4+"").html(); */
+	        $.ajax({
+	            url:"http://localhost:8080/api/growthRecord/updateTeaGRState",
+	            type: "POST",
+	            data: {
+	                teaNo: getTeaData().teaNo,
+	                growthRecordId: growthRecordId,
+	                collectState: 0
+	            },
+	            dataType: "JSON",
+	            success:function(result){
+	                console.log(result);
+	                alert("取消点赞成功");
+					$.ajax({
+					    url:"http://localhost:8080/api/growthRecord/updateGrowthRecordCollects",
+					    type: "POST",
+					    data: {
+					        growthRecordId: growthRecordId
+					    },
+					    dataType: "JSON",
+					    success:function(result){
+							console.log(result);
+						},
+					});
+	                window.location.href="growthRecord-teacher.html";
+	            }
+	        });
+			$("."+growthRecordId+1+"").removeClass("red");
+			
+	    }else{
+	        $.ajax({
+	            url:"http://localhost:8080/api/growthRecord/teaGrowthCollectList",
+	            type: "GET",
+	            data: {
+	            },
+	            dataType: "JSON",
+	            success:function(res){
+	                let choose1=0;
+	                for(let item of res.data){
+						console.log(item)
+	                    if (item.teacher.teaNo == getTeaData().teaNo && item.growthRecord.growthRecordId==growthRecordId){
+	                        choose1=1;
+	                    }
+	                }
+	                if (choose1==1){
+	                    $.ajax({
+	                        url:"http://localhost:8080/api/growthRecord/updateTeaGRState",
+	                        type: "POST",
+	                        data: {
+								teaNo: getTeaData().teaNo,
+	                            growthRecordId: growthRecordId,
+								collectState: 1
+	                        },
+	                        dataType: "JSON",
+	                        success:function(result){
+	                            console.log(result)
+								$.ajax({
+								    url:"http://localhost:8080/api/growthRecord/addGrowthRecordCollects",
+								    type: "POST",
+								    data: {
+								        growthRecordId: growthRecordId
+								    },
+								    dataType: "JSON",
+								    success:function(result){
+										console.log(result);
+									},
+								});
+								alert("点赞成功");
+	                            window.location.href="growthRecord-teacher.html";
+	                        }
+	                    });
+	                    $("."+growthRecordId+1+"").addClass("red");
+	                }else{
+	                    $.ajax({
+	                        url:"http://localhost:8080/api/growthRecord/teaGrowthCollect",
+	                        type: "POST",
+	                        data: {
+	                            teaNo: getTeaData().teaNo,
+	                            growthRecordId: growthRecordId
+	                        },
+	                        dataType: "JSON",
+	                        success:function(result){
+	                            console.log(result);
+	                            alert("点赞成功");
+								$.ajax({
+								    url:"http://localhost:8080/api/growthRecord/addGrowthRecordCollects",
+								    type: "POST",
+								    data: {
+								        growthRecordId: growthRecordId
+								    },
+								    dataType: "JSON",
+								    success:function(result){
+										console.log(result);
+									},
+								});
+	                            window.location.href="growthRecord-teacher.html";
+	                        }
+	                    });
+	                    $("."+growthRecordId+1+"").addClass("red");
+	                }
+	            }
+	        });
+	    }
 	}
 </script>

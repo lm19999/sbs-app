@@ -25,6 +25,8 @@
 	justify-content: space-around;
 	color: white;
 	font-size: 0.875rem;
+	position: fixed;
+	z-index: 2;
 }
 .gr{
 	width: 85%;
@@ -41,6 +43,7 @@
 	justify-content: space-around;
 	flex-flow: row;
 	font-size: 0.875rem;
+	padding-top: 2.6rem;
 }
 
 #nav li {
@@ -54,10 +57,147 @@
 
 #container{
 	margin-top: 1rem;
+	margin-bottom: 4rem;
+}
+.container-List{
+	width: 88%;
+	margin: auto;
+}
+.tabOneList,.tabTwoList{
+	width: 92%;
+	margin: auto;
 }
 
+.son {
+	width: 95%;
+	margin: auto;
+	margin-top: 1rem;
+	background: #f6f6f6;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	padding-bottom: 1rem;
+	border-radius: 0.3rem;
+}
 
+.son p {
+	width: 100%;
+	font-size: 0.75rem;
+	color: #5c5a57;
+	margin-left: 0.5rem;
+}
 
-/* .container section {
-	height: 300px;
-} */
+.sonleft {
+	width: 60%;
+	padding-left: 0.5rem;
+	padding-top: 0.5rem;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+}
+
+.sonimg img {
+	border-radius: 50%;
+	width: 3.5rem;
+}
+
+.jieshao{
+	width: 50%;
+	line-height: 3.5rem;
+	margin-left: 1rem;
+}
+
+.classify {
+	color: #a6a6a6;
+	font-size: 0.75rem;
+}
+
+.sonright {
+	margin-top: 1rem;
+	margin-right: 0.5rem;
+	width: 4rem;
+	height: 1.8rem;
+	padding-top: 0.65rem;
+	background: #e6e6e6;
+	border-radius: 2rem;
+	color: #716d6e;
+	font-size: 0.76rem;
+	text-align:center;
+
+}
+
+.guanzhu{
+	width: 4rem;
+	height: 1.8rem;
+	padding: 0.8rem;
+	background: #ff3333;
+	border-radius: 2rem;
+	color: #FFFFFF;
+	font-size: 0.76rem;
+	text-align:center;
+}
+
+.imageson {
+	width: 100%;
+	margin-top: 1rem;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+}
+
+.imageson img {
+	margin-left: 0;
+	height: 3rem;
+	padding: 0.3rem;
+}
+
+.bottom {
+	width: 100%;
+	margin-top: 1rem;
+	margin-left: 0.5rem;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+.dizhi {
+	width: 60%;
+}
+
+.iconweizhi {
+	color: #828282;
+	font-size: 1rem !important;
+}
+
+.dizhifont {
+	color: #828282;
+	font-size: 0.6rem;
+	line-height: 1rem;
+}
+
+.pinglun {
+	margin: auto;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+.iconthumbup-fill,
+.iconpinglun {
+	color: #707070;
+}
+.iconthumbup-fill{
+	font-size: 1.3rem;
+}
+.iconpinglun{
+	font-size: 1.3rem;
+}
+.font {
+	color: #c3c3c2;
+	font-size: 0.8rem;
+	/* line-height: 1.3rem; */
+}
+
+.red {
+	color: red;
+}

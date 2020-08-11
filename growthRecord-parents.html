@@ -21,19 +21,13 @@
 		</nav>
 		<!--内容部分HTML代码-->
 		<div id="container" class="container">
-			<section class="tab" id="tabOne" class="tabOneList">
+			<section class="tab tabOneList" id="tabOne">
 				
 			</section>
-			<section class="tab" id="tabTwo" class="tabTwoList">
+			<section class="tab tabTwoList" id="tabTwo">
 				
 			</section>
 		</div>
-		<!-- <div class="navTab">
-			
-		</div>
-		<div class="dynamicList">
-			
-		</div> -->
 		<div class="nav">
 			<figure>
 				<span class="iconfont iconindex"></span>
@@ -65,47 +59,289 @@
 	$(function(){
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost:8080/api/growthRecord/growthRecordList',
+			url: 'http://localhost:8080/api/growthRecord/growthRecordParList',
 			data: {},
 			dataType: "json",
 			success: function (res) {
 				console.log(res)
-				for(var growthRecordList of res.data){
-					console.log(growthRecordList);
-					$('.tabOneList').append(
-						`
-							<div class="tabOneSon">
-								
-							</div>
-						`
-					);
-				}
+				var growthRecordCollectList = res.data.growthRecordCollectList;
+				for(var growthRecord of res.data.growthRecordList){
+					$.ajax({
+						type: 'POST',
+						url: 'http://localhost:8080/api/growthRecord/searchGrowthRecordById',
+						data: {
+							growthRecordId: growthRecord.growthRecordId
+						},
+						dataType: "json",
+						success: function (res) {
+							$('.tabOneList').append(
+								`
+									<div class="son">
+										<div class="sonleft">
+											<div class="sonimg">
+												<img src="${res.data.parents.parPortrait}">
+											</div>
+											<div class="jieshao">
+												<span>${res.data.parents.parName}</span>
+											</div>
+										</div>
+										<p>${res.data.growthRecordDescribe}</p>
+										<div class="imageson ${res.data.growthRecordId}3">
+											
+										</div>
+										<div class="bottom">
+											<div class="dizhi">
+												<span class="iconfont iconweizhi"></span>
+												<span class="dizhifont">${res.data.growthRecordPosition}</span>
+											</div>
+											<div class="pinglun">
+												<div class="po">
+													<span class="iconfont iconthumbup-fill ${res.data.growthRecordId}1" onclick="obtainGrowth(${res.data.growthRecordId})"></span>
+													<span class="font ${res.data.growthRecordId}4">${res.data.growthRecordCollects}</span>
+												</div>&nbsp;&nbsp;&nbsp;
+												<div class="pt">
+													<span class="iconfont iconpinglun ${res.data.growthRecordId}2" onclick="obtainGrowthReview(${res.data.growthRecordId})"></span>
+													<span class="font ${res.data.growthRecordId}5">${res.data.growthRecordViews}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								`
+							);
+							// 图片循环
+							var imgList = (res.data.growthRecordUrl).split("&");
+							var img = imgList.filter(function (s) {
+							   return s && s.trim();
+							});
+							$("."+res.data.growthRecordId+3+"").empty();
+							for (let tu of img) {
+								$("."+res.data.growthRecordId+3+"").append(
+									`<img src="http://localhost:8080/upload/${tu}" />`
+								);
+							}
+							// 点赞状态->颜色变化
+							let choose=0;
+							for (let growthRecordCollect of growthRecordCollectList){
+								/* console.log(growthRecordCollect)
+								console.log(growthRecordCollectList);
+								console.log(getParData().parId) */
+								if (growthRecordCollect.parents.parId == getParData().parId && growthRecordCollect.growthRecord.growthRecordId == res.data.growthRecordId && growthRecordCollect.collectState==1){
+									choose = 1;
+								}
+								if (choose == 1){
+									$("."+res.data.growthRecordId+1+"").addClass("red");
+									return;
+								} else {
+									$("."+res.data.growthRecordId+1+"").removeClass("red");
+								}
+							}
+						}
+					});
+				};
 			}
 		});
+	
 		$.ajax({
 			type: 'POST',
 			url: 'http://localhost:8080/api/growthRecord/findGrowthRecordByPar',
 			data: {
-				parId: getParData().parId
+				parId:	getParData().parId
 			},
 			dataType: "json",
 			success: function (res) {
-				console.log(res)
-				for(var growthRecordList of res.data){
-					console.log(growthRecordList);
-					$('.tabTwoList').append(
-						`
-							<div class="tabTwoSon">
-								
-							</div>
-						`
-					);
-				}
+				console.log(res);
+				var growthRecordCollectList = res.data.growthRecordCollectList;
+				for(var growthRecord of res.data.growthRecordList){
+					$.ajax({
+						type: 'POST',
+						url: 'http://localhost:8080/api/growthRecord/searchGrowthRecordById',
+						data: {
+							growthRecordId: growthRecord.growthRecordId
+						},
+						dataType: "json",
+						success: function (res) {
+							$('.tabTwoList').append(
+								`
+									<div class="son">
+										<div class="sonleft">
+											<div class="sonimg">
+												<img src="${res.data.parents.parPortrait}">
+											</div>
+											<div class="jieshao">
+												<span>${res.data.parents.parName}</span>
+											</div>
+										</div>
+										<p>${res.data.growthRecordDescribe}</p>
+										<div class="imageson ${res.data.growthRecordId}3">
+											
+										</div>
+										<div class="bottom">
+											<div class="dizhi">
+												<span class="iconfont iconweizhi"></span>
+												<span class="dizhifont">${res.data.growthRecordPosition}</span>
+											</div>
+											<div class="pinglun">
+												<div class="po">
+													<span class="iconfont iconthumbup-fill ${res.data.growthRecordId}1" onclick="obtainGrowth(${res.data.growthRecordId})"></span>
+													<span class="font ${res.data.growthRecordId}4">${res.data.growthRecordCollects}</span>
+												</div>&nbsp;&nbsp;&nbsp;
+												<div class="pt">
+													<span class="iconfont iconpinglun ${res.data.growthRecordId}2" onclick="obtainGrowthReview(${res.data.growthRecordId})"></span>
+													<span class="font ${res.data.growthRecordId}5">${res.data.growthRecordViews}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								`
+							);
+							// 图片循环
+							var imgList = (res.data.growthRecordUrl).split("&");
+							var img = imgList.filter(function (s) {
+							   return s && s.trim();
+							});
+							$("."+res.data.growthRecordId+3+"").empty();
+							for (let tu of img) {
+								$("."+res.data.growthRecordId+3+"").append(
+									`<img src="http://localhost:8080/upload/${tu}" />`
+								);
+							}
+							// 点赞状态->颜色变化
+							let choose=0;
+							for (let growthRecordCollect of growthRecordCollectList){
+								/* console.log(growthRecordCollect)
+								console.log(growthRecordCollectList);
+								console.log(getParData().parId) */
+								if (growthRecordCollect.parents.parId == getParData().parId && growthRecordCollect.growthRecord.growthRecordId == res.data.growthRecordId && growthRecordCollect.collectState==1){
+									choose = 1;
+								}
+								if (choose == 1){
+									$("."+res.data.growthRecordId+1+"").addClass("red");
+									return;
+								} else {
+									$("."+res.data.growthRecordId+1+"").removeClass("red");
+								}
+							}
+						}
+					});
+					
+				};
 			}
-		})
+		});
 	});
+	
+	
 	function getParData() {
 	    var storage = localStorage.getItem("parentLogin");
 	    return JSON.parse(storage);
+	}
+	function obtainGrowth(growthRecordId) {
+		console.log(growthRecordId);
+	    if($("."+growthRecordId+1+"").hasClass("red")){
+	        /* var num = $("."+growthRecordId+4+"").html(); */
+	        $.ajax({
+	            url:"http://localhost:8080/api/growthRecord/updateParGRState",
+	            type: "POST",
+	            data: {
+	                parId: getParData().parId,
+	                growthRecordId: growthRecordId,
+	                collectState: 0
+	            },
+	            dataType: "JSON",
+	            success:function(result){
+	                console.log(result);
+	                alert("取消点赞成功");
+					$.ajax({
+					    url:"http://localhost:8080/api/growthRecord/updateGrowthRecordCollects",
+					    type: "POST",
+					    data: {
+					        growthRecordId: growthRecordId
+					    },
+					    dataType: "JSON",
+					    success:function(result){
+							console.log(result);
+						},
+					});
+	                window.location.href="growthRecord-parents.html";
+	            }
+	        });
+			$("."+growthRecordId+1+"").removeClass("red");
+			
+	    }else{
+	        $.ajax({
+	            url:"http://localhost:8080/api/growthRecord/parGrowthCollectList",
+	            type: "GET",
+	            data: {
+	            },
+	            dataType: "JSON",
+	            success:function(res){
+	                let choose1=0;
+	                for(let item of res.data){
+						console.log(item)
+	                    if (item.parents.parId == getParData().parId && item.growthRecord.growthRecordId==growthRecordId){
+	                        choose1=1;
+	                    }
+	                }
+	                if (choose1==1){
+	                    $.ajax({
+	                        url:"http://localhost:8080/api/growthRecord/updateParGRState",
+	                        type: "POST",
+	                        data: {
+								parId: getParData().parId,
+	                            growthRecordId: growthRecordId,
+								collectState: 1
+	                        },
+	                        dataType: "JSON",
+	                        success:function(result){
+	                            console.log(result)
+								$.ajax({
+								    url:"http://localhost:8080/api/growthRecord/addGrowthRecordCollects",
+								    type: "POST",
+								    data: {
+								        growthRecordId: growthRecordId
+								    },
+								    dataType: "JSON",
+								    success:function(result){
+										console.log(result);
+									},
+								});
+								alert("点赞成功");
+	                            window.location.href="growthRecord-parents.html";
+	                        }
+	                    });
+	                    $("."+growthRecordId+1+"").addClass("red");
+	                }else{
+	                    $.ajax({
+	                        url:"http://localhost:8080/api/growthRecord/parGrowthCollect",
+	                        type: "POST",
+	                        data: {
+	                            parId: getParData().parId,
+	                            growthRecordId: growthRecordId
+	                        },
+	                        dataType: "JSON",
+	                        success:function(result){
+	                            console.log(result);
+	                            alert("点赞成功");
+								$.ajax({
+								    url:"http://localhost:8080/api/growthRecord/addGrowthRecordCollects",
+								    type: "POST",
+								    data: {
+								        growthRecordId: growthRecordId
+								    },
+								    dataType: "JSON",
+								    success:function(result){
+										console.log(result);
+									},
+								});
+	                            window.location.href="growthRecord-parents.html";
+	                        }
+	                    });
+	                    $("."+growthRecordId+1+"").addClass("red");
+	                }
+	            }
+	        });
+	    }
+	}
+	function obtainGrowthReview(growthRecordId) {
+	    window.location.href="forumReview.html?growthRecordId="+growthRecordId;
 	}
 </script>
