@@ -1,0 +1,32 @@
+body{
+	background: url(../img/bg.jpg) no-repeat;
+	background-size: cover;
+}
+.selectRoles{
+	margin: auto 0;
+	margin-top: 12rem;
+}
+.selectRoles p{
+	width: 100%;
+	text-align: center;
+	color: white;
+	font-size: 1.2rem;
+	margin: 2.5rem 0;
+}
+.selectRoles .roles{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+	align-items: center;
+}
+.selectRoles .roles button{
+	width: 8rem;
+	height: 3rem;
+	border-radius: 2rem;
+	border: none;
+	outline: none;
+	font-size: 1rem;
+	text-align: center;
+}
+
+

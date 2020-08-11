@@ -1,0 +1,51 @@
+.bodys{
+	width: 100%;
+	bottom: 0rem;
+	position: absolute;
+	overflow-y: scroll; 
+	top: 2.3rem;
+	left: 0;
+	overflow: auto;
+}
+/* --------------------------list------------------------------- */
+.recommend1,.recommend2,.recommend3,.recommend4{
+	width: 100%;
+}
+.list{
+	border-top: 1px solid #716d6e;
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: center;
+	height: 5.5rem;
+}
+.list img{
+	width: 6rem;
+	height: 4.5rem;
+}
+.list .detail{
+	width: 50%;
+	height: 4rem;
+	font-size: 1.1rem;
+	line-height: 2rem;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+.list .detail p{
+	width: 100%;
+}
+.cakeColor{
+	color: #dc2f35;
+}
+.coffeColor{
+	color: #dc2f35;
+}
+.sweetColor{
+	color: #dc2f35;
+}
+.teaColor{
+	color: #dc2f35;
+}
