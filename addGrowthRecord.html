@@ -40,8 +40,10 @@
 		window.history.go(-1);
 	}
 	// 定位
+	var address;
 	function geoInf( position ) {
 		var str = "";
+		address=position.address.province+" "+position.address.city+" "+position.address.district;
 		str += "地址："+position.addresses+"\n";//获取地址信息
 		str += "坐标类型："+position.coordsType+"\n";
 		var timeflag = position.timestamp;//获取到地理位置信息的时间戳；一个毫秒数；
@@ -62,6 +64,7 @@
 		var sped = codns.speed;//获取设备的移动速度；
 		str += "移动速度："+sped;
 		console.log(JSON.stringify(position));
+		console.log(address);
 		outLine( str );
 	}
 	
@@ -103,7 +106,7 @@
 		let formdate = new FormData();
 		console.log(urlList);
 		formdate.append("parId",getParData().parId);
-		formdate.append("growthRecordPosition","");
+		formdate.append("growthRecordPosition",address);
 		for (var url of urlList){
 			formdate.append("growthRecordUrl",url);
 			console.log(url);
