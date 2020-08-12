@@ -1,18 +1,47 @@
-$('.iconindex').click(function(){
-	window.location.href = "index.html";
-});
-$('.iconqimeng').click(function(){
-	window.location.href = "initiation.html";
-});
-$('.icongrowth').click(function(){
-	window.location.href = "growthRecord-parents.html";
-});
-$('.iconbianji').click(function(){
-	window.location.href = "addGrowthRecord.html";
-});
-$('.iconmine').click(function(){
-	window.location.href = "mime.html"
-});
+function getParents(){
+	var parents = localStorage.getItem("parentLogin");
+	return JSON.parse(parents);
+}
+
+function getTeacher(){
+	var teacher = localStorage.getItem("teacherLogin");
+	return JSON.parse(teacher);
+}
+	
+if(getParents()){
+	$('.iconindex').click(function(){
+		window.location.href = "index.html";
+	});
+	$('.iconqimeng').click(function(){
+		window.location.href = "initiation.html";
+	});
+	$('.icongrowth').click(function(){
+		window.location.href = "growthRecord-parents.html";
+	});
+	$('.iconbianji').click(function(){
+		window.location.href = "addGrowthRecord.html";
+	});
+	$('.iconmine').click(function(){
+		window.location.href = "parentsMine.html"
+	});
+}
+if(getTeacher()){
+	$('.iconindex').click(function(){
+		window.location.href = "index.html";
+	});
+	$('.iconqimeng').click(function(){
+		window.location.href = "initiation.html";
+	});
+	$('.icongrowth').click(function(){
+		window.location.href = "growthRecord-parents.html";
+	});
+	$('.iconbianji').click(function(){
+		window.location.href = "addGrowthRecord.html";
+	});
+	$('.iconmine').click(function(){
+		window.location.href = "teacherMine.html"
+	});
+}
 
 
 (function(w){

@@ -5,20 +5,19 @@
 		<meta charset="utf-8">
 		<title></title>
 		<script type="text/javascript">
-			
-			function getTeacher(){
+			function getTeacher() {
 				var teacher = localStorage.getItem("teacherLogin");
 				return JSON.parse(teacher);
 			}
-			
+
 			function getQueryStrings() {
 				var url = location.search; //获取url中"?"符后的字串
 				var theRequest = new Object();
 				if (url.indexOf("?") != -1) {
 					var str = url.substr(1);
 					strs = str.split("&");
-					for(var i = 0; i < strs.length; i ++) {
-						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					for (var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 					}
 				}
 				return theRequest;
@@ -35,27 +34,27 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	function teacherLogout(){
+	function teacherLogout() {
 		$.ajax({
-			url:'http://localhost:8080/teacherApi/teacherLogout',
-			dataType:"json",
-			type:"post",
-			data:{
-				teaNo:getTeacher().teaNo
+			url: 'http://localhost:8080/teacherApi/teacherLogout',
+			dataType: "json",
+			type: "post",
+			data: {
+				teaNo: getTeacher().teaNo
 			},
-			success:function(res){
+			success: function(res) {
 				console.log(res)
 				$.ajax({
-					url : 'http://localhost:8080/teacher/searchTeacherByTno',
-					type : "post",
-					dataType : "json",
-					data:{
-						teaNo:getTeacher().teaNo
+					url: 'http://localhost:8080/teacher/searchTeacherByTno',
+					type: "post",
+					dataType: "json",
+					data: {
+						teaNo: getTeacher().teaNo
 					},
-					success : function(res){
+					success: function(res) {
 						console.log(res)
-						if(res.msg == "success"){
-							localStorage.setItem("teacherLogin",JSON.stringify(res.data));
+						if (res.msg == "success") {
+							localStorage.setItem("teacherLogin", JSON.stringify(res.data));
 							window.location.href = "teacherLogin.html";
 						}
 					},

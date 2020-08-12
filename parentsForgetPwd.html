@@ -4,24 +4,40 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="css/register.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/register.css" />
+		<style type="text/css">
+			.jt {
+				width: 3.125rem;
+				margin-top: 2rem;
+				margin-left: 2.5rem;
+			}
+
+			.iconfont {
+				font-size: 1.5rem;
+			}
+		</style>
 	</head>
 	<body>
+		<div class="jt">
+			<a href="parentsLogin.html"><span class="iconfont iconfanhui"></span></a>
+		</div>
 		<div class="form">
 			<div id="i">
-				<span class="text">手机号：</span><input type="text" id="parPhone" placeholder="请填写账号" style="color: white;"/>
+				<span class="text">手机号：</span><input type="text" id="parPhone" placeholder="请填写账号" style="color: white;" />
 			</div>
 			<div id="i">
-				<span class="text">验证码：</span><input type="text" id="code" placeholder="输入验证码" style="color: white;"/><span class="getCode" id="getCode">获取验证码</span>
+				<span class="text">验证码：</span><input type="text" id="code" placeholder="输入验证码" style="color: white;" /><span class="getCode"
+				 id="getCode">获取验证码</span>
 			</div>
 			<div id="i">
-				<span class="text">密&nbsp;&nbsp;&nbsp;码：</span><input type="password" id="parPwd" placeholder="请填写密码" style="color: white;"/>
+				<span class="text">密&nbsp;&nbsp;&nbsp;码：</span><input type="password" id="parPwd" placeholder="请填写密码" style="color: white;" />
 			</div>
 			<div id="i">
-				<span class="text">确认密码：</span><input type="password" id="confirm" placeholder="确认密码" style="color: white;"/>
+				<span class="text">确认密码：</span><input type="password" id="confirm" placeholder="确认密码" style="color: white;" />
 			</div>
-			<button id="changePwd" >确认修改</button>
+			<button id="changePwd">确认修改</button>
 		</div>
 	</body>
 </html>
@@ -29,99 +45,97 @@
 <script src="js/registerAndchangePwd.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript">
-	
-//获取验证码
-　　$('#getCode').click(function(){
-　　　　var ipone  = isIpone($('#parPhone').val());//手机号验证
-　　　　var parPhone = document.getElementById('parPhone').value;
+	//获取验证码
+	$('#getCode').click(function() {
+		var ipone = isIpone($('#parPhone').val()); //手机号验证
+		var parPhone = document.getElementById('parPhone').value;
 
-　　　　if(ipone  == true){
-　　　　　　//请求
-　　　　　　try {
-　　　　　　　　$.ajax({
-　　　　　　　　　　url: 'http://localhost:8080/parentsApi/getCode',
-　　　　　　　　　　timeout: 8000,
-　　　　　　　　　　type: 'POST',
-				  data: {
-					 "parPhone":parPhone
-				  },
-　　　　　　　　　　success: function(result) {
-　　　　　　　　　　　　try {
-　　　　　　　　　　　　　　result = result.trim();
-　　　　　　　　　　　　　　result = result.replace(/\n/g, '');//此处做去空格处理
-　　　　　　　　　　　　　　if(result == '0'){
-							alert('该号码已注册');
-						}else {
-							alert("验证码已发送，请注意查收");
-　　　　　　　　　　　　　　　 time();//调用
-　　　　　　　　　　　　　　　 document.getElementById('code').setAttribute('class',result);//让该元素添加class
-　　　　　　　　　　　　　　}
-　　　　　　　　　　　　} catch(e) {
-　　　　　　　　　　　　　　// alert("接口错误，请联系客服");
-　　　　　　　　　　　　}
-　　　　　　　　　　},
-　　　　　　　　　　error: function(xhr, status, error) {
-　　　　　　　　　　　　if(status == "error")
-　　　　　　　　　　　　alert('请检查网络连接');
-　　　　　　　　　　}
-　　　　　　　　});
-　　　　　　} catch(error) {
-　　　　　　　　alert("请检查网络连接");
-　　　　　　}
-　　　　}
-　　});
-		
+		if (ipone == true) {
+			//请求
+			try {
+				$.ajax({
+					url: 'http://localhost:8080/parentsApi/getCode',
+					timeout: 8000,
+					type: 'POST',
+					data: {
+						"parPhone": parPhone
+					},
+					success: function(result) {
+						try {
+							result = result.trim();
+							result = result.replace(/\n/g, ''); //此处做去空格处理
+							if (result == '0') {
+								alert('该号码已注册');
+							} else {
+								alert("验证码已发送，请注意查收");
+								time(); //调用
+								document.getElementById('code').setAttribute('class', result); //让该元素添加class
+							}
+						} catch (e) {
+							// alert("接口错误，请联系客服");
+						}
+					},
+					error: function(xhr, status, error) {
+						if (status == "error")
+							alert('请检查网络连接');
+					}
+				});
+			} catch (error) {
+				alert("请检查网络连接");
+			}
+		}
+	});
+
 	//点击确认修改密码
-	$('#changePwd').click(function(){
-		var ipone  = isIpone($('#parPhone').val());//手机号验证
+	$('#changePwd').click(function() {
+		var ipone = isIpone($('#parPhone').val()); //手机号验证
 		var parPhone = document.getElementById('parPhone').value;
 		var code = document.getElementById('code').value;
 		var parPwd = document.getElementById('parPwd').value;
 		var confirm = document.getElementById('confirm').value;
-		
-		if(ipone != true){
-　　　　　　return;
-　　　　 }
-		if(parPhone == ''){
+
+		if (ipone != true) {
+			return;
+		}
+		if (parPhone == '') {
 			alert("请输入手机号");
 			return;
 		}
-		if(code == ''){
+		if (code == '') {
 			alert("请填写验证码");
 			return;
 		}
-		if(parPwd == ''){
+		if (parPwd == '') {
 			alert("请填写密码");
 			return;
 		}
-		if(confirm == ''){
+		if (confirm == '') {
 			alert("请确认密码");
 			return;
 		}
-		if(parPwd != confirm){
+		if (parPwd != confirm) {
 			alert("输入的两个密码不一致，请重新输入！");
-		}else{
-			if(ipone == true) {
-	　　　　　　$.ajax({
-					url : 'http://localhost:8080/parentsApi/forgetParentsPwd',
+		} else {
+			if (ipone == true) {
+				$.ajax({
+					url: 'http://localhost:8080/parentsApi/forgetParentsPwd',
 					type: 'POST',
-					dataType : "json",
-					data:{
-						"parPhone":parPhone,
-						"code":code,
-						"parPwd":parPwd
+					dataType: "json",
+					data: {
+						"parPhone": parPhone,
+						"code": code,
+						"parPwd": parPwd
 					},
-					success:function (result){
-						if(result != null){
+					success: function(result) {
+						if (result != null) {
 							alert("密码修改成功，请重新登录")
-							localStorage.setItem("parentLogin",JSON.stringify(result));
+							localStorage.setItem("parentLogin", JSON.stringify(result));
 							window.location.href = "parentsLogin.html";
 						}
 					}
 				});
-		　　}
+			}
 		}
-		
+
 	});
-		
 </script>

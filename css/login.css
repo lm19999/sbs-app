@@ -9,7 +9,7 @@ a{
 .form{
 	width: 70%;
 	margin: auto;
-	margin-top: 6.3rem;
+	margin-top: 3.5rem;
 	color: #FFFFFF;
 	padding-top: 2rem;
 }
@@ -35,7 +35,9 @@ a{
 	padding-left: 0.5rem;
 }
 .form #zw{
+	/* border: 0.0625rem solid red; */
 	width: 100%;
+	margin-top: 2rem;
 	display: flex;
 	flex-flow: row;
 	justify-content: space-between;

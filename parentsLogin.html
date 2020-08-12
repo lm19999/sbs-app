@@ -3,17 +3,32 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>登录</title>
-		<link rel="stylesheet" type="text/css" href="css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+		<title>家长登录</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/login.css" />
+		<style type="text/css">
+			.jt {
+				width: 3.125rem;
+				margin-top: 2rem;
+				margin-left: 2.5rem;
+			}
+
+			.iconfont {
+				font-size: 1.5rem;
+			}
+		</style>
 	</head>
 	<body>
+		<div class="jt">
+			<a href="selectRoles.html"><span class="iconfont iconfanhui"></span></a>
+		</div>
 		<div class="form">
 			<div id="i">
-				账号：<input type="text" id="parPhone" name="parPhone" placeholder="请输入手机号" style="color: white;"/>
+				账号：<input type="text" id="parPhone" name="parPhone" placeholder="请输入手机号" style="color: white;" />
 			</div>
 			<div id="i">
-				密码：<input type="password" id="parPwd" name="parPwd" placeholder="请输入密码" style="color: white;"/>
+				密码：<input type="password" id="parPwd" name="parPwd" placeholder="请输入密码" style="color: white;" />
 			</div>
 			<div id="zw">
 				<span id="w" onclick="parentsForgetPwd()">忘记密码&nbsp;？</a></span>
@@ -27,77 +42,82 @@
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/registerAndchangePwd.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
-	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+	$(function() { //, headers: { 'x-requested-with': 'XMLHttpRequest' }
+		$.ajaxSetup({
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			}
+		});
 	});
-	
-	
-	function login(){
-　　　　var ipone  = isIpone($('#parPhone').val());//手机号验证
+
+
+	function login() {
+		var ipone = isIpone($('#parPhone').val()); //手机号验证
 		var parPhone = $("#parPhone").val();
 		var parPwd = $("#parPwd").val();
 
-		if(ipone != true){
-　　　　　　return;
-　　　　 }
-		if(parPhone == "" || parPwd == ""){
+		if (ipone != true) {
+			return;
+		}
+		if (parPhone == "" || parPwd == "") {
 			alert("账号或密码不能为空");
 			return;
-		} 
-		if(ipone == true) {
+		}
+		if (ipone == true) {
 			$.ajax({
-				url : 'http://localhost:8080/parentsApi/parentsLogin',
-				type : "post",
-				dataType : "json",
-				data:{
-					parPhone:parPhone,
-					parPwd:parPwd
+				url: 'http://localhost:8080/parentsApi/parentsLogin',
+				type: "post",
+				dataType: "json",
+				data: {
+					parPhone: parPhone,
+					parPwd: parPwd
 				},
-				success : function(data){
+				success: function(data) {
 					console.log(data.data)
-					if(data.msg == "success"){
+					if (data.msg == "success") {
 						$.ajax({
-							url : 'http://localhost:8080/parentsApi/updateParentsStatus',
-							type : "post",
-							dataType : "json",
-							data:{
-								parId:data.data.parId
+							url: 'http://localhost:8080/parentsApi/updateParentsStatus',
+							type: "post",
+							dataType: "json",
+							data: {
+								parId: data.data.parId
 							},
-							success : function(result){
+							success: function(result) {
 								console.log(result)
-								if(result.msg == "success"){
+								if (result.msg == "success") {
 									console.log("正处于登录状态")
-								
+
 									$.ajax({
-										url : 'http://localhost:8080/parents/searchParentsById',
-										type : "post",
-										dataType : "json",
-										data:{
-											parId:data.data.parId
+										url: 'http://localhost:8080/parents/searchParentsById',
+										type: "post",
+										dataType: "json",
+										data: {
+											parId: data.data.parId
 										},
-										success : function(res){
+										success: function(res) {
 											console.log(res)
-											if(res.msg == "success"){
-												localStorage.setItem("parentLogin",JSON.stringify(res.data));
-												window.location.href = "index.html";
+											if (res.msg == "success") {
+												localStorage.setItem("parentLogin", JSON.stringify(res.data));
+												window.location.href = "parentsMine.html";
 											}
 										},
 									})
 								}
 							},
 						})
-						
+
 					}
 				},
-				error:function(result){
+				error: function(result) {
 					alert("账号或密码错误，请重新输入！")
 				}
 			});
 		}
 	};
-	
-	
-	function parentsForgetPwd(){
+
+
+	function parentsForgetPwd() {
 		window.location.href = "parentsForgetPwd.html";
 	}
 </script>

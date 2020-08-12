@@ -4,11 +4,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8">
 		<title>我的</title>
-		<link rel="stylesheet" type="text/css" href="css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
-		<link rel="stylesheet" type="text/css" href="css/mine.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/mine.css" />
 		<style type="text/css">
-			.icon-zuji{
+			.icon-zuji {
 				color: #bf4343;
 			}
 		</style>
@@ -16,25 +16,25 @@
 	<body>
 		<div class="header">
 			<div class="top">
-				<span class="iconfont icon-biaoqing"></span>
+				<!-- <span class="iconfont iconfanhui"></span> -->
 				<p>我的</p>
-				<span class="iconfont icon-sandian"></span>
+				<!-- <span class="iconfont iconfanhui"></span> -->
 			</div>
-			
+
 			<div class="bodys">
 				<div class="me">
 				</div>
-				
+
 				<div class="lists">
 					<a href="parentsInfo.html">
-						<div class="p1" >
+						<div class="p1">
 							基本资料
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
 					<a href="parentsLikes.html">
 						<div class="p1">
-							我的点赞
+							我的喜欢
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
@@ -80,37 +80,44 @@
 </html>
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	
-	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
-	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+	$(function() { //, headers: { 'x-requested-with': 'XMLHttpRequest' }
+		$.ajaxSetup({
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			}
+		});
 	});
-		
-	function getParents(){
+
+	function getParents() {
 		var parents = localStorage.getItem("parentLogin");
 		return JSON.parse(parents);
 	}
 	console.log(getParents())
 
 	$.ajax({
-		url:'http://localhost:8080/parentsApi/showParentById',
-		dataType:"json",
-		type:"post",
-		data:{
-			
+		url: 'http://localhost:8080/parentsApi/showParentById',
+		dataType: "json",
+		type: "post",
+		data: {
+
 		},
-		success:function(res){
+		success: function(res) {
 			console.log(res)
 			console.log(getParents())
 			var lists = '';
 			lists += `
 				<div class="list">
 					<div id="tx">
-						<img src="`+getParents().parPortrait+`" >
+						<img src="` + getParents().parPortrait +
+				`" >
 					</div>
 					<div id="name">
-						<span id="wm">`+getParents().parName+`</span>
-						<span id="jj">电话：`+getParents().parPhone+`</span>
+						<span id="wm">` + getParents().parName +
+				`</span>
+						<span id="jj">电话：` + getParents().parPhone + `</span>
 					</div>
 				</div> 
 			`
@@ -123,4 +130,3 @@
 		window.location.href = "parentsInfo.html?parId="+parId;
 	} */
 </script>
-

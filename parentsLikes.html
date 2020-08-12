@@ -4,14 +4,39 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>我的喜欢</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/mine.css" />
 		<link rel="stylesheet" type="text/css" href="css/parentsLikes.css"/>
+		<script type="text/javascript">
+			function getParents() {
+				var parents = localStorage.getItem("parentLogin");
+				return JSON.parse(parents);
+			}
+		
+			function getQueryStrings() {
+				var url = location.search; //获取url中"?"符后的字串
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for (var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = getQueryStrings();
+			var parId = Request['parId'];
+		</script>
 	</head>
 	<body>
 		<div class="header">
 			<div class="top">
 				<span class="iconfont icon-biaoqing"></span>
 				<p>我的喜欢</p>
-				<span class="iconfont icon-sandian"></span>
+				<span></span>
 			</div>
 			<div class="bodys">
 				<div class="recommend1"></div><!--校园动态-->
@@ -23,3 +48,8 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/parentsLike.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$('.iconfanhui').click(function() {
+		window.location.href = "parentsMine.html";
+	})
+</script>

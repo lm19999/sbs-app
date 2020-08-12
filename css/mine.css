@@ -6,6 +6,13 @@ a{
 	text-decoration: none;
 	color: #000000;
 }
+.header .top{
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
 .bodys{
 	width: 100%;
 	position: absolute;
@@ -138,25 +145,7 @@ a{
 	justify-content: space-between;
 	align-items: flex-start;
 }
-
-/* -------------------footer------------------------ */
-.footer{
-	width: 100%;
-	height: 3.6rem;
-	display: flex;
-	flex-flow: row;
-	justify-content: space-around;
-	align-items: center;
-	background: #eeeeee;
-	position: fixed;
-	bottom: 0;
-	left: 0;
+.iconfont{
+	font-size: 1.5rem;
 }
-.footer .iconfont{
-	font-size: 1.6rem;
-}
-.footer figcaption{
-	font-size: 0.8rem;
-}
-
 

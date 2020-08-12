@@ -4,8 +4,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>修改名称</title>
-		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
-		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/mine.css" />
+		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css" />
 		<script type="text/javascript">
 			function getQueryStrings() {
 				var url = location.search; //获取url中"?"符后的字串
@@ -13,8 +14,8 @@
 				if (url.indexOf("?") != -1) {
 					var str = url.substr(1);
 					strs = str.split("&");
-					for(var i = 0; i < strs.length; i ++) {
-						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					for (var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 					}
 				}
 				return theRequest;
@@ -25,77 +26,76 @@
 		</script>
 	</head>
 	<body>
-		<div class="header">
-			<div class="top">
-				<span class="iconfont icon-biaoqing"></span>
-				<p>修改名称</p>
+		<div class="top">
+			<span class="iconfont iconfanhui"></span>
+			<p>修改名称</p>
+			<span></span>
+		</div>
+		<div class="bodys">
+			<div id="changeName">
+				名称：
+				<input type="text" name="parName" id="parName" />
 			</div>
-			<div class="bodys">
-				<div id="changeName">
-					名称：
-					<input type="text" name="parName" id="parName" />
-				</div>
-				<div id="ok">
-					<button onclick="changeParName()">保&nbsp;&nbsp;&nbsp;存</button>
-				</div>
+			<div id="ok">
+				<button onclick="changeParName()">保&nbsp;&nbsp;&nbsp;存</button>
 			</div>
 		</div>
+
 	</body>
 </html>
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	
-	$(function(){
+	$(".iconfanhui").click(function() {
+		window.location.href = "parentsInfo.html";
+	})
+	$(function() {
 		$.ajax({
-			url:'http://localhost:8080/parents/searchParentsById',
-			dataType:"json",
-			type:"post",
-			data:{
-				parId:parId
+			url: 'http://localhost:8080/parents/searchParentsById',
+			dataType: "json",
+			type: "post",
+			data: {
+				parId: parId
 			},
-			success:function(res){
+			success: function(res) {
 				console.log(res)
 				$('#parName').val(res.data.parName)
 			}
 		});
 	})
-	
-	function changeParName(){
+
+	function changeParName() {
 		var parName = $("#parName").val();
-		if(parName != null){
+		if (parName != null) {
 			$.ajax({
-				url:'http://localhost:8080/parentsApi/parentsChangeName',
-				dataType:"json",
-				type:"post",
-				data:{
-					parId:parId,
-					parName:parName
+				url: 'http://localhost:8080/parentsApi/parentsChangeName',
+				dataType: "json",
+				type: "post",
+				data: {
+					parId: parId,
+					parName: parName
 				},
-				success:function(res){
+				success: function(res) {
 					alert("名称修改成功");
 					console.log(res)
 					$.ajax({
-						url : 'http://localhost:8080/parents/searchParentsById',
-						type : "post",
-						dataType : "json",
-						data:{
-							parId:parId
+						url: 'http://localhost:8080/parents/searchParentsById',
+						type: "post",
+						dataType: "json",
+						data: {
+							parId: parId
 						},
-						success : function(res){
+						success: function(res) {
 							console.log(res)
-							if(res.msg == "success"){
-								localStorage.setItem("parentLogin",JSON.stringify(res.data));
+							if (res.msg == "success") {
+								localStorage.setItem("parentLogin", JSON.stringify(res.data));
 								window.location.href = "parentsInfo.html";
 							}
 						},
 					})
-					
+
 				}
 			})
 		}
 	}
-	$(".icon-biaoqing").click(function(){
-		window.location.href = "parentsInfo.html";
-	})
 </script>

@@ -3,24 +3,24 @@
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8">
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
-		<link rel="stylesheet" type="text/css" href="css/parentsInfo.css"/>
+		<title>个人资料</title>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/mine.css" />
+		<link rel="stylesheet" type="text/css" href="css/parentsInfo.css" />
 		<script type="text/javascript">
-			
-			function getTeacher(){
+			function getTeacher() {
 				var teacher = localStorage.getItem("teacherLogin");
 				return JSON.parse(teacher);
 			}
-			
+
 			function getQueryStrings() {
 				var url = location.search; //获取url中"?"符后的字串
 				var theRequest = new Object();
 				if (url.indexOf("?") != -1) {
 					var str = url.substr(1);
 					strs = str.split("&");
-					for(var i = 0; i < strs.length; i ++) {
-						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					for (var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 					}
 				}
 				return theRequest;
@@ -32,9 +32,9 @@
 	</head>
 	<body>
 		<div class="top">
-			<span class="iconfont icon-biaoqing"></span>
+			<span class="iconfont iconfanhui"></span>
 			<p>个人资料</p>
-			<span class="iconfont icon-sandian"></span>
+			<span></span>
 		</div>
 		<div class="bodys">
 			<div class="me">
@@ -45,53 +45,59 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    /* $('.icon-biaoqing').click(function(){
-        window.location.href = "mine.html";
-    }) */
-    $(function(){
-        $.ajax({
-            url:'http://localhost:8080/teacherApi/showTeacherById',
-            dataType:"json",
-            type:"post",
-            data:{
-                teaNo:teaNo
-            },
-            success:function(res){
-                var lists = '';
-    			console.log(res)
-    			lists += `
+	$('.iconfanhui').click(function() {
+		window.location.href = "teacherMine.html";
+	})
+	$(function() {
+		$.ajax({
+			url: 'http://localhost:8080/teacherApi/showTeacherById',
+			dataType: "json",
+			type: "post",
+			data: {
+				teaNo: teaNo
+			},
+			success: function(res) {
+				var lists = '';
+				console.log(res)
+				lists +=
+					`
     				<div id="info" onclick="teacherChangeTx()">
     					<span id="items">头像</span>
     					<div id="imgs">
-    						<img src="`+getTeacher().teaPortrait+`" >
+    						<img src="` +
+					getTeacher().teaPortrait +
+					`" >
     					</div>
     				</div>
     				
     				<div id="info" onclick="teacherChangeName()">
     					<span id="items">姓名</span>
     					<div id="text">
-    						<p>`+getTeacher().teaName+`</p>
+    						<p>` +
+					getTeacher().teaName +
+					`</p>
     					</div>
     				</div>
     				
     				<div id="info">
     					<span id="items">教师工号</span>
     					<div id="text">
-    						<p style="disabled">`+getTeacher().teaNo+`</p>
+    						<p style="disabled">` +
+					getTeacher().teaNo + `</p>
     					</div>
     				</div>
     			`
-                $(".me").empty();
-                $(".me").html(lists);
-                }
-        })
-    });
-    
-    function teacherChangeTx(){
-        window.location.href = "teacherChangeTx.html?teaNo="+getTeacher().teaNo;
-    }
-    function teacherChangeName(){
-        window.location.href = "teacherChangeName.html?teaNo="+getTeacher().teaNo;
-    }
-    
+				$(".me").empty();
+				$(".me").html(lists);
+			}
+		})
+	});
+
+	function teacherChangeTx() {
+		window.location.href = "teacherChangeTx.html?teaNo=" + getTeacher().teaNo;
+	}
+
+	function teacherChangeName() {
+		window.location.href = "teacherChangeName.html?teaNo=" + getTeacher().teaNo;
+	}
 </script>

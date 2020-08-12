@@ -4,8 +4,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>修改姓名</title>
-		<link rel="stylesheet" type="text/css" href="css/myCommon.css"/>
-		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/mine.css" />
+		<link rel="stylesheet" type="text/css" href="css/parentsChangeName.css" />
 		<script type="text/javascript">
 			function getQueryStrings() {
 				var url = location.search; //获取url中"?"符后的字串
@@ -13,8 +14,8 @@
 				if (url.indexOf("?") != -1) {
 					var str = url.substr(1);
 					strs = str.split("&");
-					for(var i = 0; i < strs.length; i ++) {
-						theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+					for (var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 					}
 				}
 				return theRequest;
@@ -25,19 +26,18 @@
 		</script>
 	</head>
 	<body>
-		<div class="header">
-			<div class="top">
-				<span class="iconfont icon-biaoqing"></span>
-				<p>修改姓名</p>
+		<div class="top">
+			<span class="iconfont iconfanhui"></span>
+			<p>修改姓名</p>
+			<span></span>
+		</div>
+		<div class="bodys">
+			<div id="changeName">
+				姓名：
+				<input type="text" name="teaName" id="teaName" />
 			</div>
-			<div class="bodys">
-				<div id="changeName">
-					姓名：
-					<input type="text"  name="teaName" id="teaName" />
-				</div>
-				<div id="ok">
-					<button onclick="changeTeaName()">保&nbsp;&nbsp;&nbsp;存</button>
-				</div>
+			<div id="ok">
+				<button onclick="changeTeaName()">保&nbsp;&nbsp;&nbsp;存</button>
 			</div>
 		</div>
 	</body>
@@ -45,55 +45,54 @@
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	
-	$(function(){
-	    $.ajax({
-	        url:'http://localhost:8080/teacher/searchTeacherByTno',
-	        dataType:"json",
-	        type:"post",
-	        data:{
-	            teaNo:teaNo
-	        },
-	        success:function(res){
+	$(function() {
+		$.ajax({
+			url: 'http://localhost:8080/teacher/searchTeacherByTno',
+			dataType: "json",
+			type: "post",
+			data: {
+				teaNo: teaNo
+			},
+			success: function(res) {
 				console.log(res)
 				$('#teaName').val(res.data.teaName)
-	        }
-	    })
+			}
+		})
 	});
-	
-	function changeTeaName(){
+
+	function changeTeaName() {
 		var teaName = $("#teaName").val();
-		if(teaName != null){
+		if (teaName != null) {
 			$.ajax({
-				url:'http://localhost:8080/teacherApi/teacherChangeName',
-				dataType:"json",
-				type:"post",
-				data:{
-					teaNo:teaNo,
-					teaName:teaName
+				url: 'http://localhost:8080/teacherApi/teacherChangeName',
+				dataType: "json",
+				type: "post",
+				data: {
+					teaNo: teaNo,
+					teaName: teaName
 				},
-				success:function(res){
+				success: function(res) {
 					alert("名称修改成功");
 					console.log(res)
 					console.log(teaName)
 					$.ajax({
-					    url:'http://localhost:8080/teacher/searchTeacherByTno',
-					    dataType:"json",
-					    type:"post",
-					    data:{
-					        teaNo:teaNo
-					    },
-					    success:function(res){
+						url: 'http://localhost:8080/teacher/searchTeacherByTno',
+						dataType: "json",
+						type: "post",
+						data: {
+							teaNo: teaNo
+						},
+						success: function(res) {
 							console.log(res)
-							localStorage.setItem("teacherLogin",JSON.stringify(res.data));
+							localStorage.setItem("teacherLogin", JSON.stringify(res.data));
 							window.location.href = "teacherInfo.html";
-					    }
+						}
 					})
 				}
 			})
 		}
 	}
-	$(".icon-biaoqing").click(function(){
+	$(".iconfanhui").click(function() {
 		window.location.href = "teacherInfo.html";
 	})
 </script>

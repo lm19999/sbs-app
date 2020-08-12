@@ -4,10 +4,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8">
 		<title>我的</title>
-		<link rel="stylesheet" type="text/css" href="css/mine.css"/>
-		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/mine.css" />
 		<style type="text/css">
-			.icon-zuji{
+			.icon-zuji {
 				color: #bf4343;
 			}
 		</style>
@@ -15,19 +16,17 @@
 	<body>
 		<div class="header">
 			<div class="top">
-				<span class="iconfont icon-biaoqing"></span>
 				<p>我的</p>
-				<span class="iconfont icon-sandian"></span>
 			</div>
-			
+
 			<div class="bodys">
 				<div class="me">
-					
+
 				</div>
-				
+
 				<div class="lists">
 					<a href="teacherInfo.html">
-						<div class="p1" >
+						<div class="p1">
 							基本资料
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
@@ -38,7 +37,7 @@
 							<span class="iconfont icon-dibudaohanglan-"></span>
 						</div>
 					</a>
-					
+
 					<a href="teacherAboutUs.html">
 						<div class="p1">
 							关于我们
@@ -49,55 +48,67 @@
 			</div>
 		</div>
 
-		<div class="footer" style="border: 1px solid red;">
-			<!-- <figure>
-				<span class="iconfont icon-canyin"></span>
-				<figcaption>首页</figcaption>
+		<div class="nav">
+			<figure>
+				<span class="iconfont iconindex"></span>
+				<figcaption style="color: white;">首页</figcaption>
 			</figure>
 			<figure>
-				<span class="iconfont icon-canyinxitong-"></span>
-				<figcaption>约食</figcaption>
+				<span class="iconfont iconqimeng"></span>
+				<figcaption>启蒙</figcaption>
 			</figure>
 			<figure>
-				<span class="iconfont icon-gouwuche"></span>
-				<figcaption>购物车</figcaption>
+				<span class="iconfont iconshangcheng-copy"></span>
+				<figcaption>班级</figcaption>
 			</figure>
 			<figure>
-				<span class="iconfont icon-zuji"></span>
-				<figcaption style="color: #bf4343;">我的</figcaption>
-			</figure> -->
+				<span class="iconfont icongrowth"></span>
+				<figcaption>成长记录</figcaption>
+			</figure>
+			<figure>
+				<span class="iconfont iconmine"></span>
+				<figcaption>我的</figcaption>
+			</figure>
 		</div>
 	</body>
 </html>
 
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	$(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }
-	        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+	$(function() { //, headers: { 'x-requested-with': 'XMLHttpRequest' }
+		$.ajaxSetup({
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			}
+		});
 	});
-	
-	function getTeacher(){
+
+	function getTeacher() {
 		var teacher = localStorage.getItem("teacherLogin");
 		return JSON.parse(teacher);
 	}
-	
+
 	$.ajax({
-		url:'http://localhost:8080/teacherApi/showTeacherById',
-		dataType:"json",
-		type:"post",
-		data:{},
-		success:function(res){
+		url: 'http://localhost:8080/teacherApi/showTeacherById',
+		dataType: "json",
+		type: "post",
+		data: {},
+		success: function(res) {
 			console.log(res)
 			console.log(getTeacher())
 			var lists = '';
 			lists += `
 				<div class="list">
 					<div id="tx">
-						<img src="`+getTeacher().teaPortrait+`" >
+						<img src="` + getTeacher().teaPortrait +
+				`" >
 					</div>
 					<div id="name">
-						<span id="wm">`+getTeacher().teaName+`</span>
-						<span id="jj">教师工号：`+getTeacher().teaNo+`</span>
+						<span id="wm">` + getTeacher().teaName +
+				`</span>
+						<span id="jj">教师工号：` + getTeacher().teaNo + `</span>
 					</div>
 				</div> 
 			`
@@ -109,4 +120,3 @@
 		window.location.href = "teacherInfo.html?teaNo="+teaNo;
 	} */
 </script>
-

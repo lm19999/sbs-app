@@ -1,24 +1,4 @@
-/* ==================top================== */
-.top{
-	width: 100%;
-	text-align: center;
-	font-size: 1.2rem;
-	height: 2.3rem;
-	line-height: 2.3rem;
-	background: #eeeeee;
-	color: #000;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 2;
-}
-.top p{
-	margin-top: -2.5rem;
-}
-.top .icon-biaoqing{
-	font-size: 1.5rem;
-	margin-left: -18rem;
-}
+
 /* ===================bodys===================== */
 .bodys{
 	width: 100%;
@@ -56,18 +36,14 @@
 	margin-left: 0.8rem;
 }
 .upload #frame p{
-	/* border: 0.0625rem solid red; */
 	width: 31%;
 	display: block;
-	/* margin-top: 2rem; */
 	margin-left: 1rem;
 	font-size: 0.6rem;
 	right: 0;
 	color: #838182;
 }
 #previewImg{
-	/* border: 0.0625rem solid red; */
-
 	width: 90%;
 	margin: auto;
 	margin-top: -4rem;
@@ -80,7 +56,6 @@
 	width: 70%;
 	height: 3rem;
 	margin: auto;
-	/* margin-top: rem; */
 	font-size: 1.4rem;
 	text-align: center;
 	border-radius: 1rem;
