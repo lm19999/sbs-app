@@ -1,3 +1,11 @@
+.head{
+	width: 100%;
+	text-align: center;
+	align-content: center;
+	height: 2.6rem;
+	line-height: 2.6rem;
+	background: #007BFF;
+}
 .search{
 	width: 100%;
 	display: flex;
@@ -33,6 +41,7 @@
 	border-bottom: 1px solid red;
 }
 .list{
+	margin-top: 1.25rem;
 	width: 100%;
 }
 .listOne{
