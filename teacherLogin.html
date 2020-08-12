@@ -57,9 +57,11 @@
 					teaPwd:teaPwd
 				},
 				success : function(result){
-					if(result != null){
+					if(result.data != null){
 						localStorage.setItem("teacherLogin",JSON.stringify(result.data));
 						window.location.href = "growthRecord-teacher.html";
+					}else{
+						alert("账号或密码错误，请重新输入！")
 					}
 				},
 				error:function(result){
