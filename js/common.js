@@ -18,8 +18,8 @@ if(getParents()){
 	$('.icongrowth').click(function(){
 		window.location.href = "growthRecord-parents.html";
 	});
-	$('.iconbianji').click(function(){
-		window.location.href = "addGrowthRecord.html";
+	$('.iconketang').click(function(){
+		window.location.href = "parengtsClass.html";
 	});
 	$('.iconmine').click(function(){
 		window.location.href = "parentsMine.html"
@@ -33,16 +33,19 @@ if(getTeacher()){
 		window.location.href = "initiation.html";
 	});
 	$('.icongrowth').click(function(){
-		window.location.href = "growthRecord-parents.html";
+		window.location.href = "growthRecord-teacher.html";
 	});
-	$('.iconbianji').click(function(){
-		window.location.href = "addGrowthRecord.html";
+	$('.iconketang').click(function(){
+		window.location.href = "teacherClass.html";
 	});
 	$('.iconmine').click(function(){
 		window.location.href = "teacherMine.html"
 	});
 }
 
+$('.iconbianji').click(function(){
+		window.location.href = "addGrowthRecord.html";
+	});
 
 (function(w){
 // 空函数
