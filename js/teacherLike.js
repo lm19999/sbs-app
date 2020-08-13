@@ -1,19 +1,19 @@
 $(function(){
     /*----------------------------成长记录---------------------------------*/
     $.ajax({
-    	url:'http://localhost:8080/api/growthRecord/parGRCollectList',
+    	url:'http://localhost:8080/api/growthRecord/teaGRCollectList',
     	type:'post',
     	dataType:'json',
     	data:{
-    		parId:getParents().parId
+    		teaNo:getTeacher().teaNo
     	},
     	success:function(data){
     		console.log(data.data)
-			var parLike = data.data
+			var teaLike = data.data
 			var likeItem = '';
-			for(var i=0; i<parLike.length; i++){
-				console.log(parLike[i])
-				var recommend = parLike[i];
+			for(var i=0; i<teaLike.length; i++){
+				console.log(teaLike[i])
+				var recommend = teaLike[i];
 				likeItem += `
 					<div class="list">
 						<div class="imageson ${recommend.growthRecord.growthRecordId}3">
@@ -27,8 +27,8 @@ $(function(){
 					</div>
 				`
 			};
-			// 图片循环
-			var imgList = (recommend.growthRecord.growthRecordUrl).split("&");
+			// // 图片循环
+			/* var imgList = (recommend.growthRecord.growthRecordUrl).split("&");
 			console.log(imgList)
 			var img = imgList.filter(function (s) {
 			   return s && s.trim();
@@ -40,7 +40,7 @@ $(function(){
 				$("."+recommend.growthRecord.growthRecordId+3+"").append(
 					`<img src="http://localhost:8080/upload/${tu}" />`
 				);
-			}
+			} */
 			
 			$(".recommend1").empty();
 			$(".recommend1").html(likeItem);
@@ -63,11 +63,11 @@ function getCoffeId(coffeId){
 function cancelGRLike(growthRecordId){
 	if($("."+growthRecordId+"").hasClass("LikeColor")){
 		$.ajax({
-			url:"http://localhost:8080/api/growthRecord/updateParGRState",
+			url:"http://localhost:8080/api/growthRecord/updateTeaGRState",
 			dataType:"json",
 			type:"post",
 			data:{
-				parId: getParents().parId,
+				teaNo:getTeacher().teaNo,
 				growthRecordId: growthRecordId,
 				collectState: 0
 			},
@@ -90,10 +90,10 @@ function cancelGRLike(growthRecordId){
 		$("."+growthRecordId+"").removeClass("LikeColor");
 	}else{
 		$.ajax({
-		    url:"http://localhost:8080/api/growthRecord/updateParGRState",
+		    url:"http://localhost:8080/api/growthRecord/updateTeaGRState",
 		    type: "POST",
 		    data: {
-				parId: getParents().parId,
+				teaNo:getTeacher().teaNo,
 		        growthRecordId: growthRecordId,
 				collectState: 1
 		    },
@@ -119,19 +119,3 @@ function cancelGRLike(growthRecordId){
 	
 	
 }
-/* function cancelCoffe(coffeId){
-    $.ajax({
-        url:"/collect/delCollectCoffe",
-        dataType:"json",
-        type:"post",
-        data:{
-            coffeId:coffeId
-        },
-        success:function(res){
-            alert("取消收藏");
-            $("."+coffeId+"").removeClass("coffeColor");
-        }
-    })
-} */
-
-
