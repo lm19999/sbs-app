@@ -19,7 +19,7 @@ if(getParents()){
 		window.location.href = "growthRecord-parents.html";
 	});
 	$('.iconketang').click(function(){
-		window.location.href = "parengtsClass.html";
+		window.location.href = "parentsClass.html";
 	});
 	$('.iconmine').click(function(){
 		window.location.href = "parentsMine.html"
