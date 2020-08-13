@@ -101,6 +101,12 @@
 				success:function(data){
 					console.log(data);
 					// 创建好班级后跳转到自己所有创建的班级目录
+					// 创建好班级直接提示创建成功
+					if(data.code = "200"){
+						window.location.href="teacherClass.html"
+					}else{
+						showBg("创建失败");
+					}
 				}
 			});
 	    });
