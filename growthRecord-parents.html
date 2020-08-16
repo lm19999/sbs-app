@@ -63,7 +63,6 @@
 			data: {},
 			dataType: "json",
 			success: function (res) {
-				console.log(res)
 				var growthRecordCollectList = res.data.growthRecordCollectList;
 				for(var growthRecord of res.data.growthRecordList){
 					$.ajax({

@@ -17,8 +17,15 @@
 		<div class="new">
 			最新的群聊的消息
 		</div>
-		<div class="join">
-			<div>我创建的群聊</div>
+		<div class="myCreate">
+			<figure id="figure" style="border-bottom: 1px solid red;" value="true" onclick="onOff()">
+				<span id="icon" class="iconfont iconxiala"></span>
+				<figcaption>我创建的群聊</figcaption>
+				<div style="flex:1;text-align: right;">7</div>
+			</figure>
+			<div class="myList" style="display: none;">
+				
+			</div>
 		</div>
 		<div class="nav">
 			<figure>
@@ -48,10 +55,50 @@
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function(){
-		
+		var teacher = JSON.parse(localStorage.getItem("teacherLogin"));
+		console.log(teacher.teaNo)
+		$.ajax({
+			type:"post",//HTTP请求类型
+			url:"http://localhost:8080/api/selectAllCreateClassService",
+			data:{
+				teaNo:teacher.teaNo
+			},
+			dataType:'json',//服务器返回json格式数据
+			success:function(data){
+				console.log(data);
+				if(data.code == "200"){
+					$('.myList').empty()
+					var html = ""
+					for(var i =0;i<data.data.length;i++){
+						html+=`
+							<figure>
+								<img src="${data.data[i].classImg}" />
+								<figcaption>${data.data[i].className}</figcaption>
+							</figure>
+						`
+					}
+					$('.myList').append(html)
+				}
+			}
+		})
 	})
 	
 	function create(){
 		window.location.href = "createClass.html"
+	}
+	
+	function onOff(){
+		console.log()
+		if($('#figure').attr("value") == "true"){
+			$('#icon').removeClass('iconxiala')
+			$('#icon').addClass('iconxiaoxi-haoyou-weizhankai')
+			$('#figure').attr("value","false")
+			$(".myList").css("display","block")
+		}else{
+			$('#icon').removeClass('iconxiaoxi-haoyou-weizhankai')
+			$('#icon').addClass('iconxiala')
+			$('#figure').attr("value","true")
+			$('.myList').css("display","none")
+		}
 	}
 </script>
