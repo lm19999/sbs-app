@@ -85,6 +85,9 @@
 												<span>${res.data.parents.parName}</span>
 											</div>
 										</div>
+										<div class="sonright">
+											<span class="iconfont iconshanchu ${res.data.growthRecordId}6" onclick="toDel(${res.data.growthRecordId})"></span>
+										</div>
 										<p>${res.data.growthRecordDescribe}</p>
 										<div class="imageson ${res.data.growthRecordId}3">
 											
@@ -140,12 +143,12 @@
 				};
 			}
 		});
-	
+		console.log(getParData());
 		$.ajax({
 			type: 'POST',
 			url: 'http://localhost:8080/api/growthRecord/findGrowthRecordByPar',
 			data: {
-				parId:	getParData().parId
+				parId: getParData().parId
 			},
 			dataType: "json",
 			success: function (res) {
@@ -228,7 +231,26 @@
 			}
 		});
 	});
-	
+	function toDel(growthRecordId){
+		$.ajax({
+		    url:"http://localhost:8080/api/growthRecord/delGrowthRecord",
+		    type: "POST",
+		    data: {
+		        parId: getParData().parId,
+		        growthRecordId: growthRecordId
+		    },
+		    dataType: "JSON",
+		    success:function(result){
+				console.log(result);
+		        if (result.code == 200){
+					alert("删除成长记录成功");
+					window.location.href="growthRecord-parents.html";
+				} else{
+					alert("删除成长记录失败");
+				}
+		    }
+		});
+	}
 	
 	function getParData() {
 	    var storage = localStorage.getItem("parentLogin");
