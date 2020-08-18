@@ -14,36 +14,56 @@ $(function(){
 			for(var i=0; i<teaLike.length; i++){
 				console.log(teaLike[i])
 				var recommend = teaLike[i];
-				likeItem += `
-					<div class="list">
-						<div class="imageson ${recommend.growthRecord.growthRecordId}3">
+				
+				$(".recommend1").append(
+					`
+						<div class="list">
+						
+							<div class="sonleft">
+								<div class="sonimg">
+									<img src="${recommend.parents.parPortrait}">
+								</div>
+								<div class="jieshao">
+									<span>${recommend.parents.parName}</span>
+								</div>
+							</div>
 							
+							<div class="describe">
+								<p onclick="getGrowthRecordId()">`+recommend.growthRecord.growthRecordDescribe+`</p>
+							</div>
+						
+							<div class="imageson ${recommend.growthRecord.growthRecordId}3"></div>
+								
+							
+							<div class="detail">
+								<div class="dizhi">
+									<span class="iconfont iconweizhi"></span>
+									<span class="dizhifont">${recommend.growthRecord.growthRecordPosition}</span>
+								</div>
+								<div class="dzpl">
+									<span class="iconfont iconthumbup-fill LikeColor ${recommend.growthRecord.growthRecordId}" onclick="cancelGRLike(${recommend.growthRecord.growthRecordId})"></span>
+									<span class="iconfont iconpinglun ${recommend.growthRecord.growthRecordId}2" onclick="obtainGrowthReview(${recommend.growthRecord.growthRecordId})"></span>
+								</div>
+							</div>
 						</div>
-					
-						<div class="detail">
-							<p onclick="getGrowthRecordId()">`+recommend.growthRecord.growthRecordDescribe+`</p>
-							<span class="iconfont iconthumbup-fill LikeColor ${recommend.growthRecord.growthRecordId}" onclick="cancelGRLike(${recommend.growthRecord.growthRecordId})"></span>
-						</div>
-					</div>
-				`
-			};
-			// // 图片循环
-			/* var imgList = (recommend.growthRecord.growthRecordUrl).split("&");
-			console.log(imgList)
-			var img = imgList.filter(function (s) {
-			   return s && s.trim();
-			});
-			console.log(img)
-			$("."+recommend.growthRecord.growthRecordId+3+"").empty();
-			for (let tu of img) {
-				console.log(tu)
-				$("."+recommend.growthRecord.growthRecordId+3+"").append(
-					`<img src="http://localhost:8080/upload/${tu}" />`
+					`
 				);
-			} */
+				// 图片循环
+				var imgList = (recommend.growthRecord.growthRecordUrl).split("&");
+				console.log(imgList)
+				var img = imgList.filter(function (s) {
+				   return s && s.trim();
+				});
+				console.log(img)
+				$("."+recommend.growthRecord.growthRecordId+3+"").empty();
+				for (let tu of img) {
+					console.log(tu)
+					$("."+recommend.growthRecord.growthRecordId+3+"").append(
+						`<img src="http://localhost:8080/upload/${tu}" />`
+					);
+				}
+			};
 			
-			$(".recommend1").empty();
-			$(".recommend1").html(likeItem);
     	}
 	
     });
@@ -52,6 +72,7 @@ $(function(){
 
 });
 
+//进入详情页
 function getCakeId(cakeId){
     window.location.href = "/tea/details.html?cakeId="+cakeId;
 }
@@ -61,6 +82,7 @@ function getCoffeId(coffeId){
 
 
 function cancelGRLike(growthRecordId){
+	//取消点赞
 	if($("."+growthRecordId+"").hasClass("LikeColor")){
 		$.ajax({
 			url:"http://localhost:8080/api/growthRecord/updateTeaGRState",
@@ -89,6 +111,7 @@ function cancelGRLike(growthRecordId){
 		})
 		$("."+growthRecordId+"").removeClass("LikeColor");
 	}else{
+		//点赞
 		$.ajax({
 		    url:"http://localhost:8080/api/growthRecord/updateTeaGRState",
 		    type: "POST",
@@ -118,4 +141,9 @@ function cancelGRLike(growthRecordId){
 	}
 	
 	
+}
+
+
+function obtainGrowthReview(growthRecordId){
+	window.location.href="forumReview.html?growthRecordId="+growthRecordId;
 }
