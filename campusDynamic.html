@@ -6,6 +6,7 @@
 		<title>校园动态</title>
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/campusDynamic.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
 	</head>
 	<body>
 		<div class="head">
@@ -91,12 +92,12 @@
 														</span>
 														<div class="interactbody">
 														    <div class="bo">
-														        <span class="iconfont icondianzan1-copy red ${dynamicList.campusDynamicId}1" onclick='obtainDynamic(${dynamicList.campusDynamicId})'></span>
-														        <span class="font yesFont ${dynamicList.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;</span>
+														        <span class="iconfont icondianzan ${dynamicList.campusDynamicId}1" onclick='obtainDynamic(${dynamicList.campusDynamicId})'></span>
+														        <span class="font yesFont ${dynamicList.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;${dynamicList.campusDynamicCollects}</span>
 														    </div>
 														    <div class="bt">
-														        <span class="iconfont iconpinglun1-copy ${dynamicList.campusDynamicId}2" onclick='obtainPingLun(${dynamicList.campusDynamicId})'></span>
-														        <span class="fontLun ${dynamicList.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;</span>
+														        <span class="iconfont iconicon_fapinglun-mian ${dynamicList.campusDynamicId}2" onclick='obtainPingLun(${dynamicList.campusDynamicId})'></span>
+														        <span class="fontLun ${dynamicList.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;${dynamicList.campusDynamicCollects}</span>
 														    </div>
 														</div>
 														<div class="comContent ${dynamicList.campusDynamicId}3"></div>

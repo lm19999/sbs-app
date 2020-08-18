@@ -9,6 +9,10 @@
 	flex-flow: row;
 	justify-content: space-around;
 }
+.iconfont {
+	color: #cdcdcd;
+	font-size: 1.5rem;
+}
 .return{
 	width: 10%;
 }
