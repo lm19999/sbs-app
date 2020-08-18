@@ -25,6 +25,13 @@
 			Request = getQueryStrings();
 			var parId = Request['parId'];
 		</script>
+		<style type="text/css">
+			.headPic{
+				display: block;
+				margin-top: -5rem;
+				margin-left: 2rem;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="top">
@@ -36,10 +43,10 @@
 			<div class="upload">
 				<div id="frame">
 					<!--<p>（仅能上传一张图片哦！）</p>-->
-					<!-- style="opacity: 0; -->
-					<input type="file" name="commentFile" id="upLoads" "/>
-						<!-- <span class=" iconfont icon-tianjiatupian"></span>
-					-->
+					
+					<input type="file" name="commentFile" id="upLoads" style="opacity: 0;"/>
+					<img id="headPic" class="headPic" src="img/upload.png" width="20%" height="20%" >
+					
 					<div id='previewImg'>
 						<img src="" id='viewImg' />
 					</div>

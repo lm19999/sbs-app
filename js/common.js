@@ -8,6 +8,9 @@ function getTeacher(){
 	return JSON.parse(teacher);
 }
 	
+	console.log(getParents())
+	console.log(getTeacher())
+	
 if(getParents()){
 	$('.iconindex').click(function(){
 		window.location.href = "index.html";
