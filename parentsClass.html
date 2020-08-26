@@ -22,13 +22,22 @@
 		<div class="head">
 			<div>用户名</div>
 			<div style="text-align: center;">班级</div>
-			<div class="button" onclick="openBarcode()">扫一扫</div><!--后期换成图标-->
+			<!-- <div class="button" onclick="openBarcode()">扫一扫</div><!--后期换成图标--> 
+			<div class="joinclass">
+				<button id="button" status="0"; onclick="xianshi()">加入群聊</button>
+				<ul id="ul" style="display: none;">
+					<li onclick="classNum()">班级号</li>
+					<li>二维码</li>
+				</ul>
+			</div>
 		</div>
 		<div>
-			返回值
 			<ul id="history" class="dlist" style="text-align:left;">
 				<li id="nohistory" class="ditem" onclick="onempty()"></li>
 			</ul>
+		</div>
+		<div id="joinList" class="joinList" style="">
+			
 		</div>
 		<div class="nav">
 			<figure>
@@ -57,3 +66,45 @@
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/barcode.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(function(){
+		var parent = JSON.parse(localStorage.getItem("parentLogin"));
+		console.log(parent.parId)
+		$.ajax({
+			type:'post',
+			url:"http://localhost:8080/api/selectAllJoinClass",
+			data:{
+				parId:parent.parId
+			},
+			success:function(data){
+				console.log(data)
+				$('.joinList').empty();
+				if(data.data.length == 0){
+					$('.joinList').append("暂时没有加入群聊，快去加入吧~")
+				}else{
+					$('.joinList').append(`
+						<figure>
+							<img src="${data.data[i].classImg}" />
+							<figcaption>${data.data[i].className}</figcaption>
+						</figure>
+					`)
+				}
+			}
+		})
+	})
+	
+	function xianshi(){
+		console.log($('#button').attr("status"))
+		if($('#button').attr("status") == 0){
+			$('#ul').show()
+			$('#button').attr("status","1")
+		}else{
+			$('#ul').hide()
+			$('#button').attr("status","0")
+		}
+	}
+	
+	function classNum(){
+		window.location.href="searchClass.html"
+	}
+</script>

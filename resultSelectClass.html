@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>查询到的结果</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/resultSelectClass.css"/>
+	</head>
+	<body>
+		<div class="back">
+			<a onclick="go()">返回</a>
+		</div>
+		<!-- 查询到的返回结果，是否查询到班级 -->
+		<div class="resultList">
+			
+		</div>
+		<!-- 申请加群 -->
+		<div style="display: none;" class="apply">申请加群</div>
+	</body>
+</html>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function go()
+	{
+	 window.history.go(-1);
+	}
+	
+	function GetRequest() {
+		var url = location.search; //获取url中"?"符后的字串
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for(var i = 0; i < strs.length; i ++) {
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+
+	var Request = new Object();
+	Request = GetRequest();
+	var classNum = Request['classNum'];
+	console.log(classNum)
+	
+	$(function(){
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8080/api/selectClassByClassNum",
+			data:{
+				classNum:classNum
+			},
+			success:function(data){
+				console.log(data)
+				// 没有查询到数据
+				if (data.data == null) {
+					$('.resultList').empty()
+					$('.resultList').append("没有查询到班级~")
+					$('.apply').hide();
+				} else{
+					// 查询到班级数据
+					console.log("e")
+					let remark = ""
+					if(data.data.remark == ""){
+						remark = "本群暂时没有介绍~"
+					}else{
+						remark = data.data.remark
+					}
+					$('.resultList').append(`
+						<figure>
+							<img src="${data.data.classImg}" />
+							<figcaption>
+								<p>${data.data.className}</p>
+								<p style="padding:10px 0">${data.data.classNum}</p>
+								<p>${remark}</p>
+							</figcaption>
+						</figure>
+					`)
+					$('.apply').show();
+				}
+			}
+		})
+	})
+</script>

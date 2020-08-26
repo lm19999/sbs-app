@@ -1,0 +1,21 @@
+.back{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.625rem;
+	background-color: #0000FF;
+	color: white;
+}
+.search{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+	height: 1.875rem;
+	padding: 0.625rem 0;
+}
+.search input{
+	width: 60%;
+}
+.search button{
+	width: 20%;
+}

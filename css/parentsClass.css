@@ -16,3 +16,18 @@
 .iconketang{
 	color: white;
 }
+.joinList{
+	padding: 0.625rem;
+}
+.choose{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+.joinclass button{
+	/* width: 6.25rem; */
+	padding: 0.3125rem 0.625rem;
+	border: none;
+	outline: none;
+	background-color: none;
+}

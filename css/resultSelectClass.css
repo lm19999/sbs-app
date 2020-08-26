@@ -1,0 +1,48 @@
+body{
+	background-color: #F5F7FB;
+}
+.back{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.625rem;
+	background-color: #0000FF;
+	color: white;
+}
+.resultList{
+	width: 100%;
+	box-sizing: border-box;
+}
+.resultList figure{
+	width: 100%;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	padding: 1.25rem 0;
+}
+.resultList figure img{
+	width: 20%;
+	padding: 0.625rem;
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+.resultList figure figcaption{
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1;
+	justify-content: space-between;
+	align-items: center;
+}
+.resultList figure figcaption p{
+	width: 100%;
+}
+.apply{
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	padding: 10px 0;
+	box-sizing: border-box;
+	background-color: skyblue;
+	color: white;
+}
