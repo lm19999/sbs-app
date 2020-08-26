@@ -4,8 +4,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>查询到的结果</title>
-		<link rel="stylesheet" type="text/css" href="css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="css/resultSelectClass.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/resultSelectClass.css" />
 	</head>
 	<body>
 		<div class="back">
@@ -13,26 +13,25 @@
 		</div>
 		<!-- 查询到的返回结果，是否查询到班级 -->
 		<div class="resultList">
-			
+
 		</div>
 		<!-- 申请加群 -->
-		<div style="display: none;" class="apply">申请加群</div>
+		<div class="apply" onclick="applyJoin()">申请加群</div>
 	</body>
 </html>
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	function go()
-	{
-	 window.history.go(-1);
+	function go() {
+		window.history.go(-1);
 	}
-	
+
 	function GetRequest() {
 		var url = location.search; //获取url中"?"符后的字串
 		var theRequest = new Object();
 		if (url.indexOf("?") != -1) {
 			var str = url.substr(1);
 			strs = str.split("&");
-			for(var i = 0; i < strs.length; i ++) {
+			for (var i = 0; i < strs.length; i++) {
 				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 			}
 		}
@@ -43,31 +42,26 @@
 	Request = GetRequest();
 	var classNum = Request['classNum'];
 	console.log(classNum)
-	
-	$(function(){
+
+	$(function() {
 		$.ajax({
-			type:"post",
-			url:"http://localhost:8080/api/selectClassByClassNum",
-			data:{
-				classNum:classNum
+			type: "post",
+			url: "http://localhost:8080/api/selectClassByClassNum",
+			data: {
+				classNum: classNum
 			},
-			success:function(data){
+			success: function(data) {
 				console.log(data)
-				// 没有查询到数据
-				if (data.data == null) {
-					$('.resultList').empty()
-					$('.resultList').append("没有查询到班级~")
-					$('.apply').hide();
-				} else{
-					// 查询到班级数据
-					console.log("e")
-					let remark = ""
-					if(data.data.remark == ""){
-						remark = "本群暂时没有介绍~"
-					}else{
-						remark = data.data.remark
-					}
-					$('.resultList').append(`
+				// 查询到班级数据
+				console.log("e")
+				let remark = ""
+				if (data.data.remark == "") {
+					remark = "本群暂时没有介绍~"
+				} else {
+					remark = data.data.remark
+				}
+				$('.resultList').append(
+					`
 						<figure>
 							<img src="${data.data.classImg}" />
 							<figcaption>
@@ -76,10 +70,53 @@
 								<p>${remark}</p>
 							</figcaption>
 						</figure>
-					`)
-					$('.apply').show();
-				}
+					`
+				)
 			}
 		})
 	})
+	
+	// 申请加入班级方法
+	function applyJoin(){
+		// 当前登录的家长的id
+		var parents = JSON.parse(localStorage.getItem("parentLogin"));
+		console.log(parents.parId)
+		// 班级号
+		console.log(classNum)
+		// 加入班级之前去查询此家长是否已经加入过班级
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8080/api/selectTrue",
+			data:{
+				classNum:classNum,
+				parId:parents.parId
+			},
+			async:false, 
+			success:function(data){
+				console.log(data)
+				if(data.data == null){
+					// 加入班级请求
+					$.ajax({
+						type:"post",
+						url:"http://localhost:8080/api/joinClass",
+						data:{
+							classNum:classNum,
+							parId:parents.parId
+						},
+						async:false, 
+						success:function(data){
+							if(data.data == 1){
+								console.log("加入成功")
+							}else{
+								console.log("加入失败")
+							}
+						}
+					})
+				}else{
+					alert("已经加入过此班级")
+				}
+			}
+		})
+		
+	}
 </script>

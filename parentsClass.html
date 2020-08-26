@@ -27,15 +27,16 @@
 				<button id="button" status="0"; onclick="xianshi()">加入群聊</button>
 				<ul id="ul" style="display: none;">
 					<li onclick="classNum()">班级号</li>
-					<li>二维码</li>
+					<li onclick="openBarcode()">二维码</li>
 				</ul>
 			</div>
 		</div>
-		<div>
+		<!-- 返回的数据 -->
+		<!-- <div>
 			<ul id="history" class="dlist" style="text-align:left;">
 				<li id="nohistory" class="ditem" onclick="onempty()"></li>
 			</ul>
-		</div>
+		</div> -->
 		<div id="joinList" class="joinList" style="">
 			
 		</div>
@@ -82,12 +83,14 @@
 				if(data.data.length == 0){
 					$('.joinList').append("暂时没有加入群聊，快去加入吧~")
 				}else{
-					$('.joinList').append(`
-						<figure>
-							<img src="${data.data[i].classImg}" />
-							<figcaption>${data.data[i].className}</figcaption>
-						</figure>
-					`)
+					for (let i = 0;i<data.data.length;i++) {
+						$('.joinList').append(`
+							<figure>
+								<img src="${data.data[i].createClass.classImg}" />
+								<figcaption style="padding:0 10px;box-sizing: border-box;">${data.data[i].createClass.className}</figcaption>
+							</figure>
+						`)
+					}
 				}
 			}
 		})

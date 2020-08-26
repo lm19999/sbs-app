@@ -46,3 +46,17 @@ body{
 	background-color: skyblue;
 	color: white;
 }
+.search{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row;
+	height: 1.875rem;
+	padding: 0.625rem 0;
+}
+.search input{
+	width: 60%;
+}
+.search button{
+	width: 20%;
+}

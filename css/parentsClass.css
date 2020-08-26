@@ -18,6 +18,7 @@
 }
 .joinList{
 	padding: 0.625rem;
+	box-sizing: border-box;
 }
 .choose{
 	display: flex;
@@ -27,7 +28,19 @@
 .joinclass button{
 	/* width: 6.25rem; */
 	padding: 0.3125rem 0.625rem;
+	box-sizing: border-box;
 	border: none;
 	outline: none;
 	background-color: none;
+}
+.joinList{
+	width: 100%;
+}
+.joinList figure{
+	display: flex;
+	align-items: center;
+}
+.joinList figure img{
+	width: 3.125rem;
+	border-radius: 50%;
 }
