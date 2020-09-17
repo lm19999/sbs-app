@@ -84,9 +84,6 @@
 												<span>${res.data.parents.parName}</span>
 											</div>
 										</div>
-										<div class="sonright">
-											<span class="iconfont iconshanchu ${res.data.growthRecordId}6" onclick="toDel(${res.data.growthRecordId})"></span>
-										</div>
 										<p>${res.data.growthRecordDescribe}</p>
 										<div class="imageson ${res.data.growthRecordId}3">
 											
@@ -124,9 +121,10 @@
 							// 点赞状态->颜色变化
 							let choose=0;
 							for (let growthRecordCollect of growthRecordCollectList){
-								/* console.log(growthRecordCollect)
-								console.log(growthRecordCollectList);
-								console.log(getParData().parId) */
+								/* 	console.log(growthRecordCollect)
+									console.log(growthRecordCollectList);
+									console.log(getParData().parId) 
+								*/
 								if (growthRecordCollect.parents.parId == getParData().parId && growthRecordCollect.growthRecord.growthRecordId == res.data.growthRecordId && growthRecordCollect.collectState==1){
 									choose = 1;
 								}
@@ -173,6 +171,9 @@
 												<span>${res.data.parents.parName}</span>
 											</div>
 										</div>
+										<div class="sonright">
+											<span class="iconfont iconshanchu ${res.data.growthRecordId}6" onclick="toDel(${res.data.growthRecordId})"></span>
+										</div>
 										<p>${res.data.growthRecordDescribe}</p>
 										<div class="imageson ${res.data.growthRecordId}3">
 											
@@ -210,9 +211,6 @@
 							// 点赞状态->颜色变化
 							let choose=0;
 							for (let growthRecordCollect of growthRecordCollectList){
-								/* console.log(growthRecordCollect)
-								console.log(growthRecordCollectList);
-								console.log(getParData().parId) */
 								if (growthRecordCollect.parents.parId == getParData().parId && growthRecordCollect.growthRecord.growthRecordId == res.data.growthRecordId && growthRecordCollect.collectState==1){
 									choose = 1;
 								}
@@ -280,13 +278,26 @@
 					    dataType: "JSON",
 					    success:function(result){
 							console.log(result);
+							// $.ajax({
+							//     url:"http://localhost:8080/api/growthRecord/searchGrowthRecordById",
+							//     type: "POST",
+							//     data: {
+							//         growthRecordId: growthRecordId
+							//     },
+							//     dataType: "JSON",
+							//     success:function(result){
+							// 		console.log(result);
+							// 		console.log(result.data.growthRecordCollects);
+							// 		$("."+growthRecordId+4+"").innerText = result.data.growthRecordCollects;
+							// 	},
+							// });
 						},
 					});
-	                window.location.href="growthRecord-parents.html";
+	                // window.location.reload();
+					// history.go(0);
 	            }
 	        });
 			$("."+growthRecordId+1+"").removeClass("red");
-			
 	    }else{
 	        $.ajax({
 	            url:"http://localhost:8080/api/growthRecord/parGrowthCollectList",

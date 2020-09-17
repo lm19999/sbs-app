@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<div class="head">
-			<p class="return" onclick="go()"><</p>
+			<span class="iconfont iconfanhui" onclick="go()"></span>
 			<p class="title">校园动态</p>
 		</div>
 		<div class="navTab">
@@ -39,9 +39,9 @@
 			data: {},
 			dataType: "json",
 			success: function (res) {
-				console.log(res)
+				// console.log(res)
 				for(var campusDynamicType of res.data){
-					console.log(campusDynamicType);
+					// console.log(campusDynamicType);
 					$('.navTab').append(
 						`
 							<div class="tabDiv" value="${campusDynamicType.campusDynamicTypeId}">
@@ -56,7 +56,7 @@
 				// 进入页面就加在数据
 				// 获取启蒙类型查询对应的数据
 				var typeId = $('.current').attr("value");
-				console.log(typeId);
+				// console.log(typeId);
 				$('.dynamicList').empty();
 				$.ajax({
 					type: 'POST',
@@ -66,59 +66,95 @@
 					},
 					dataType: "json",
 					success: function (res) {
-						console.log(res);
+						// console.log(res);
 						var html = "";
-						if(res.code=="300"){
+						if (res.code=="300") {
 							$('.dynamicList').append("暂无数据");
-						}else{
-							for(var dynamicList of res.data){
+						} else {
+							let dynamicCollectList = res.data.campusDynamicCollectList;
+							for(var dynamicList of res.data.campusDynamicList){
 								$.ajax({
 									type: 'POST',
-									url: 'http://localhost:8080/api/campusDynamic/getPictureUrl',
+									url: 'http://localhost:8080/api/campusDynamic/findCampusDynamicById',
 									data: {
-										campusDynamicDescribe: dynamicList.campusDynamicDescribe
+										campusDynamicId: dynamicList.campusDynamicId
 									},
 									dataType: "json",
-									async:false,
 									success: function (res) {
 										console.log(res.data);
-										$(".dynamicList").append(
-											`
-												<div class="dynamicSon">
-													<img src="${res.data}" onclick="toDetails(${dynamicList.campusDynamicId})" />
-													<div class="mm">
-														<span onclick="toDetails(${dynamicList.campusDynamicId})">
-															${dynamicList.campusDynamicName}
-														</span>
-														<div class="interactbody">
-														    <div class="bo">
-														        <span class="iconfont icondianzan ${dynamicList.campusDynamicId}1" onclick='obtainDynamic(${dynamicList.campusDynamicId})'></span>
-														        <span class="font yesFont ${dynamicList.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;${dynamicList.campusDynamicCollects}</span>
-														    </div>
-														    <div class="bt">
-														        <span class="iconfont iconicon_fapinglun-mian ${dynamicList.campusDynamicId}2" onclick='obtainPingLun(${dynamicList.campusDynamicId})'></span>
-														        <span class="fontLun ${dynamicList.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;${dynamicList.campusDynamicCollects}</span>
-														    </div>
+										let campusDynamic = res.data;
+										$.ajax({
+											type: 'POST',
+											url: 'http://localhost:8080/api/campusDynamic/getPictureUrl',
+											data: {
+												campusDynamicDescribe: res.data.campusDynamicDescribe
+											},
+											dataType: "json",
+											async:false,
+											success: function (res) {
+												console.log(res.data);
+												$(".dynamicList").append(
+													`
+														<div class="dynamicSon">
+															<img src="${res.data}" onclick="toDetails(${campusDynamic.campusDynamicId})" />
+															<div class="mm">
+																<span onclick="toDetails(${campusDynamic.campusDynamicId})">
+																	${campusDynamic.campusDynamicName}
+																</span>
+																<div class="interactbody">
+																	<div class="bo">
+																		<span class="iconfont icondianzan ${campusDynamic.campusDynamicId}1" onclick='obtainDynamic(${campusDynamic.campusDynamicId})'></span>
+																		<span class="font yesFont ${campusDynamic.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;${campusDynamic.campusDynamicCollects}</span>
+																	</div>
+																	<div class="bt">
+																		<span class="iconfont iconicon_fapinglun-mian ${campusDynamic.campusDynamicId}2" onclick='obtainPingLun(${campusDynamic.campusDynamicId})'></span>
+																		<span class="fontLun ${campusDynamic.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;${campusDynamic.campusDynamicCollects}</span>
+																	</div>
+																</div>
+																<div class="comContent ${campusDynamic.campusDynamicId}3"></div>
+															</div>
 														</div>
-														<div class="comContent ${dynamicList.campusDynamicId}3"></div>
-													</div>
-												</div>
-											`
-										);
+													`
+												);
+												// 点赞状态->颜色变化
+												let choose=0;
+												for (let dynamicCollect of dynamicCollectList){
+													// console.log(dynamicCollect);
+													// console.log(growthRecordCollectList);
+													// console.log(getTeaData().teaNo);
+													// console.log(dynamicCollect.teacher.teaNo == getTeaData().teaNo);
+													// console.log("."+dynamicList.campusDynamicId+1+"");
+												   if (getParData() !== null) {
+														if (dynamicCollect.parents.parId == getParData().parId && dynamicCollect.campusDynamic.campusDynamicId == campusDynamic.campusDynamicId && dynamicCollect.collectState==1){
+															choose = 1;
+														}
+												   } else if (getTeaData() !== null){
+														if (dynamicCollect.teacher.teaNo == getTeaData().teaNo && dynamicCollect.campusDynamic.campusDynamicId == campusDynamic.campusDynamicId && dynamicCollect.collectState==1){
+															choose = 1;
+														}
+												   }
+												   //颜色变化逻辑
+												   if (choose == 1){
+														$("."+campusDynamic.campusDynamicId+1+"").addClass("red");
+														return;
+												   } else {
+														$("."+campusDynamic.campusDynamicId+1+"").removeClass("red");
+												   }
+												}
+											}
+										});
 									}
 								});
-								
 							}
-							
 						}
 					}
 				})
 				
 				// tab切换卡
 				var tabs = $('.tabDiv');
-				console.log(tabs);
+				// console.log(tabs);
 				for (var i = 0; i < tabs.length; ++i) {
-					console.log(tabs[i]);
+					// console.log(tabs[i]);
 					tabs[i].onclick = function() {
 						$(this).addClass('current');
 						$(this).siblings().removeClass('current');
@@ -140,48 +176,88 @@
 								if(res.code=="300"){
 									$('.dynamicList').append("暂无数据");
 								}else{
-									for(var dynamicList of res.data){
-										console.log(dynamicList.campusDynamicDescribe)
-										
-										$.ajax({
-											type: 'POST',
-											url: 'http://localhost:8080/api/campusDynamic/getPictureUrl',
-											data: {
-												campusDynamicDescribe: dynamicList.campusDynamicDescribe
-											},
-											dataType: "json",
-											async:false,
-											success: function (res) {
-												console.log(res.data);
-												$(".dynamicList").append(
-													`
-														<div class="dynamicSon">
-															<img src="${res.data}" onclick="toDetails(${dynamicList.campusDynamicId})" />
-															<div class="mm">
-																<span id="gd" onclick="toDetails(${dynamicList.campusDynamicId})">
-																	${dynamicList.campusDynamicName}
-																</span>
-																<div class="interactbody">
-																    <div class="bo">
-																        <span class="iconfont icondianzan1-copy red ${dynamicList.campusDynamicId}1" onclick='obtainDynamic(${dynamicList.campusDynamicId})'></span>
-																        <span class="font yesFont ${dynamicList.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;</span>
-																    </div>
-																    <div class="bt">
-																        <span class="iconfont iconpinglun1-copy ${dynamicList.campusDynamicId}2" onclick='obtainPingLun(${dynamicList.campusDynamicId})'></span>
-																        <span class="fontLun ${dynamicList.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;</span>
-																    </div>
-																</div>
-																<div class="comContent ${dynamicList.campusDynamicId}3"></div>
-															</div>
-														</div>
-													`
-												);
+									var html = "";
+										if (res.code=="300") {
+											$('.dynamicList').append("暂无数据");
+										} else {
+											let dynamicCollectList = res.data.campusDynamicCollectList;
+											for(var dynamicList of res.data.campusDynamicList){
+												$.ajax({
+													type: 'POST',
+													url: 'http://localhost:8080/api/campusDynamic/findCampusDynamicById',
+													data: {
+														campusDynamicId: dynamicList.campusDynamicId
+													},
+													dataType: "json",
+													success: function (res) {
+														console.log(res.data);
+														let campusDynamic = res.data;
+														$.ajax({
+															type: 'POST',
+															url: 'http://localhost:8080/api/campusDynamic/getPictureUrl',
+															data: {
+																campusDynamicDescribe: res.data.campusDynamicDescribe
+															},
+															dataType: "json",
+															async:false,
+															success: function (res) {
+																console.log(res.data);
+																$(".dynamicList").append(
+																	`
+																		<div class="dynamicSon">
+																			<img src="${res.data}" onclick="toDetails(${campusDynamic.campusDynamicId})" />
+																			<div class="mm">
+																				<span onclick="toDetails(${campusDynamic.campusDynamicId})">
+																					${campusDynamic.campusDynamicName}
+																				</span>
+																				<div class="interactbody">
+																					<div class="bo">
+																						<span class="iconfont icondianzan ${campusDynamic.campusDynamicId}1" onclick='obtainDynamic(${campusDynamic.campusDynamicId})'></span>
+																						<span class="font yesFont ${campusDynamic.campusDynamicId}4">赞&nbsp;&nbsp;&nbsp;${campusDynamic.campusDynamicCollects}</span>
+																					</div>
+																					<div class="bt">
+																						<span class="iconfont iconicon_fapinglun-mian ${campusDynamic.campusDynamicId}2" onclick='obtainPingLun(${campusDynamic.campusDynamicId})'></span>
+																						<span class="fontLun ${campusDynamic.campusDynamicId}5">评论&nbsp;&nbsp;&nbsp;${campusDynamic.campusDynamicCollects}</span>
+																					</div>
+																				</div>
+																				<div class="comContent ${campusDynamic.campusDynamicId}3"></div>
+																			</div>
+																		</div>
+																	`
+																);
+																// 点赞状态->颜色变化
+																let choose=0;
+																for (let dynamicCollect of dynamicCollectList){
+																	// console.log(dynamicCollect);
+																	// console.log(growthRecordCollectList);
+																	// console.log(getTeaData().teaNo);
+																	// console.log(dynamicCollect.teacher.teaNo == getTeaData().teaNo);
+																	// console.log("."+dynamicList.campusDynamicId+1+"");
+																   if (getParData() !== null) {
+																		if (dynamicCollect.parents.parId == getParData().parId && dynamicCollect.campusDynamic.campusDynamicId == campusDynamic.campusDynamicId && dynamicCollect.collectState==1){
+																			choose = 1;
+																		}
+																   } else if (getTeaData() !== null){
+																		if (dynamicCollect.teacher.teaNo == getTeaData().teaNo && dynamicCollect.campusDynamic.campusDynamicId == campusDynamic.campusDynamicId && dynamicCollect.collectState==1){
+																			choose = 1;
+																		}
+																   }
+																   //颜色变化逻辑
+																   if (choose == 1){
+																		$("."+campusDynamic.campusDynamicId+1+"").addClass("red");
+																		return;
+																   } else {
+																		$("."+campusDynamic.campusDynamicId+1+"").removeClass("red");
+																   }
+																}
+															}
+														});
+													}
+												});
 											}
-										});										
+										}
 									}
-									
 								}
-							}
 						})
 					}
 				}
@@ -198,5 +274,220 @@
 	function getTeaData() {
 	    var storage = localStorage.getItem("teacherLogin");
 	    return JSON.parse(storage);
+	}
+	console.log(getParData());
+	console.log(getTeaData());
+	function obtainDynamic(campusDynamicId) {
+		console.log(campusDynamicId);
+		if (getParData() !== null) {
+			if($("."+campusDynamicId+1+"").hasClass("red")){
+			    /* var num = $("."+campusDynamicId+4+"").html(); */
+			    $.ajax({
+			        url:"http://localhost:8080/api/campusDynamic/updateParCDState",
+			        type: "POST",
+			        data: {
+			            parId: getParData().parId,
+			            campusDynamicId: campusDynamicId,
+			            collectState: 0
+			        },
+			        dataType: "JSON",
+			        success:function(result){
+			            console.log(result);
+			            alert("取消点赞成功");
+						$.ajax({
+						    url:"http://localhost:8080/api/campusDynamic/updateStatus",
+						    type: "POST",
+						    data: {
+						        campusDynamicId: campusDynamicId
+						    },
+						    dataType: "JSON",
+						    success:function(result){
+								console.log(result);
+							},
+						});
+			            window.location.reload();
+			        }
+			    });
+				$("."+campusDynamicId+1+"").removeClass("red");
+			}else{
+			    $.ajax({
+			        url:"http://localhost:8080/api/campusDynamic/parCampusCollectList",
+			        type: "GET",
+			        data: {
+			        },
+			        dataType: "JSON",
+			        success:function(res){
+			            let choose1=0;
+			            for(let item of res.data){
+							console.log(item)
+			                if (item.parents.parId == getParData().parId && item.campusDynamic.campusDynamicId==campusDynamicId){
+			                    choose1=1;
+			                }
+			            }
+			            if (choose1==1){
+			                $.ajax({
+			                    url:"http://localhost:8080/api/campusDynamic/updateParCDState",
+			                    type: "POST",
+			                    data: {
+									parId: getParData().parId,
+			                        campusDynamicId: campusDynamicId,
+									collectState: 1
+			                    },
+			                    dataType: "JSON",
+			                    success:function(result){
+			                        console.log(result)
+									$.ajax({
+									    url:"http://localhost:8080/api/campusDynamic/addCampusDynamicCollects",
+									    type: "POST",
+									    data: {
+									        campusDynamicId: campusDynamicId
+									    },
+									    dataType: "JSON",
+									    success:function(result){
+											console.log(result);
+										},
+									});
+									alert("点赞成功");
+			                        window.location.reload();
+			                    }
+			                });
+			                $("."+campusDynamicId+1+"").addClass("red");
+			            }else{
+			                $.ajax({
+			                    url:"http://localhost:8080/api/campusDynamic/parDynamicCollect",
+			                    type: "POST",
+			                    data: {
+			                        parId: getParData().parId,
+			                        campusDynamicId: campusDynamicId
+			                    },
+			                    dataType: "JSON",
+			                    success:function(result){
+			                        console.log(result);
+			                        alert("点赞成功");
+									$.ajax({
+									    url:"http://localhost:8080/api/campusDynamic/addCampusDynamicCollects",
+									    type: "POST",
+									    data: {
+									        campusDynamicId: campusDynamicId
+									    },
+									    dataType: "JSON",
+									    success:function(result){
+											console.log(result);
+										},
+									});
+			                        window.location.reload();
+			                    }
+			                });
+			                $("."+campusDynamicId+1+"").addClass("red");
+			            }
+			        }
+			    });
+			}
+		} else {
+			if($("."+campusDynamicId+1+"").hasClass("red")){
+			    /* var num = $("."+campusDynamicId+4+"").html(); */
+			    $.ajax({
+			        url:"http://localhost:8080/api/campusDynamic/updateTeaCDState",
+			        type: "POST",
+			        data: {
+			            teaNo: getTeaData().teaNo,
+			            campusDynamicId: campusDynamicId,
+			            collectState: 0
+			        },
+			        dataType: "JSON",
+			        success:function(result){
+			            console.log(result);
+			            alert("取消点赞成功");
+						$.ajax({
+						    url:"http://localhost:8080/api/campusDynamic/updateStatus",
+						    type: "POST",
+						    data: {
+						        campusDynamicId: campusDynamicId
+						    },
+						    dataType: "JSON",
+						    success:function(result){
+								console.log(result);
+							},
+						});
+			            window.location.reload();
+			        }
+			    });
+				$("."+campusDynamicId+1+"").removeClass("red");
+				
+			} else {
+			    $.ajax({
+			        url:"http://localhost:8080/api/campusDynamic/teaCampusCollectList",
+			        type: "GET",
+			        data: {
+			        },
+			        dataType: "JSON",
+			        success:function(res){
+			            let choose1=0;
+			            for(let item of res.data){
+							console.log(item)
+			                if (item.teacher.teaNo == getTeaData().teaNo && item.campusDynamic.campusDynamicId==campusDynamicId){
+			                    choose1=1;
+			                }
+			            }
+			            if (choose1==1){
+			                $.ajax({
+			                    url:"http://localhost:8080/api/campusDynamic/updateTeaCDState",
+			                    type: "POST",
+			                    data: {
+									teaNo: getTeaData().teaNo,
+			                        campusDynamicId: campusDynamicId,
+									collectState: 1
+			                    },
+			                    dataType: "JSON",
+			                    success:function(result){
+			                        console.log(result)
+									$.ajax({
+									    url:"http://localhost:8080/api/campusDynamic/addCampusDynamicCollects",
+									    type: "POST",
+									    data: {
+									        campusDynamicId: campusDynamicId
+									    },
+									    dataType: "JSON",
+									    success:function(result){
+											console.log(result);
+										},
+									});
+									alert("点赞成功");
+			                        window.location.reload();
+			                    }
+			                });
+			                $("."+campusDynamicId+1+"").addClass("red");
+			            }else{
+			                $.ajax({
+			                    url:"http://localhost:8080/api/campusDynamic/teaCollect",
+			                    type: "POST",
+			                    data: {
+			                        teaNo: getTeaData().teaNo,
+			                        campusDynamicId: campusDynamicId
+			                    },
+			                    dataType: "JSON",
+			                    success:function(result){
+			                        console.log(result);
+			                        alert("点赞成功");
+									$.ajax({
+									    url:"http://localhost:8080/api/campusDynamic/addCampusDynamicCollects",
+									    type: "POST",
+									    data: {
+									        campusDynamicId: campusDynamicId
+									    },
+									    dataType: "JSON",
+									    success:function(result){
+											console.log(result);
+										},
+									});
+			                        window.location.reload();
+			                    }
+			                });
+			                $("."+campusDynamicId+1+"").addClass("red");
+			            }
+			        }
+			    });
+			}
+		}
 	}
 </script>
