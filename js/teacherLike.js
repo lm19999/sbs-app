@@ -21,10 +21,10 @@ $(function(){
 						
 							<div class="sonleft">
 								<div class="sonimg">
-									<img src="${recommend.parents.parPortrait}">
+									<img src="${recommend.teacher.teaPortrait}">
 								</div>
 								<div class="jieshao">
-									<span>${recommend.parents.parName}</span>
+									<span>${recommend.teacher.teaName}</span>
 								</div>
 							</div>
 							
@@ -50,14 +50,11 @@ $(function(){
 				);
 				// 图片循环
 				var imgList = (recommend.growthRecord.growthRecordUrl).split("&");
-				console.log(imgList)
 				var img = imgList.filter(function (s) {
 				   return s && s.trim();
 				});
-				console.log(img)
 				$("."+recommend.growthRecord.growthRecordId+3+"").empty();
 				for (let tu of img) {
-					console.log(tu)
 					$("."+recommend.growthRecord.growthRecordId+3+"").append(
 						`<img src="http://localhost:8080/upload/${tu}" />`
 					);
