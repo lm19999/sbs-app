@@ -66,7 +66,59 @@ $(function(){
     });
 
     /*----------------------------校园动态---------------------------------*/
-
+	$.ajax({
+		url:'http://localhost:8080/api/campusDynamic/parCDCollectList',
+		type:'post',
+		dataType:'json',
+		data:{
+			parId:getParents().parId
+		},
+		success:function(data){
+			console.log(data.data)
+			var parLike = data.data
+			var likeItem = '';
+			
+			for(var i=0; i<parLike.length; i++){
+				console.log(parLike[i])
+				var recommend = parLike[i];
+				
+				$(".recommend2").append(
+					`
+						<div class="list">
+							<div class="sonleft">
+								<div class="sonimg">
+									<img src="${recommend.parents.parPortrait}">
+								</div>
+								<div class="jieshao">
+									<span>${recommend.parents.parName}</span>
+								</div>
+							</div>
+						
+							<div class="describe">
+								<p onclick="getCampusDynamicId()">`+recommend.campusDynamic.campusDynamicDescribe+`</p>
+							</div>
+						
+							<div class="imageson ${recommend.campusDynamic.campusDynamicId}3"></div>
+								
+							<div class="detail">
+								<div class="dizhi">
+									
+									
+								</div>
+								<div class="dzpl">
+									<span class="iconfont iconthumbup-fill LikeColor ${recommend.campusDynamic.campusDynamicId}" onclick="cancelGRLike(${recommend.campusDynamic.campusDynamicId})"></span>
+									<span class="iconfont iconpinglun ${recommend.campusDynamic.campusDynamicId}2" onclick="obtainGrowthReview(${recommend.campusDynamic.campusDynamicId})"></span>
+								</div>
+							</div>
+						</div>
+					`
+				);
+			
+			};
+			
+		}
+	
+	});
 });
 
 //进入详情页
@@ -138,6 +190,68 @@ function cancelGRLike(growthRecordId){
 	}
 	
 }
+
+
+function cancelCDLike(campusDynamicId){
+	//取消校园动态点赞
+	if($("."+campusDynamicId+"").hasClass("LikeColor")){
+		$.ajax({
+			url:"http://localhost:8080/api/campusDynamic/updateParCDState",
+			dataType:"json",
+			type:"post",
+			data:{
+				parId: getParents().parId,
+				campusDynamicId: campusDynamicId,
+				collectState: 0
+			},
+			success:function(res){
+				console.log(res)
+				alert("取消点赞");
+				$.ajax({
+					url:"http://localhost:8080/api/campusDynamic/updateStatus",
+					type: "POST",
+					data: {
+						campusDynamicId: campusDynamicId
+					},
+					dataType: "JSON",
+					success:function(result){
+						console.log(result);
+					},
+				});
+			}
+		})
+		$("."+campusDynamicId+"").removeClass("LikeColor");
+	}else{
+		//点赞
+		$.ajax({
+		    url:"http://localhost:8080/api/campusDynamic/updateParCDState",
+		    type: "POST",
+		    data: {
+				parId: getParents().parId,
+				campusDynamicId: campusDynamicId,
+				collectState: 1
+		    },
+		    dataType: "JSON",
+		    success:function(result){
+		        console.log(result)
+				$.ajax({
+				    url:"http://localhost:8080/api/campusDynamic/addCampusDynamicCollects",
+				    type: "POST",
+				    data: {
+				        campusDynamicId: campusDynamicId
+				    },
+				    dataType: "JSON",
+				    success:function(result){
+						console.log(result);
+					},
+				});
+				alert("点赞成功");
+		    }
+		});
+		$("."+campusDynamicId+"").addClass("LikeColor");
+	}
+}
+
 
 function obtainGrowthReview(growthRecordId){
 	window.location.href="forumReview.html?growthRecordId="+growthRecordId;
