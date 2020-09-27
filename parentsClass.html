@@ -83,12 +83,13 @@
 				if(data.data.length == 0){
 					$('.joinList').append("暂时没有加入群聊，快去加入吧~")
 				}else{
+					// ${parent.parName}/${data.data[i].createClass.className}
 					for (let i = 0;i<data.data.length;i++) {
 						$('.joinList').append(`
-							<figure>
+							<a href = "socketChart.html?classNum=${data.data[i].createClass.classNum}"><figure>
 								<img src="${data.data[i].createClass.classImg}" />
 								<figcaption style="padding:0 10px;box-sizing: border-box;">${data.data[i].createClass.className}</figcaption>
-							</figure>
+							</figure></a>
 						`)
 					}
 				}

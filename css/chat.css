@@ -1,0 +1,44 @@
+.chat{
+	width: 100%;
+}
+.chat figure{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-flow: row;
+	padding: 0.625rem;
+	box-sizing: border-box;
+}
+.chat figure figcaption{
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1;
+	text-align: center;
+}
+.chat figure figcaption span{
+	width: 100%;
+}
+.message{
+	width: 100%;
+	border: 1px solid red;
+	box-sizing: border-box;
+	height: 25rem;
+}
+.sendMessage{
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 2.5rem;
+	box-sizing: border-box;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+	margin: 0.625rem 0;
+}
+.sendMessage input{
+	width: 70%;
+}
+.sendMessage button{
+	padding: 0 1.25rem;
+}

@@ -14,8 +14,8 @@
 			启蒙页面
 		</div>
 		<div class="search">
-			<input type="text" placeholder="请输入启蒙名称"/>
-			<button>搜索</button>
+			<input id="searchInput" type="text" placeholder="请输入启蒙名称"/>
+			<button onclick="search()">搜索</button>
 		</div>
 		<div class="tab">
 			
@@ -96,7 +96,7 @@
 										<div class="listRight">
 											<figure>
 												${data.data[i].initiationUrl.initiationUrlName}
-												<figcaption></figcaption>
+												<figcaption style="padding-top:20px">热度：8888</figcaption>
 											</figure>
 										</div>
 									</div></a>
@@ -175,5 +175,52 @@
 			}
 		})
 	})
+	
+	function search(){
+		// 搜索框输入的内容
+		var searchInput = $("#searchInput").val()
+		// 当前选中的标签卡
+		var current = $(".current").attr("value")
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8080/api/selectAllInitiationByTypeAndName",
+			data:{
+				initiationTypeId:current,
+				initiationUrlName:searchInput
+			},
+			success:function(data){
+				console.log(data)
+				var html = "";
+				$('.list').empty()
+				if(data.data.length == 0){
+					$('.list').append("没有查询到数据");
+				}else{
+					for(var i = 0;i<data.data.length;i++){
+						console.log(data.data)
+						if(current == 1){
+							// 传输id和当前下标
+							html+=`<a href="initiationAudio.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}&index=${i}"><div class="listOne">`
+						}
+						else{
+							html+=`<a href="initiationDetails.html?initiationUrlId=${data.data[i].initiationUrl.initiationUrlId}"><div class="listOne">`
+						}
+							html+=`
+								<div class="listLeft">
+									<img src="${data.data[i].initiationImg}" />
+								</div>
+								<div class="listRight">
+									<figure>
+										${data.data[i].initiationUrl.initiationUrlName}
+										<figcaption></figcaption>
+									</figure>
+								</div>
+							</div></a>
+							`
+					}
+					$('.list').append(html)
+				}
+			}
+		})
+	}
 	
 </script>

@@ -46,7 +46,7 @@
 }
 .listOne{
 	width: 95%;
-	margin: 0 auto;
+	margin: 0.625rem auto;
 	display: flex;
 	justify-content: space-around;
 	flex-flow: row;
@@ -56,6 +56,8 @@
 }
 .listRight{
 	width: 50%;
+	display: flex;
+	align-items: center;
 }
 .listLeft img{
 	width: 90%;

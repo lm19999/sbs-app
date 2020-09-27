@@ -49,6 +49,45 @@ function onmarked(type, result, file){
 	back()	//返回到上一个页面
 	
 	// 写ajax方法调用后台接口,将result(扫描到的结果)+当前登录的人的id,传递到后台,走加入班级成功接口	
+		// 当前登录的家长的id
+		var parents = JSON.parse(localStorage.getItem("parentLogin"));
+		console.log(parents.parId)
+		// 班级号
+		console.log(classNum)
+		// 加入班级之前去查询此家长是否已经加入过班级
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8080/api/selectTrue",
+			data:{
+				classNum:classNum,
+				parId:parents.parId
+			},
+			async:false, 
+			success:function(data){
+				console.log(data)
+				if(data.data == null){
+					// 加入班级请求
+					$.ajax({
+						type:"post",
+						url:"http://localhost:8080/api/joinClass",
+						data:{
+							classNum:classNum,
+							parId:parents.parId
+						},
+						async:false, 
+						success:function(data){
+							if(data.data == 1){
+								console.log("加入成功")
+							}else{
+								console.log("加入失败")
+							}
+						}
+					})
+				}else{
+					alert("已经加入过此班级")
+				}
+			}
+		})
 }
 // 创建子窗口
 function createSubview(){
