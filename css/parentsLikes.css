@@ -3,7 +3,7 @@
 	bottom: 0rem;
 	position: absolute;
 	overflow-y: scroll; 
-	top: 2.3rem;
+	top: 2.7rem;
 	left: 0;
 	overflow: auto;
 }
@@ -15,19 +15,30 @@
 	color: #828282;
 	font-size: 1rem !important;
 }
+/* --------------------------tops------------------------------- */
+.tops{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 2.6rem;
+	background: #8fdf7e;
+	padding: 0 0.8rem;
+}
 /* --------------------------list------------------------------- */
-.recommend1,.recommend2,.recommend3,.recommend4{
+.recommend1,.recommend2{
 	width: 100%;
 }
+
 .list{	
 	border-radius: 0.3125rem;
-	background: #f6f6f6;
-	width: 90%;
-	margin: 0 auto;
+	background: #dae8d7;
+	width: 95%;
 	display: flex;
 	flex-flow: column;
 	justify-content: space-around;
-	margin: 0.5rem auto;
+	margin: 0.8rem auto;
+	padding: 0.5rem 0;
 }
 .imageson{
 	padding: 0.3rem 0.3rem;
@@ -39,7 +50,7 @@
 }
 
 .list .describe{
-	width: 100%;
+	width: 95%;
 	font-size: 0.8rem;
 	padding: 0 0.625rem;
 	display: flex;
@@ -47,6 +58,12 @@
 	justify-content: space-between;
 	align-items: center;
 }
+
+.describe img{
+	width: 335px;
+	height: 210px;
+}
+
 
 .list .detail{
 	width: 100%;
@@ -74,7 +91,8 @@
 
 .sonimg img {
 	border-radius: 50%;
-	width: 3rem;
+	width: 2.5rem;
+	padding-top: 0.2rem;
 }
 
 .jieshao{
@@ -98,9 +116,5 @@
 }
 
 
-.describe img{
-	width: 300px;
-	height: 180px;
-}
 
 

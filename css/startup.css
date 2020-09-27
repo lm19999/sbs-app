@@ -4,12 +4,11 @@ body{
 }
 
 .time{
-	/* border: 1px solid red; */
 	width: 2rem;
 	height: 2rem;
 	margin-left: 18.75rem;
 	border-radius: 50%;
-	background-color: #ddd;
+	background-color: #b8ddb1;
 }
 
 .time #Time{

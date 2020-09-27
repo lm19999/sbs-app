@@ -6,13 +6,27 @@ a{
 	text-decoration: none;
 	color: #000000;
 }
+
+/* -------------------top------------------------ */
 .header .top{
+	width: 100%;
+	text-align: center;
+	height: 2.6rem;
+	line-height: 2.6rem;
+	background: #8fdf7e;
+	color: #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
 	display: flex;
 	flex-flow: row;
 	justify-content: center;
 	align-items: center;
 }
 
+
+/* -------------------bodys------------------------ */
 .bodys{
 	width: 100%;
 	position: absolute;
@@ -22,10 +36,15 @@ a{
 	bottom: 3.6rem;
 	overflow: auto;
 }
+
+/* -------------------me------------------------ */
 .me{
-	width: 100%;
+	border-radius: 10px;
+	width: 90%;
+	margin: 0 auto;
 	height: 5rem;
-	margin-top: 0.5rem;
+	margin-top: 1rem;
+	background: #e6f6e2;
 }
 .me .list {
 	width: 100%;
@@ -47,8 +66,8 @@ a{
 .me .list #name{
 	width: 60%;
 	height: 100%;
-	font-size: 1.2rem;
-	line-height: 1.5rem;
+	font-size: 1.1rem;
+	line-height: 1.3rem;
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: flex-start;
@@ -72,13 +91,16 @@ a{
 .me .list #jt .icongengduo{
 	font-size: 1.5rem;
 }
+
+/* -------------------lists------------------------ */
 .lists{
 	width: 90%;
 	margin: auto auto;
-	margin-top: 2rem;
+	margin-top: 0.5rem;
 	padding-top: 0.1rem;
 	height: 21rem;
-	background: #f5f4f4;
+	background: #e6f6e2;
+	border-radius: 10px;
 }
 .lists .p1{
 	width: 90%;
@@ -127,25 +149,5 @@ a{
 .header #bodys .list p{
 	width: 100%;
 }
-/* -------------------top------------------------ */
-.top{
-	width: 100%;
-	text-align: center;
-	font-size: 1.2rem;
-	height: 2.3rem;
-	line-height: 2.3rem;
-	background: #eeeeee;
-	color: #000;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 2;
-	display: flex;
-	flex-flow: row;
-	justify-content: space-between;
-	align-items: flex-start;
-}
-.iconfont{
-	font-size: 1.5rem;
-}
+
 

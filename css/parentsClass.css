@@ -4,7 +4,7 @@
 	align-content: center;
 	height: 2.6rem;
 	line-height: 2.6rem;
-	background: #007BFF;
+	background: #8fdf7e;
 	display: flex;
 	flex-flow: row;
 	justify-content: space-around;
@@ -43,4 +43,10 @@
 .joinList figure img{
 	width: 3.125rem;
 	border-radius: 50%;
+}
+
+
+ul li{
+	background: #8fdf7e;
+	line-height: 2rem;
 }

@@ -4,12 +4,12 @@
 	align-content: center;
 	height: 2.6rem;
 	line-height: 2.6rem;
-	background: #007BFF;
-	color: white;
+	background: #8fdf7e;
+	/* color: white; */
 	display: flex;
 	flex-flow: row;
 	justify-content: space-around;
-	font-size: 0.8rem;
+	/* font-size: 0.8rem; */
 }
 .bodys{
 	width: 90%;

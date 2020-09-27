@@ -1,3 +1,11 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
 .bodys{
     width: 100%;
     position: absolute;
@@ -7,6 +15,18 @@
     bottom: 3.6rem;
     overflow: auto;
 }
+
+/* --------------------------tops------------------------------- */
+.tops{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 2.6rem;
+	background: #8fdf7e;
+	padding: 0 0.8rem;
+}
+
 .me{
     width: 85%;
     margin: 2rem auto;

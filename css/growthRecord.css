@@ -11,7 +11,7 @@
 }
 .iconbianji{
 	font-size: 1rem;
-	color: white;
+	color: black;
 }
 .head{
 	width: 100%;
@@ -19,12 +19,12 @@
 	align-content: center;
 	height: 2.6rem;
 	line-height: 2.6rem;
-	background: #007BFF;
+	background: #8fdf7e;
 	display: flex;
 	flex-flow: row;
 	justify-content: space-around;
-	color: white;
-	font-size: 0.875rem;
+	/* color: white; */
+	/* font-size: 0.875rem; */
 	position: fixed;
 	z-index: 2;
 }

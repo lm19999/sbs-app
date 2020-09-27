@@ -2,6 +2,17 @@
 	bottom: 0rem;
 }
 
+/* --------------------------tops------------------------------- */
+.tops{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 2.6rem;
+	background: #8fdf7e;
+	padding: 0 0.8rem;
+}
+
 .checkout{
 	width: 100%;
 	height: 2.6rem;
