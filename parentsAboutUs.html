@@ -82,6 +82,7 @@
 						console.log(res)
 						if (res.msg == "success") {
 							localStorage.setItem("parentLogin", JSON.stringify(res.data));
+							localStorage.clear();
 							window.location.href = "parentsLogin.html";
 						}
 					},

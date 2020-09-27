@@ -80,6 +80,7 @@
 						console.log(res)
 						if (res.msg == "success") {
 							localStorage.setItem("teacherLogin", JSON.stringify(res.data));
+							localStorage.clear();
 							window.location.href = "teacherLogin.html";
 						}
 					},
